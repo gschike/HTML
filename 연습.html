@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+        window.addEventListener('load', init)
+
+        function init() {
+            bind()
+        }
+
+        // function bind() {
+
+        //     let count = 0;
+        //     const mom = document.querySelector('#mom')
+        //     const txtArea = document.querySelector('textarea')
+
+        //     mainCmt()
+        //     subCmt()
+
+        //     function mainCmt() {
+        //         document.querySelector('#mainBtn')
+        //             .addEventListener('click', function () {
+
+        //                 //행
+        //                 const row = document.createElement('div')
+
+        //                 //답글
+        //                 const button = document.createElement('button')
+        //                 button.setAttribute('id', 'num' + count)
+        //                 button.textContent += '대댓글'
+
+        //                 row.append(button)
+
+        //                 row.innerHTML += txtArea.value + count
+
+        //                 mom.append(row)
+
+        //                 count++
+        //             })
+        //     }
+
+        //     function subCmt() {
+        //         document.querySelector( '#num' + count )
+        //             .addEventListener('click', function () {
+        //                 console.log('안녕하세요.')
+        //             })
+        //     }
+
+        // }
+
+        function bind() {
+            let count = 0;
+            const mom = document.querySelector('#mom');
+            const txtArea = document.querySelector('textarea');
+
+            // 메인 댓글 달기
+            document.querySelector('#mainBtn').addEventListener('click', function () {
+                // 1. 행(row) 생성
+                const row = document.createElement('div');
+                row.style.marginBottom = "10px";
+
+                // 2. 대댓글 버튼 생성
+                const subBtn = document.createElement('button');
+                subBtn.textContent = '대댓글';
+
+                // 3. [핵심] 버튼을 만들자마자 바로 이벤트를 걸어줍니다!
+                subBtn.addEventListener('click', function () {
+                    createSubReply(row); // 현재 row(부모)를 인자로 전달
+                });
+
+                // 4. 내용 추가 (innerHTML 대신 textContent나 span 권장)
+                const textNode = document.createTextNode(txtArea.value);
+
+                // 5. 조립
+                row.append(subBtn);
+                row.append(textNode);
+                mom.append(row);
+
+                count++;
+                txtArea.value = ""; // 입력창 비우기
+            });
+
+            // 대댓글 생성을 담당하는 별도의 함수
+            function createSubReply(parentRow) {
+                const subText = prompt("대댓글을 입력하세요:");
+                if (!subText) return;
+
+                const subRow = document.createElement('div');
+                subRow.style.marginLeft = "20px"; // 들여쓰기로 대댓글 표시
+                subRow.style.borderLeft = "1px solid #ccc";
+
+                const subBtn = document.createElement('button');
+                subBtn.textContent = '대댓글';
+
+                // 무한 증식을 위해 대댓글 버튼에도 자기 자신을 부르는 이벤트 추가
+                subBtn.addEventListener('click', function () {
+                    createSubReply(subRow);
+                });
+
+                subRow.append(subBtn);
+                subRow.append(document.createTextNode(` ${subText}`));
+                parentRow.append(subRow);
+            }
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+    <div>댓글창
+        <button id="mainBtn">댓글 달기</button>
+
+    </div>
+    <textarea name="dd" id="comment"></textarea>
+    <div id="mom">내용</div>
+    
+
+<!-- 
+    Todo 
+    1. 댓글 대댓글 테이블화
+    2. 대댓글 prompt X -> append.textarea로 받기
+    3. 대댓글 등록 입력 시 / remove.textarea
+-->
+</body>
+
+</html>

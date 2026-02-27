@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #wrap_Cmt {
+            border: 1px solid red;
+            width: 900px;
+        }
+
+        #cmt_Head {
+            /* border: 1px solid red; */
+            clear: both;
+        }
+
+        .left {
+            float: left;
+        }
+
+        .right {
+            float: right;
+        }
+
+
+        #cmt {
+            clear: both;
+        }
+
+        [type=textarea] {
+            width: 90%;
+            height: 100px;
+        }
+
+        #cmt div {
+            /* border: 1px solid green; */
+            position: relative;
+        }
+
+        #cmt_write {
+            position: absolute;
+            bottom: 0px;
+            right: 0px;
+        }
+
+        @media screen and (max-width: 600px) {
+            #wrap_Cmt {
+                border: 1px solid red;
+                width: 450px;
+            }
+        }
+    </style>
+
+    <script>
+
+    </script>
+</head>
+
+<body>
+    <!-- 전체 컨테이너 -->
+    <div id="wrap_Cmt">
+        <!-- head -->
+        <div id="cmt_Head">
+            <div id="fl_Left" class="left">
+                <span>전체 댓글 ```</span>
+                <bind><input type="radio" name="array" value="1">안녕1</bind>
+                <bind><input type="radio" name="array" value="2">안녕2</bind>
+                <bind><input type="radio" name="array" value="3">안녕3</bind>
+            </div>
+
+            <div id="fl_Right" class="right">
+                <a href="">댓글 등록 (버튼)</a>
+                <a href="">본문 보기 (버튼)</a>
+            </div>
+        </div>
+
+        <!-- 댓글 입력창 -->
+        <div id="cmt">
+            <input type="textarea">
+
+
+            <div><button id="cmt_write">등록</button></div>
+
+        </div>
+        <a href="">전체글 (메인 페이지로 가는 버튼)</a>
+
+        <!-- 댓글 -->
+        <div>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
