@@ -5,290 +5,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main</title>
-
-    <style>
-        :root {
-            --main-color: #7B2DD2;
-            --sub-color: #08C69C;
-        }
-
-        .top {
-            padding: 15px;
-
-            display: flex;
-            justify-content: right;
-        }
-
-        .user {
-            width: 500px;
-            height: 500px;
-
-            display: none;
-        }
-
-        #join {}
-
-        .beforeLogin {
-            display: block;
-            /* display: none; */
-        }
-
-        .afterLogin {
-            display: none;
-            /* display: block; */
-        }
-
-        .main {
-            height: 80vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #title {
-            font-size: 80px;
-        }
-
-        .pop {
-            background-color: gray;
-
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-
-            display: none;
-        }
-
-        .manual {
-            width: 400px;
-            height: 400px;
-
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" href="./main.css">
 
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script>
-        userList = {
-            "admin": {
-                "name": "admin",
-                "id": "admin",
-                "pw": "admin",
-                "stage": 0,
-                // stage 단계 관리 : 1~0(완료)
-                "access": 0
-                // 관리자 권한 : 0, 회원 권한 : 1~2
-                // access가 1보다 작거나 같다~ 하는 조건으로 접근제한
-            },
-            "user1": {
-                "name": "user1",
-                "id": "user1",
-                "pw": "user1",
-                "stage": 1,
-                "access": 2
-            },
-            "user2": {
-                "name": "user2",
-                "id": "user2",
-                "pw": "user2",
-                "stage": 2,
-                "access": 2
-            },
-            "user3": {
-                "name": "user3",
-                "id": "user3",
-                "pw": "user3",
-                "stage": 3,
-                "access": 2
-            },
-            "user4": {
-                "name": "user4",
-                "id": "user4",
-                "pw": "user4",
-                "stage": 0,
-                "access": 1
-            }
-        }
-
-        window.addEventListener("load", () => {
-            init();
-            bind();
-        })
-
-        function init() {
-
-        }
-
-        function bind() {
-            const message = document.querySelector("#message");
-
-            // 로그인 상태에 따라서 user 버튼 교체 (.beforeLogin <> .afterLogin)
-
-            // 회원가입 버튼 클릭 시 회원가입 팝업
-            const btn_join = document.querySelector("#btn-join");
-            const join = document.querySelector("#join");
-
-            btn_join.addEventListener("click", () => {
-                join.style.display = "block";
-            })
-
-
-
-
-            // 아이디가 기존에 있으면, 거절
-            // 없으면, 가능
-            const join_id = document.querySelector("#join-id");
-            const join_id_check = document.querySelector("#join-id-check");
-            const join_message = document.querySelector(".join-message");
-
-            let joinPossible = false;
-
-            // join_id_check.addEventListener("click", () => {
-            //     join_message.innerHTML = "";
-            //     const join_id_value = join_id.value.trim();
-
-            //     for (let key in userList) {
-            //         if (join_id_value == userList[key].id) {
-            //             join_message.innerHTML = "이미 존재하는 사용자입니다.";
-            //             joinPossible = false;
-            //             break;
-            //         }
-            //     }
-            //     // console.log(joinPossible);
-            // })
-
-
-
-
-            // 비밀번호 보기 클릭 시 타입 text로 변환
-            const join_pw = document.querySelector("#join-pw");
-            const join_pw_check = document.querySelector("#join-pw-check");
-
-            join_pw_check.addEventListener("mousedown", () => {
-                join_pw.type = "text";
-            })
-            join_pw_check.addEventListener("mouseup", () => {
-                join_pw.type = "password";
-            })
-            join_pw_check.addEventListener("mouseleave", () => {
-                join_pw.type = "password";
-            })
-
-            // 회원가입 버튼 클릭
-            const join_fin = document.querySelector("#join-fin");
-
-            join_fin.addEventListener("click", () => {
-                const join_id_value = join_id.value.trim();
-                const join_pw_value = join_pw.value.trim();
-
-                // 아이디 중복 검사
-                for (let key in userList) {
-                    if (join_id_value == userList[key].id) {
-                        joinPossible = false;
-                        join_message.innerHTML = "이미 존재하는 사용자입니다.";
-                        break;
-                    }
-                }
-
-                // 아이디, 비번 빈칸이면 안 됨
-                if (join_id_value == "" || join_pw_value == "") {
-                    joinPossible = false;
-                    join_message.innerHTML = "아이디 혹은 비밀번호를 입력해주세요.";
-                } else {
-                    joinPossible = true;
-                }
-
-
-                if (joinPossible == true) {
-                    console.log("회원가입 성공!")
-                }
-            })
-
-            // 회원가입 팝업 닫기 버튼 클릭 시 사라짐
-            const join_close = document.querySelector("#join-close");
-
-            join_close.addEventListener("click", () => {
-                join.style.display = "none";
-            })
-
-            // 로그인 버튼 클릭 시 로그인 팝업
-
-            // 커뮤니티 버튼 클릭 시 커뮤니티 링크로 이동
-
-            // 햄버거 메뉴 클릭 시 오른쪽 팝업
-
-            // 처음부터 시작 클릭 시 1stage 이동
-            const btn_sFirst = document.querySelector("#btn-sFirst");
-
-            btn_sFirst.addEventListener("click", () => {
-                message.innerHTML = "게임으로 이동 중...";
-                message.style.display = "block";
-
-                setTimeout(() => {
-                    message.style.display = "none";
-                    ///////// 페이지 이동
-                    window.location.href = "http://naver.com";
-                }, 1000)
-            })
-
-            // 이어서 시작 클릭 시 저장된 페이지 링크로 이동
-            const btn_sLast = document.querySelector("#btn-sLast");
-
-            btn_sLast.addEventListener("click", () => {
-                message.innerHTML = "세이브 포인트로 이동 중...";
-                message.style.display = "block";
-
-                setTimeout(() => {
-                    message.style.display = "none";
-                    ///////// 페이지 이동
-                    window.location.href = "http://naver.com";
-                }, 1000)
-            })
-
-            // 게임 설명서 버튼 누르면 .manual 열리기
-            const btn_manual = document.querySelector("#btn-manual");
-            const manual = document.querySelector(".manual");
-
-            btn_manual.addEventListener("click", () => {
-                manual.style.display = "block";
-            })
-
-            // 돌아가기 버튼 누르면 .manual 닫히기
-            const manual_back = document.querySelector("#manual-back");
-
-            manual_back.addEventListener("click", () => {
-                manual.style.display = "none";
-            })
-        }
-
-    </script>
+    <script src="./main.js"></script>
 
 </head>
 
 <body>
     <div class="top">
         <!-- 회원가입, 로그인 / 커뮤니티, 햄 버튼 -->
+        <button type="button" class="topBtn" id="btn-comm">커뮤니티</button>
+
         <div class="beforeLogin">
-            <button type="button" id="btn-join">회원가입</button>
-            <button type="button" id="btn-login">로그인</button>
+            <button type="button" class="topBtn" id="btn-login">로그인</button>
+            <button type="button" class="topBtn" id="btn-join">회원가입</button>
         </div>
         <div class="afterLogin">
-            <button type="button" id="btn-comm">커뮤니티</button>
-            <button type="button" id="btn-ham">햄</button>
+            <button type="button" class="topBtn" id="btn-logout">로그아웃</button>
+            <button type="button" class="topBtn" id="btn-ham">햄</button>
         </div>
     </div>
 
     <!-- 회원가입 창 -->
     <!-- 아이디, 비밀번호 규칙 -->
     <div class="user pop" id="join">
-        <table>
+        <table class="input">
             <tr class="id">
                 <td>
                     ID
@@ -309,36 +51,87 @@
                     <input type="password" id="join-pw" placeholder="비밀번호">
                 </td>
                 <td>
-                    <button type="button" id="join-pw-check">보기</button>
+                    <button type="button" class="pwCheckBtn" id="join-pw-check">보기</button>
                 </td>
             </tr>
         </table>
-        <div class="join-message">
 
+        <div class="message join-message">
+             
         </div>
-        <button type="button" id="join-fin">회원가입</button>
-        <button type="button" id="join-close">닫기</button>
+
+        <div class="inputBtnDiv">
+            <button type="button" class="popBtn" id="join-fin">회원가입</button>
+            <button type="button" class="popBtn" id="join-close">닫기</button>
+        </div>
+
+        <!-- <button type="button" class="popBtn" id="join-fin">회원가입</button>
+        <button type="button" class="popBtn" id="join-close">닫기</button> -->
+    </div>
+    
+    <div class="overlay" id="join-success-overlay">
+        <div class="pop popMessage" id="join-success">
+            회원가입에 성공하였습니다
+        </div>
     </div>
 
-    <!-- 로그인 창
+    <!-- 로그인 창 -->
     <div class="user pop" id="login">
-        
-    </div> -->
+        <table class="input">
+            <tr class="id">
+                <td>
+                    ID
+                </td>
+                <td>
+                    <input type="text" id="login-id" placeholder="아이디">
+                </td>
+            </tr>
+
+            <tr class="pw">
+                <td>
+                    PW
+                </td>
+                <td>
+                    <input type="password" id="login-pw" placeholder="비밀번호">
+                </td>
+                <td>
+                    <button type="button" class="pwCheckBtn" id="login-pw-check">보기</button>
+                </td>
+            </tr>
+        </table>
+
+        <div class="message login-message">
+             
+        </div>
+        <div class="inputBtnDiv">
+            <button type="button" class="popBtn" id="login-fin">로그인</button>
+            <button type="button" class="popBtn" id="login-close">닫기</button>
+        </div>
+
+    </div>
+
+    <div class="overlay" id="login-success-overlay">
+        <div class="pop popMessage" id="login-success">
+            로그인 성공하였습니다
+        </div>
+    </div>
 
     <div class="main">
-        <div class="pop" id="message">
-            <!-- 상황에 따라 내용 바뀜 -->
+        <div class="overlay" id="message-overlay">
+            <div class="pop popMessage" id="messageBox">
+                상황에 따라 내용 바뀜
+            </div>
         </div>
 
         <div id="title">
-            로고
+            HTML, CSS, JavaScript의 이해에 대하여
         </div>
 
         <!-- 버튼 있는 곳 -->
         <div class="btn">
-            <button type="button" id="btn-sFirst">처음부터 시작</button>
-            <button type="button" id="btn-sLast">이어서 시작</button>
-            <button type="button" id="btn-manual">게임설명서</button>
+            <button type="button" class="mainBtn" id="btn-sFirst">처음부터 시작</button>
+            <button type="button" class="mainBtn" id="btn-sLast">이어서 시작</button>
+            <button type="button" class="mainBtn" id="btn-manual">게임설명서</button>
         </div>
 
         <!-- 게임설명서(#btn-manual) 버튼 -->
@@ -346,7 +139,7 @@
             <div id="maual-ex">
                 내용내용
             </div>
-            <button type="button" id="manual-back">돌아가기</button>
+            <button type="button" class="popBtn" id="manual-close">닫기</button>
         </div>
     </div>
 
