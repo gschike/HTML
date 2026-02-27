@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stage 1 - 숨겨진 로봇</title>
+<style>
+  body {
+    background-color: black;
+    color: white;
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .game-area {
+    width: 300px;
+    height: 200px;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .robot {
+    display: none; /* 초기에는 숨김 */
+    font-size: 50px;
+  }
+
+  textarea {
+    width: 320px;
+    height: 80px;
+    font-family: monospace;
+    font-size: 14px;
+  }
+
+  button {
+    margin-top: 10px;
+    padding: 5px 15px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<h2>Stage 1 - 숨겨진 로봇</h2>
+<p>힌트 : 없음 !! </p>
+
+<div class="container">
+  <div class="game-area">
+    <div class="robot">🤖</div>
+  </div>
+
+  <textarea id="css-input">
+
+.robot { ; }
+  </textarea>
+  <button id="apply-css">Apply CSS</button>
+</div>
+
+<script>
+const textarea = document.getElementById('css-input');
+const button = document.getElementById('apply-css');
+const styleTag = document.createElement('style');
+document.head.appendChild(styleTag);
+
+button.addEventListener('click', () => {
+  styleTag.innerHTML = textarea.value;
+});
+</script>
+
+</body>
+</html>
