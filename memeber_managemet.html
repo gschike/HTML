@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>member management</title>
+
+    <script>
+        window.onload = () => {
+            //회원 삭제 버튼 누르면 회원 정보 삭제
+            document.querySelectorAll('.delete').forEach(ob => {
+                ob.addEventListener('click', evt => {
+                    evt.target.closest('tr').remove()
+                })
+            })
+
+            //전체 선택 버튼 누르면 모든 체크박스 선택
+            document.querySelector('.allChk').addEventListener('click', evt => {
+                if (document.querySelector('.allChk').checked) {
+                    for (let i of document.querySelectorAll('.chkbox')) {
+                        i.checked = true
+                    }
+                } else {
+                    for (let i of document.querySelectorAll('.chkbox')) {
+                        i.checked = false
+                    }
+                }
+            })
+
+            //선택 회원 정보 삭제
+            document.querySelector('.chkDel').addEventListener('click', evt => {
+                for (let ob of document.querySelectorAll('.chkbox')) {
+                    if (ob.checked) {
+                        ob.closest('tr').remove()
+                    }
+                }
+                document.querySelector('.allChk').checked = false
+            })
+
+            //모든 체크박스 체크면 전체 선택도 체크
+            document.querySelector('.memberList').addEventListener('click', evt => {
+                let i = 0
+                for (let ob of document.querySelectorAll('.chkbox')) {
+                    if (!ob.checked) {
+                        document.querySelector('.allChk').checked = false
+                        break
+                    } else {
+                        i++
+                    }
+                }
+                if (i == document.querySelectorAll('.chkbox').length) {
+                    document.querySelector('.allChk').checked = true
+                }
+            })
+
+        }   
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            padding: 30px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 600px;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th,td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background: #630CA7;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f1f1f1;
+        }
+
+        button {
+            padding: 6px 12px;
+            border: none;
+            background: #FF5E93;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #C94C2A;
+        }
+
+        .top-bar {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>회원 관리</h2>
+
+    <div class="top-bar">
+        <input type="checkbox" class="allChk"> 전체 선택
+        <button class="chkDel">선택 회원 삭제</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>선택</th>
+                <th>ID</th>
+                <th>상세 정보</th>
+                <th>관리</th>
+            </tr>
+        </thead>
+        <tbody class="memberList">
+            <tr>
+                <td><input type="checkbox" class="chkbox"></td>
+                <td>id1</td>
+                <td>상세 정보</td>
+                <td><button class="delete">회원 삭제</button></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" class="chkbox"></td>
+                <td>id2</td>
+                <td>상세 정보</td>
+                <td><button class="delete">회원 삭제</button></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" class="chkbox"></td>
+                <td>id3</td>
+                <td>상세 정보</td>
+                <td><button class="delete">회원 삭제</button></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" class="chkbox"></td>
+                <td>id4</td>
+                <td>상세 정보</td>
+                <td><button class="delete">회원 삭제</button></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

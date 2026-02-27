@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stage</title>
+    <style>
+        #gameArea {
+            background-color: #08C69C;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        .disapear {
+            position: relative;
+            top: -5000px
+        }
+
+        .text {
+            margin-left: 40vw;
+            margin-top: 40vh;
+        }
+
+        .title {
+            font-size: 40px;
+        }
+
+        .des {
+            font-size: 32px;
+        }
+
+        #object {
+            background-color: #7B2DD2;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            position: absolute;
+            top: 55vh;
+            left: 50vw;
+        }
+
+        .hint{
+            position: relative;
+            z-index: -1;
+        }
+    </style>
+    <script>
+        window.onload = () => {
+            //game화면 크기설정
+            document.querySelector('#gameArea').clientHeight = window.innerHeight
+            document.querySelector('#gameArea').clientWidth = window.innerWidth
+            //우클릭, 드래그 막기
+            document.querySelector('#gameArea').onselectstart = () => false
+            document.querySelector('#gameArea').oncontextmenu = () => false
+
+            //object움직임
+            document.addEventListener('keydown', objectMove)
+
+            //기믹 생성
+            //goal에 disapear클래스 부여해서 위치를 화면 밖으로 이동시킴
+            document.querySelector('body').addEventListener('mousemove', evt => {
+                document.querySelector('.goal').classList.add('disapear')
+            })
+
+            //goal에 마우스 올리면 위치 랜덤하게 변경
+            document.querySelector('.goal').addEventListener('mouseover', goalJump)
+
+            //goal을 하얀색 글씨로 만듬/ 트리거 기믹은 ?
+            // goalWhite()
+
+            //goal을 클릭했을때 z인덱스를 사용하여 화면 뒤로 보낼예정
+            document.querySelector('.goal').addEventListener('click', goalZ)
+
+            //다른 무언가가 와서 goal가려서 클릭 못하게 하기
+
+
+            //클리어 조건
+            //goal을 더블 클릭
+            document.querySelector('.goal').addEventListener('dblclick', evt => {
+                alert('클리어')    //클리어 메시지 출력
+                window.location.href = "stage2.html" // 다음 스테이지로 전환
+            })
+        }
+
+        //goal에 마우스 올리면 위치 랜덤하게 변경
+        function goalJump(evt) {
+            document.querySelector('.goal').style.position = 'absolute'
+            document.querySelector('.goal').style.top = Math.random() * (window.innerHeight - (document.querySelector('.goal').clientHeight)) + 'px'
+            document.querySelector('.goal').style.left = Math.random() * (window.innerWidth - (document.querySelector('.goal').clientWidth)) + 'px'
+        }
+
+        //goal을 하얀색 글씨로 만듬
+        function goalWhite() {
+            document.querySelector('.goal').style.color = "white"
+        }
+
+        //goal을 클릭했을때 z인덱스를 사용하여 화면 뒤로 보낼예정
+        function goalZ() {
+            document.querySelector('.goal').style.position = "absolute"
+            document.querySelector('.goal').style.zIndex = -20
+        }
+
+        //object 움직임        
+        function objectMove(evt) {
+            const obj = getComputedStyle(document.querySelector('#object'))
+                   
+            //obj가 움직일 거리
+            let up = 10
+            let down = 10
+            let right = 10
+            let left = 10
+
+            //object의 움직임 범위를 화면 범위로 제한
+            if (parseInt(obj.top) > (window.innerHeight - (document.querySelector('#object').clientHeight))) {
+                down = 0
+            }
+            if (parseInt(obj.top) < 0.5 * (document.querySelector('#object').clientHeight)) {
+                up = 0
+            }
+            if (parseInt(obj.left) > (window.innerWidth - (document.querySelector('#object').clientWidth))) {
+                right = 0
+            }
+            if (parseInt(obj.left) < 0.5 * (document.querySelector('#object').clientWidth)) {
+                left = 0
+            }
+
+            //화살표를 누르면 obj가 움직임
+            if (evt.key === 'ArrowRight') {
+                document.querySelector('#object').style.left = parseInt(obj.left) + right + 'px'
+            }
+            if (evt.key === 'ArrowLeft') {
+                document.querySelector('#object').style.left = parseInt(obj.left) - left + 'px'
+            }
+            if (evt.key === 'ArrowUp') {
+                document.querySelector('#object').style.top = parseInt(obj.top) - up + 'px'
+            }
+            if (evt.key === 'ArrowDown') {
+                document.querySelector('#object').style.top = parseInt(obj.top) + down + 'px'
+            }
+        }
+    </script>
+
+</head>
+
+<body>
+    <div id="gameArea">
+        <div class="text">
+            <div class="title">FIND <span class="goal">ME</span></div>
+            <div class="des">사라진 나를 찾아주세요</div>
+        </div>
+        <div id="object"></div>
+        <div class="hint">사라진 글자를 찾아서 더블 클릭 하세요</div>
+    </div>
+</body>
+
+</html>
