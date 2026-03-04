@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join</title>
+    <link rel="stylesheet" href="./join.css">
+
+    <!-- <script src="https://code.jquery.com/jquery-3.7.1.js"></script> -->
+    <script src="./phi/jquery-3.7.1.js"></script>
+    <script src="./phi/js/dd.api.v1.js" defer></script>
+    <script src="./join.js" defer></script>
+</head>
+
+<body>
+    <div class="top">
+        <button type="button" class="topBtn btn" id="btn-main">메인 페이지</button>
+        <button type="button" class="topBtn btn" id="btn-login">로그인</button>
+    </div>
+    <div class="pop">
+        <div class="user">
+            <div id="user-title">CREATE ACCOUNT</div>
+            <table class="input">
+
+                <tr class="explain">
+                    <td id="id-ex" colspan="3">아이디는 5~20자 영문 소문자, 숫자만 가능합니다.</td>
+                </tr>
+
+                <tr class="id">
+                    <td class="input-td">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M6.67999 7C8.47492 7 9.92999 5.54493 9.92999 3.75C9.92999 1.95507 8.47492 0.5 6.67999 0.5C4.88507 0.5 3.42999 1.95507 3.42999 3.75C3.42999 5.54493 4.88507 7 6.67999 7Z"
+                                stroke="#aaa" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M12.86 13.5001C12.4402 12.191 11.6155 11.049 10.5048 10.2387C9.39409 9.42853 8.0548 8.99194 6.68 8.99194C5.3052 8.99194 3.96591 9.42853 2.85522 10.2387C1.74453 11.049 0.919822 12.191 0.5 13.5001H12.86Z"
+                                stroke="#aaa" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <input type="text" id="join-id" placeholder="아이디">
+                    </td>
+                </tr>
+                <tr></tr>
+
+                <tr class="explain">
+                    <td id="pw-ex" colspan="3">비밀번호는 8~20자 영어, 숫자가 하나 이상 있어야 합니다.</td>
+                </tr>
+
+                <tr class="pw">
+                    <td class="input-td">
+                        <svg width="11" height="14" viewBox="0 0 11 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M9.5 5.5H1.5C0.947715 5.5 0.5 5.94772 0.5 6.5V12.5C0.5 13.0523 0.947715 13.5 1.5 13.5H9.5C10.0523 13.5 10.5 13.0523 10.5 12.5V6.5C10.5 5.94772 10.0523 5.5 9.5 5.5Z"
+                                stroke="#aaa" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M9 5.5V4C9 3.07174 8.63125 2.1815 7.97487 1.52513C7.3185 0.868749 6.42826 0.5 5.5 0.5C4.57174 0.5 3.6815 0.868749 3.02513 1.52513C2.36875 2.1815 2 3.07174 2 4V5.5"
+                                stroke="#aaa" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M5.5 10C5.77614 10 6 9.77614 6 9.5C6 9.22386 5.77614 9 5.5 9C5.22386 9 5 9.22386 5 9.5C5 9.77614 5.22386 10 5.5 10Z"
+                                stroke="#aaa" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <input type="password" id="join-pw" placeholder="비밀번호">
+                        <button type="button" class="pwCheckBtn" id="join-pw-check">
+                            <svg class="viewPw" width="14" height="9" viewBox="0 0 14 9" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M13.2176 3.83C13.3835 4.01375 13.4753 4.25248 13.4753 4.5C13.4753 4.74752 13.3835 4.98625 13.2176 5.17C12.1676 6.3 9.77764 8.5 6.98764 8.5C4.19764 8.5 1.80764 6.3 0.757639 5.17C0.591799 4.98625 0.5 4.74752 0.5 4.5C0.5 4.25248 0.591799 4.01375 0.757639 3.83C1.80764 2.7 4.19764 0.5 6.98764 0.5C9.77764 0.5 12.1676 2.7 13.2176 3.83Z"
+                                    stroke="#aaa" stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M6.98761 6.5C8.09218 6.5 8.98761 5.60457 8.98761 4.5C8.98761 3.39543 8.09218 2.5 6.98761 2.5C5.88304 2.5 4.98761 3.39543 4.98761 4.5C4.98761 5.60457 5.88304 6.5 6.98761 6.5Z"
+                                    stroke="#aaa" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    </td>
+                </tr>
+
+                <tr class="explain">
+                    <td id="pw-chk" colspan="3">비밀번호 재확인</td>
+                </tr>
+                <tr class="pw">
+                    <td class="input-td">
+                        <svg width="11" height="14" viewBox="0 0 11 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M9.5 5.5H1.5C0.947715 5.5 0.5 5.94772 0.5 6.5V12.5C0.5 13.0523 0.947715 13.5 1.5 13.5H9.5C10.0523 13.5 10.5 13.0523 10.5 12.5V6.5C10.5 5.94772 10.0523 5.5 9.5 5.5Z"
+                                stroke="#aaa" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M9 5.5V4C9 3.07174 8.63125 2.1815 7.97487 1.52513C7.3185 0.868749 6.42826 0.5 5.5 0.5C4.57174 0.5 3.6815 0.868749 3.02513 1.52513C2.36875 2.1815 2 3.07174 2 4V5.5"
+                                stroke="#aaa" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M5.5 10C5.77614 10 6 9.77614 6 9.5C6 9.22386 5.77614 9 5.5 9C5.22386 9 5 9.22386 5 9.5C5 9.77614 5.22386 10 5.5 10Z"
+                                stroke="#aaa" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <input type="password" id="join-pw-chk" placeholder="비밀번호 확인">
+
+                    </td>
+                </tr>
+            </table>
+
+            <div class="message join-message">
+
+            </div>
+
+            <div class="inputBtnDiv">
+                <button type="button" class="popBtn btn" id="join-fin">회원가입</button>
+            </div>
+
+            <!-- <button type="button" class="popBtn" id="join-fin">회원가입</button>
+            <button type="button" class="popBtn" id="join-close">닫기</button> -->
+        </div>
+
+        <div class="ad">
+            광고 배너
+        </div>
+    </div>
+</body>
+
+</html>

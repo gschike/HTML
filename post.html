@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML 어쩌구 커뮤니티</title>
+    <link rel="stylesheet" href="./post.css">
+
+    <script src="./phi/jquery-3.7.1.js"></script>
+    <script src="./phi/js/dd.api.v1.js" defer></script>
+    <script src="./post.js"></script>
+</head>
+
+<body>
+    <div class="top">
+        <div class="left">
+            <button type="button" class="topBtn" id="btn-comm">목록</button>
+            <button type="button" class="topBtn" id="btn-main">메인 페이지</button>
+        </div>
+
+        <div class="right">
+            <div class="beforeLogin">
+                <button type="button" class="topBtn" id="btn-login">로그인</button>
+                <button type="button" class="topBtn" id="btn-join">회원가입</button>
+            </div>
+            <div class="afterLogin">
+                <button type="button" class="topBtn" id="btn-logout">로그아웃</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="title">
+            <div>
+                <h2 id="title">제목을 씁시다</h2>
+            </div>
+
+            <div class="postInfo">
+                <div class="postInfo-left">
+                    <div id="postInfo-left-userName">작성자</div>
+                    <div id="postInfo-left-postingTime">작성 시간</div>
+                </div>
+
+                <div class="postInfo-right">
+                    <div id="postInfo-right-views">조회 <sapn id="postInfo-right-views-cnt">0</sapn>
+                    </div>
+                    <div id="postInfo-right-likes">추천 0</div>
+                    <div id="postInfo-right-comment">
+                        <button type="button" id="btn-comment">댓글 0</button>
+                    </div>
+                    <div id="postInfo-right-copy">
+                        <button type="button" id="btn-URL">URL 복사</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="line title-post-line">
+
+        <div class="post-content">
+            내용내용내용내용내용
+        </div>
+
+        <hr class="line post-comment-line">
+
+        <div class="remote">
+
+        </div>
+    </div>
+
+    <!-- 댓글 컨테이너 -->
+    <div id="wrap_Cmt">
+        <!-- head -->
+        <div id="cmt_Head">
+            <div id="fl_Left" class="left">
+                <div>댓글 <span id="cmt_commentCount">0</span></div>
+                <!-- <label><input type="radio" name="array" value="1">안녕1</label>
+                <label><input type="radio" name="array" value="2">안녕2</label>
+                <label><input type="radio" name="array" value="3">안녕3</label> -->
+            </div>
+
+            <!-- <div id="fl_Right" class="right">
+                <a href="">댓글 등록 (버튼)</a>
+                <a href="">본문 보기 (버튼)</a>
+            </div> -->
+        </div>
+
+        <!-- 댓글 입력창 -->
+        <div class="inputCmt"></div>
+        <!-- <a href="">전체글 (메인 페이지로 가는 버튼)</a> -->
+        <div id="cmt_Plus_wrap">
+            <!-- 댓글나오는 곳 -->
+            <div class="cmt_Space"></div>
+        </div>
+    </div>
+
+</body>
+
+</html>

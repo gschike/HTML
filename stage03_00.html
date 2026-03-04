@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 게임 3 </title>
+    <script>
+
+
+        window.addEventListener("load", () => {
+            init();
+        })
+        function init() {
+            bind()
+        }
+
+        function bind() {
+
+
+            const msg = document.querySelector('span')
+            msg.addEventListener('click', function () {
+                msg.textContent = "F12를 눌러 확인해보자!"
+                console.log("stage3 게임을 시작합니다.")
+                console.log("stage3 게임을 시작합니다.")
+                console.log("stage3 게임을 시작합니다.")
+                console.log("stage3 게임을 시작합니다.")
+                console.log("stage3 게임을 시작합니다.")
+                console.log("stage3 게임을 시작합니다.")
+                console.log("stage3 게임을 시작합니다.")
+
+                // setTimeout(() => {
+                //     window.location.href = "mypage.html" // 클리어
+                // }, 3000);
+
+
+            })
+        }
+    </script>
+    <style>
+        /* ai가 만든 캐릭터 css */
+
+        :root {
+            --sejeong-purple: #9b59b6;
+            /* 보라색 머리 */
+            --skin-color: #ffe0bd;
+            --hoodie-color: #bdc3c7;
+            /* 편한 회색 후드 */
+
+            --MainColor: rgb(123, 45, 210);
+            --SubColor: rgb(230, 230, 230);
+
+            --color1: rgb(34, 178, 255);
+            --color2: rgb(201, 76, 42);
+            --color3: rgb(145, 222, 90);
+            --color4: rgb(18, 63, 124);
+            --color5: rgb(240, 155, 17);
+            --color6: rgb(99, 12, 167);
+            --color7: rgb(255, 94, 147);
+            --color8: rgb(72, 201, 176);
+        }
+
+        .character-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        /* 말풍선 */
+        .bubble {
+            position: relative;
+            background: white;
+            border: 2px solid #333;
+            border-radius: 10px;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-top: 10px solid #333;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+        }
+
+        /* 캐릭터 기본 */
+        .sejeong {
+            position: relative;
+            width: 100px;
+            height: 150px;
+        }
+
+        /* 보라색 중단발 */
+        .hair-back {
+            position: absolute;
+            width: 110px;
+            height: 100px;
+            background: var(--sejeong-purple);
+            border-radius: 40px 40px 10px 10px;
+            left: -5px;
+            top: -5px;
+        }
+
+        .face {
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            background: var(--skin-color);
+            border-radius: 50%;
+            left: 5px;
+            top: 5px;
+            overflow: hidden;
+        }
+
+        .hair-fringe {
+            position: absolute;
+            width: 100%;
+            height: 30px;
+            background: var(--sejeong-purple);
+            top: 0;
+        }
+
+        /* 무표정한 눈 */
+        .eyes {
+            position: absolute;
+            top: 50px;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            padding: 0 15px;
+            box-sizing: border-box;
+        }
+
+        .eye {
+            width: 8px;
+            height: 8px;
+            background: #333;
+            border-radius: 50%;
+        }
+
+        /* 무표정한 입 (일자) */
+        .mouth {
+            position: absolute;
+            bottom: 20px;
+            left: 35px;
+            width: 20px;
+            height: 2px;
+            background: #333;
+        }
+
+        /* 편한 복장 (후드) */
+        .body {
+            position: absolute;
+            top: 90px;
+            left: 10px;
+            width: 80px;
+            height: 60px;
+            background: var(--hoodie-color);
+            border-radius: 20px 20px 5px 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="character-container">
+        <div class="bubble" id="talkBubble"><span>아무 것도 없네?</span></div>
+
+        <div class="sejeong">
+            <div class="hair-back"></div>
+            <div class="face">
+                <div class="hair-fringe"></div>
+                <div class="eyes">
+                    <div class="eye left"></div>
+                    <div class="eye right"></div>
+                </div>
+                <div class="mouth"></div>
+            </div>
+            <div class="body">
+                <div class="hoodie"></div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

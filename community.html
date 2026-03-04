@@ -4,21 +4,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>HTML 커뮤니티</title>
     <link rel="stylesheet" href="community.css">
+
+    <script src="./phi/jquery-3.7.1.js"></script>
+    <script src="./phi/js/dd.api.v1.js" defer></script>
     <script src="community.js"></script>
 </head>
 
 <body>
-    <div id="">상단 메뉴 자리</div>
-    <hr>
-    <div id="wrap-main">
-        <div id="buttons">
-            <button id="notice">공지사항</button>
-            <button id="main_list">전체글</button>
-            <button id="write">글쓰기</button>
+    <div class="top">
+        <div class="left">
+            <button type="button" class="topBtn" id="btn-main">메인 페이지</button>
         </div>
-        <hr>
+
+        <div class="right">
+            <div class="beforeLogin">
+                <button type="button" class="topBtn" id="btn-login">로그인</button>
+                <button type="button" class="topBtn" id="btn-join">회원가입</button>
+            </div>
+            <div class="afterLogin">
+                <button type="button" class="topBtn" id="btn-logout">로그아웃</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- <hr> -->
+
+    <!-- <div class="ad">
+        
+    </div> -->
+
+
+    <div id="wrap-main">
+
+        <div class="search">
+            <table id="search-table">
+                <tr>
+                    <td id="search-table-svg">
+                        <svg width="15" height="15" viewBox="0 0 69 71" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="30.1667" cy="30.1667" r="26.6667" stroke="#aaa" stroke-width="7"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M48.5 50.0265L65.1667 66.6934" stroke="#aaa" stroke-width="7"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </td>
+                    <td id="search-table-input">
+                        <input type="text" id="search-input" placeholder="제목 혹은 내용으로 검색하기">
+                    </td>
+                </tr>
+            </table>
+            <button class="mainBtn" id="search-btn">검색</button>
+        </div>
+
+
+        <div id="buttons">
+            <div>
+                <button class="mainBtn" id="notice">공지사항</button>
+                <button class="mainBtn" id="main_list">전체글</button>
+            </div>
+            <button class="mainBtn" id="write">글쓰기</button>
+        </div>
+
+
         <table id="table">
             <thead>
                 <th>번호</th>
@@ -28,16 +76,24 @@
                 <th>조회</th>
                 <th>추천</th>
             </thead>
-            <tbody>
-                
+            <tbody id="content">
+                <!-- 테이블 붙이기 -->
             </tbody>
         </table>
     </div>
 
+    <!-- 번호 / 제목 / 글쓴이 / 작성일 / 조회 / 추천 수
+    <tr>
+        <td>postId</td>
+        <td>title</td>
+        <td>authorId</td>
+        <td>createdAt</td>
+        <td>viewCount</td>
+        <td>...</td>
+    </tr> -->
 
 
-
-   <!-- 참고용 -->
+    <!-- 참고용 -->
     <!-- <table id="board6">
         <tr>
             <td>
@@ -54,6 +110,17 @@
             </td>
         </tr>
     </table> -->
+
+    <div class="bottom">
+        <span class="page">
+            <!-- <span>1</span> -->
+        </span>
+    </div>
+
+    <div class="footer">
+
+    </div>
+
 </body>
 
 </html>
