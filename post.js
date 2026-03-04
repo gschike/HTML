@@ -12,6 +12,7 @@ function init() {
 }
 
 function bind() {
+
     let isLogin = localStorage.getItem("loginPossible");
 
     if (isLogin == "true") {
@@ -78,30 +79,67 @@ function bind() {
         afterLogin.style.display = "none";
     }
 
+    // 추천 / 비추천
+    
+    
+    const like = document.querySelector("#like");
+    const unlike = document.querySelector("#unlike");
+    let likeCount = 1;
+    let unlikeCount = 1;
 
+    like.onclick = () => {
+        // 버튼처럼 만들기 위해 드래그 더블클릭 제어한 것
+        like.onselectstart = function () {
+            return false;
+        }
+        like, addEventListener('dblclick', function () {
+            return false;
+        })
+        // 카운트
+        document.querySelector("#like>span").textContent = likeCount;
+        // 상단 추천수 같이쓰기ㅎ
+        document.querySelector("#postInfo-right-likes>span").textContent = likeCount; 
+        likeCount++;
+    }
+    unlike.onclick = () => {
+        unlike.onselectstart = function () {
+            return false;
+        }
+        unlike, addEventListener('dblclick', function () {
+            return false;
+        })
+        document.querySelector("#unlike>span").textContent = unlikeCount;
+        unlikeCount++;
+    }
 
     ///////////////////////////////////////////////////////////
     // 댓글
-    let count = 0
+    let count = 1
     const inputCmtarea = document.querySelector('.inputCmt')
     const mainInput = createInputComment()
+
     inputCmtarea.append(mainInput.cmt)
 
     mainInput.add_txt.addEventListener('click', function () {
         //isLogin 정보 가져오기
-        let isLogin = localStorage.getItem("loginPossible");
+        // let isLogin = localStorage.getItem("loginPossible");
 
-        console.log(isLogin);
+        // console.log(isLogin);
 
-        if (isLogin == "true") {
-            const val = mainInput.txtarea.value.trim()
-            if (!val) return
-            createRow(document.querySelector('.cmt_Space'), val)
-            mainInput.txtarea.value = ""
-        } else {
-            alert("댓글을 입력하려면 로그인 해주세요.")
-        }
+        // if (isLogin == "true") {
+        //     const val = mainInput.txtarea.value.trim()
+        //     if (!val) return
+        //     createRow(document.querySelector('.cmt_Space'), val)
+        //     mainInput.txtarea.value = ""
+        // } else {
+        //     alert("댓글을 입력하려면 로그인 해주세요.")
+        // }
+        //!!!!!!!!
+        const val = mainInput.txtarea.value.trim()
+        createRow(document.querySelector('.cmt_Space'), val)
+        mainInput.txtarea.value = ""
 
+        // 댓글 수 세기
     })
 
     function getFormattedDate() {
@@ -129,14 +167,15 @@ function bind() {
         // 왼쪽 묶음
         const span_left = document.createElement('span');
         // <닉네임>
-        const nickname = document.createElement('em');
-        nickname.textContent = loginUser.userId;
+        // const nickname = document.createElement('em');
+        // nickname.textContent = loginUser.userId;
         // <댓글 번호>
         const count_CommentNum = document.createElement('span');
         count_CommentNum.textContent = "(댓글 번호: " + count + ")";
         // 왼쪽 묶음 조립
-        span_left.append(nickname, count_CommentNum)
 
+        span_left.append(count_CommentNum)
+        //nickname,
 
         // 중간 묶음
         const div_middle = document.createElement('div');
@@ -148,59 +187,81 @@ function bind() {
 
 
         // 오른쪽 묶음
-        const span_right = document.createElement('span');
-        span_right.className = "span_right";
+        const span_right = document.createElement('span')
+        span_right.className = "span_right"
         // <날짜>
-        const timestamp = document.createElement('span');
-        timestamp.textContent = getFormattedDate();
+        const timestamp = document.createElement('span')
+        timestamp.textContent = getFormattedDate()
+        // <수정>
+        const edit = document.createElement('div')
+        edit.className = "edit"
+        const edit_text = document.createElement('span')
+        edit_text.textContent = '수정'
+        edit.append(edit_text)
         // <삭제 버튼>
-        const dlt_cmt = document.createElement('button');
-        dlt_cmt.textContent = 'x';
+        const dlt_cmt = document.createElement('button')
+        dlt_cmt.textContent = 'x'
         // 오른쪽 묶음 조립
-        span_right.append(timestamp, dlt_cmt)
+        span_right.append(timestamp, edit, dlt_cmt)
 
         // [삭제 버튼 이벤트]
         dlt_cmt.addEventListener('click', function (e) {
-            e.stopPropagation(); // 삭제 버튼 클릭 시 답글창이 열리지 않게
+            e.stopPropagation() // 삭제 버튼 클릭 시 답글창이 열리지 않게
             if (confirm("정말 삭제하시겠습니까?")) {
-                row.remove();
+                row.remove()
             }
-        });
+        })
+        // [수정 버튼 이벤트]
+        edit.onclick = (e) => {
+            e.stopPropagation()
+            if (row.querySelector('.cmt')) return
+            const Ptxt = div_middle.querySelector('p')
+
+            const editInput = createInputComment()
+            editInput.txtarea.value = Ptxt.textContent
+            row.append(editInput.cmt)
+
+            editInput.add_txt.onclick = () => {
+                Ptxt.textContent = editInput.txtarea.value
+                editInput.cmt.remove()
+            }
+        }
 
         // 조립
         row.append(span_left, div_middle, span_right);
 
         // [중요] 답글 토글 이벤트 (무한 대댓글용)
         row.addEventListener('click', function (e) {
+
             e.stopPropagation();
-            if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON') return;
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON' || e.target.tagName === 'SPAN') return;
 
             // 다른 창 끄기 로직
             document.querySelectorAll('.cmt_Space .cmt').forEach(el => {
-                if (el.parentElement !== this) el.remove();
-            });
-
-            const existingInput = this.querySelector(':scope > .cmt');
+                if (el.parentElement !== this) el.remove()
+            })
+            const existingInput = this.querySelector(':scope > .cmt')
             if (existingInput) {
-                existingInput.remove();
+                existingInput.remove()
             } else {
-                const subInput = createInputComment(); // 위에서 만드신 공장 함수 호출
-                this.append(subInput.cmt);
+                const subInput = createInputComment() // 위에서 만드신 공장 함수 호출
+                this.append(subInput.cmt)
 
                 subInput.add_txt.onclick = (event) => {
-                    event.stopPropagation();
-                    const val = subInput.txtarea.value.trim();
+                    event.stopPropagation()
+                    const val = subInput.txtarea.value.trim()
                     if (val) {
-                        // ⭐ 대댓글을 달 때 자기 자신(createRow)을 다시 호출 (재귀)
-                        createRow(row, val);
-                        subInput.cmt.remove();
+                        createRow(row, val)
+                        subInput.cmt.remove()
                     }
-                };
+                }
             }
-        });
+        })
         count++
-        parent.append(row);
+        parent.append(row)
     }
+
+
 
 
 
@@ -223,21 +284,26 @@ function renderPost(postRes) {
     document.querySelector("#postInfo-left-userName").innerText = postRes.item.authorId;
     document.querySelector("#postInfo-left-postingTime").innerText = postRes.item.createdAt.split("T")[0];
     document.querySelector(".post-content").innerText = postRes.item.content;
-    document.querySelector("#postInfo-right-views-cnt").innerText = postRes.item.viewCount;
+    document.querySelector("#postInfo-right-views").innerText = postRes.item.viewCount;
 }
 
 function createInputComment() {
     const cmt = document.createElement('div')
     cmt.className = 'cmt'
 
+    const input_wrap = document.createElement('div')
+    input_wrap.className = 'input_wrap'
+
     const txtarea = document.createElement('input')
     txtarea.type = 'text'
     txtarea.className = 'cmt_input'
+    txtarea.placeholder = "댓글을 입력하세요...";
 
     const add_txt = document.createElement('button')
     add_txt.className = 'add_txt'
     add_txt.textContent = '등록'
 
-    cmt.append(txtarea, add_txt)
+    input_wrap.append(txtarea, add_txt)
+    cmt.append(input_wrap)
     return { cmt, txtarea, add_txt }
 }

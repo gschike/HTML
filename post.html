@@ -38,16 +38,15 @@
 
             <div class="postInfo">
                 <div class="postInfo-left">
-                    <div id="postInfo-left-userName">작성자</div>
-                    <div id="postInfo-left-postingTime">작성 시간</div>
+                    <div id="postInfo-left-userName">작성자: </div>
+                    <div id="postInfo-left-postingTime">작성 시간: </div>
                 </div>
 
                 <div class="postInfo-right">
-                    <div id="postInfo-right-views">조회 <sapn id="postInfo-right-views-cnt">0</sapn>
-                    </div>
-                    <div id="postInfo-right-likes">추천 0</div>
+                    <div id="postInfo-right-views">조회 <span>0</span></div>
+                    <div id="postInfo-right-likes">추천 <span>0</span></div>
                     <div id="postInfo-right-comment">
-                        <button type="button" id="btn-comment">댓글 0</button>
+                        <button type="button" id="btn-comment">댓글 <span>0</span></button>
                     </div>
                     <div id="postInfo-right-copy">
                         <button type="button" id="btn-URL">URL 복사</button>
@@ -61,12 +60,18 @@
         <div class="post-content">
             내용내용내용내용내용
         </div>
+        <div>
+            <div class="wrap">
+                <div id="recommend-wrap">
+                    <div id="like" class="recommend">추천 ! <span>0</span></div>
+                    <div id="unlike" class="recommend">비추천 ! <span>0</span></div>
+                </div>
+            </div>
+        </div>
 
         <hr class="line post-comment-line">
+        <div class="remote"></div>
 
-        <div class="remote">
-
-        </div>
     </div>
 
     <!-- 댓글 컨테이너 -->

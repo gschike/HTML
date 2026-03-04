@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        :root {
+            /* 이미지에서 본 선명한 보라색으로 조정 */
+            --main-purple: #7b2dd2;
+            --sub-purple: #f4eeff;
+            --border-color: #dcdcdc;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            font-family: 'Pretendard', sans-serif;
+        }
+
+        table {
+            width: 100%;
+            max-width: 1000px;
+            background: #fff;
+            /* 테이블 전체 테두리를 메인 보라색으로 */
+            border: 2px solid var(--main-purple);
+            border-radius: 12px;
+            border-collapse: collapse;
+            table-layout: fixed;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(123, 45, 210, 0.1);
+        }
+
+        th,
+        td {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            box-sizing: border-box;
+        }
+
+        /* 상단 제목 라인 */
+        thead tr:first-child {
+            display: flex;
+            align-items: stretch;
+        }
+
+        thead tr:first-child th:first-child {
+            width: 120px;
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        thead tr:first-child th:last-child {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        input[type="text"],
+        select {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            outline-color: var(--main-purple);
+        }
+
+        input[type="text"] {
+            flex: 1;
+            height: 32px;
+            padding: 0 10px;
+        }
+
+        /* 옵션 라인 정렬 */
+        thead tr:nth-child(2) td {
+            background-color: #fafafa;
+            width: 100%;
+            display: block;
+        }
+
+        .option-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 15px;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* 작성자 강조 */
+        #nickname {
+            color: var(--main-purple);
+            font-weight: bold;
+        }
+
+        /* 본문 영역 */
+        tbody tr,
+        tbody td {
+            display: block;
+            width: 100%;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 500px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 15px;
+            line-height: 1.6;
+            resize: vertical;
+            display: block;
+            outline-color: var(--main-purple);
+        }
+
+        /* 버튼 공통 스타일 (보라색 테두리 버전) */
+        button {
+            background-color: #fff;
+            color: var(--main-purple);
+            border: 1px solid var(--main-purple);
+            padding: 8px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background-color: var(--sub-purple);
+        }
+
+        /* [중요] 하단 작성완료 버튼 (배경색이 꽉 찬 보라색) */
+        tr:last-child td {
+            text-align: center;
+            padding: 40px;
+            border: none;
+        }
+
+        tr:last-child button {
+            width: 220px;
+            height: 52px;
+            font-size: 18px;
+            background-color: var(--main-purple);
+            /* 배경색 적용 */
+            color: #ffffff;
+            /* 글자색 흰색 */
+            border: none;
+            box-shadow: 0 4px 15px rgba(123, 45, 210, 0.3);
+        }
+
+        tr:last-child button:hover {
+            background-color: #6221a8;
+            transform: translateY(-2px);
+        }
+
+        form{
+            display: flex;
+        }
+
+        /* 업로드 버튼 스타일 보정 */
+        form button {
+
+            padding: 6px 20px;
+            font-size: 13px;
+        }
+
+        input[type="radio"] {
+            accent-color: var(--main-purple);
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <!-- 제목 / 옵션 -->
+        <thead>
+
+            <tr>
+                <th>
+                    <select name="post_Type" id="">
+                        <option name="post_Type" value="1"> 전체글 </option>
+                        <option name="post_Type" value="2"> 공지사항 </option>
+                    </select>
+                </th>
+                <th> 제목: <input type="text"> </th>
+            </tr>
+
+            <tr>
+                <td colspan="2">
+                    <div class="option-container">
+                        <div class="radio-group">
+                            <label><input type="radio" name="text_Type" checked> Text</label>
+                            <label><input type="radio" name="text_Type"> html</label>
+                        </div>
+                        <div class="nickname-area">
+                            작성자 : <span id="nickname">관리자</span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+        </thead>
+
+        <!-- 본문 / 이미지 업로더 -->
+        <tbody>
+            <tr>
+                <td id="txtarea">
+                    <textarea name="post_Val" id=""></textarea>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <form action="/upload" method="post" enctype="multipart/form-data">
+                        <input type="file" name="image" accept="image/*">
+                        <button type="submit">업로드</button>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button>작성완료</button>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</body>
+
+</html>
