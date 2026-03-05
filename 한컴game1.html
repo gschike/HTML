@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        .game {
+            width: 450px;
+            margin: 30px auto;
+        }
+
+        .arena {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            border: 2px solid #333;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .word{
+            position : absolute;
+            font-size : 24px; 
+            color: red;
+            user-select: none;
+        }
+
+    </style>
+
+
+    <script>
+
+         window.onload = function () {
+            bind()
+        }
+
+        function bind() {
+            const arena = document.querySelector('.arena');
+            const input = document.getElementById('typingInput');
+            const words = ["\<p\>","\<h1\>","\<div\>","\<ul\>","\<li\>"];
+            
+
+            function creatword(){
+                const word = document.createElement('div');
+                word.className = "word";
+                word.innerText = words[Math.floor(Math.random() * words.length)];
+                word.style.left = Math.random()* (arena.clientWidth - 50) + "px";
+                word.style.top = "0px";
+                arena.appendChild(word);
+            }
+
+            function movewords(){
+                document.querySelectorAll(".word").forEach(word => {
+                    let top = parseFloat(word.style.top);
+                    top += 5;
+                    word.style.top = top + "px";
+
+                    if(top + 20 >= arena.clientHeight){
+                        word.remove();
+                    } 
+                });
+            }
+
+            input.addEventListener('input', ()=>{
+                const val = input.value.trim();
+                document.querySelectorAll(".word").forEach(word => {
+                    if(word.innerText===val){
+                        word.remove();
+                        input.value = "";
+                        
+                    }
+                });
+            });
+
+            setInterval(movewords,50); //단어 이동
+            setInterval(creatword,1500); // 단어 생성
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+    <div class="game">
+        <div class="arena"></div>
+        <input type="text" id="typingInput" placeholder="타이핑하세요">
+       <!-- <div class="score"></div> -->
+    </div>
+
+</body>
+
+</html>

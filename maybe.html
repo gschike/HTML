@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CSS Master Challenge</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #f5f5f5;
+            margin: 200px 0 60px 0;
+        }
+
+        .game-wrapper {
+            width: 1100px;
+            margin: 20px auto;
+        }
+
+        .stage {
+            display: none;
+            flex-direction: row;
+            height: 500px;
+            border: 2px solid rgb(123, 45, 210);
+            margin-bottom: 20px;
+        }
+
+        .stage.active {
+            display: flex;
+        }
+
+        .left-panel {
+            flex: 1;
+            padding: 20px;
+            border-right: 2px solid rgb(123, 45, 210);
+            overflow-y: auto;
+        }
+
+        .right-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .arena {
+            flex: 1;
+            position: relative;
+            border: 2px solid rgb(123, 45, 210);
+            margin-bottom: 10px;
+            overflow: hidden;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .check-btn {
+            background-color: rgb(123, 45, 210);
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .check-btn:hover {
+            background: rgb(123, 45, 210);
+        }
+
+        .skip-btn {
+            background: #e9e7e7;
+            color: rgb(123, 45, 210);
+            border-radius: 5px;
+            margin-top: 10px;
+            border: 1px solid rgb(123, 45, 210);
+            width: 200px;
+
+        }
+
+        .skip-btn:hover {
+            background: rgb(123, 45, 210);
+            color: white;
+        }
+
+        .result {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .ad-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            background: rgb(79, 78, 80);
+            text-align: center;
+            line-height: 60px;
+            color: white;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+        }
+
+        /* Stage Styles */
+        .stage1 .goal {
+            position: absolute;
+            top: 150px;
+            left: 250px;
+            width: 80px;
+            height: 80px;
+            background: #32cd32;
+        }
+
+        .stage1 .target {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: #1e90ff;
+        }
+
+        .stage2 .goal {
+            position: absolute;
+            top: 80px;
+            left: 120px;
+            width: 100px;
+            height: 100px;
+            background: #32cd32;
+            transform: rotate(30deg) scale(0.8);
+        }
+
+        .stage2 .target {
+            position: absolute;
+            top: 80px;
+            left: 120px;
+            width: 100px;
+            height: 100px;
+            background: #1e90ff;
+        }
+
+        .stage3 .trap {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+
+        .stage3 .target {
+            position: absolute;
+            top: 50px;
+            left: 200px;
+            width: 100px;
+            height: 100px;
+            background: #1e90ff;
+        }
+
+        .stage4 .box1 {
+            position: absolute;
+            top: 40px;
+            left: 60px;
+            width: 120px;
+            height: 120px;
+            background: red;
+            z-index: 1;
+        }
+
+        .stage4 .box2 {
+            position: absolute;
+            top: 80px;
+            left: 100px;
+            width: 120px;
+            height: 120px;
+            background: #1e90ff;
+        }
+
+        .stage5 .goal,
+        .stage5 .box {
+            width: 100px;
+            height: 100px;
+            background: #32cd32;
+        }
+
+        .stage5 .target {
+            width: 100px;
+            height: 100px;
+            background: #1e90ff;
+        }
+
+        .stage6 .goal {
+            width: 100px;
+            height: 100px;
+            background: #fff;
+            border: 4px solid #32cd32;
+            border-radius: 15px;
+        }
+
+        .stage6 .target {
+            width: 100px;
+            height: 100px;
+            background: #fff;
+            border: 4px solid #000;
+            border-radius: 0;
+        }
+
+        .stage7 .goal {
+            width: 120px;
+            height: 120px;
+            background: #32cd32;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .stage7 .target {
+            width: 120px;
+            height: 120px;
+            background: #1e90ff;
+            box-shadow: none;
+        }
+
+        .stage8 .goal {
+            font-size: 24px;
+            color: #32cd32;
+            font-family: Arial, sans-serif;
+        }
+
+        .stage8 .target {
+            font-size: 16px;
+            color: #1e90ff;
+            font-family: sans-serif;
+        }
+
+        .stage9 .arena {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stage9 .box {
+            width: 60px;
+            height: 60px;
+            background: #32cd32;
+        }
+
+        .stage10 .arena {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 10px;
+        }
+
+        .stage10 .box {
+            width: 100%;
+            height: 100px;
+            background: #32cd32;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="game-wrapper">
+        <!-- Stage1 -->
+        <div class="stage stage1 active">
+            <div class="left-panel">
+                <h2>Stage 1: Position Master</h2>
+                <p>초록색 목표 박스와 정확히 같은 위치에 파란색 박스를 이동시키세요.</p>
+                <ul>
+                    <li>.target을 이동해야 합니다.</li>
+                    <li>부모 요소를 기준으로 좌표를 설정하세요.</li>
+                    <li>위치가 정확히 일치하면 성공입니다.</li>
+                </ul>
+                <button class="skip-btn">Skip Stage ⪢</button>
+                <p class="message"></p>
+            </div>
+            <div class="right-panel">
+                <div class="arena">
+                    <div class="goal"></div>
+                    <div class="target"></div>
+                </div>
+                <textarea></textarea>
+                <button class="check-btn">정답 확인</button>
+                <div class="result"></div>
+            </div>
+        </div>
+
+        <!-- Stage2 -->
+        <div class="stage stage2">
+            <div class="left-panel">
+                <h2>Stage 2: Transform Lab</h2>
+                <p>초록색 박스는 회전 및 크기 변형이 적용되어 있습니다. 파란색 박스를 동일한 모양이 되도록 변형하세요.</p>
+                <ul>
+                    <li>.target에 transform을 적용하세요.</li>
+                    <li>회전 각도와 크기를 모두 맞춰야 합니다.</li>
+                    <li>transform 값이 정확히 일치해야 성공합니다.</li>
+                </ul><button class="skip-btn">Skip Stage</button>
+                <p class="message"></p>
+            </div>
+            <div class="right-panel">
+                <div class="arena">
+                    <div class="goal"></div>
+                    <div class="target"></div>
+                </div><textarea></textarea><button class="check-btn">정답 확인</button>
+                <div class="result"></div>
+            </div>
+        </div>
+
+        <!-- Stage3 -->
+        <div class="stage stage3">
+            <div class="left-panel">
+                <h2>Stage 3: Opacity Escape</h2>
+                <p>빨간색 함정 박스를 보이지 않게 만드세요.</p>
+                <ul>
+                    <li>.trap을 조작해야 합니다.</li>
+                    <li>화면에서 완전히 사라지도록 설정하세요.</li>
+                    <li>투명도 값이 0이면 성공입니다.</li>
+                </ul>
+                </ul><button class="skip-btn">Skip Stage</button>
+                <p class="message"></p>
+            </div>
+            <div class="right-panel">
+                <div class="arena">
+                    <div class="trap"></div>
+                    <div class="target"></div>
+                </div><textarea></textarea><button class="check-btn">정답 확인</button>
+                <div class="result"></div>
+            </div>
+        </div>
+
+        <!-- Stage4 -->
+        <div class="stage stage4">
+            <div class="left-panel">
+                <h2>Stage 4: Z-index Battle</h2>
+                <p>파란 박스가 빨간 박스 위에 보이도록 만드세요.</p>
+                <ul>
+                    <li>.box2를 위로 올려야 합니다.</li>
+                    <li>겹침 순서를 조정하세요.</li>
+                    <li>파란 박스가 최상단에 위치하면 성공입니다.</li>
+                </ul>
+                <button class="skip-btn">Skip Stage</button>
+                <p class="message"></p>
+            </div>
+            <div class="right-panel">
+                <div class="arena">
+                    <div class="box1"></div>
+                    <div class="box2"></div>
+                </div><textarea></textarea><button class="check-btn">정답 확인</button>
+                <div class="result"></div>
+            </div>
+        </div>
+
+        <!-- Stage5 -->
+        <div class="stage stage5">
+            <div class="left-panel">
+                <h2>Stage 5 - Color Changer</h2>
+                <p>.target의 배경색을 초록색(#32cd32)으로 변경하세요.</p>
+                <ul>
+                    <li>background-color</li>
+                    <li>Hex / RGB / HSL 색상 표현</li>
+                    <li>색상 코드 읽기</li>
+                </ul>
+                <button class="skip-btn">Skip Stage</button>
+                <p class="message"></p>
+            </div>
+            <div class="right-panel">
+                <div class="arena">
+                    <div class="goal"></div>
+                    <div class="target"></div>
+                </div><textarea></textarea><button class="check-btn">정답 확인</button>
+                <div class="result"></div>
+            </div>
+        </div>
+
+        <!-- Stage6 -->
+        <div class="stage stage6">
+            <div class="left-panel">
+                <h2>Stage 6 - Border Artist</h2>
+                <p>.target에 초록색 border + 둥근 모서리 적용</p>
+                <ul>
+                    <li>border</li>
+                    <li>border-width</li>
+                    <li>border-style</li>
+                    <li>border-color</li>
+                    <li>border-radius</li>
+                </ul>
+                <button class="skip-btn">Skip Stage</button>
+                <p class="message"></p>
+            </div>
+            <div class="right-panel">
+                <div class="arena">
+                    <div class="goal"></div>
+                    <div class="target"></div>
+                </div><textarea></textarea><button class="check-btn">정답 확인</button>
+                <div class="result"></div>
+            </div>
+        </div>
+
+        <!-- Stage7 -->
+        <div class="stage stage7">
+            <div class="left-panel">
+                <h2>Stage 7-Shadow Play</h2>
+                <p>.target에 box-shadow 적용</p>
+                <ul>
+                    <li>box-shadow</li>
+                    <li>x-offset</li>
+                    <li>y-offset</li>
+                    <li>blur</li>
+                    <li>rgba 색상</li>
+                </ul>
+                <button class="skip-btn">Skip Stage</button>
+                <p class="message"></p>
+            </div>
+            <div class="right-panel">
+                <div class="arena">
+                    <div class="goal"></div>
+                    <div class="target"></div>
+                </div><textarea></textarea><button class="check-btn">정답 확인</button>
+                <div class="result"></div>
+            </div>
+        </div>
+
+        <!-- Stage8 -->
+        <div class="stage stage8">
+            <div class="left-panel">
+                <h2>Stage 8 - Font Fun</h2>
+                <p>글자 크기 24px + 초록색</p>
+                <ul>
+                    <li>font-family</li>
+                    <li>font-size</li>
+                    <li>color</li>
+                </ul>
+                <button class="skip-btn">Skip Stage</button>
+                <p class="message"></p>
+            </div>
+            <div class="right-panel">
+                <div class="arena">
+                    <div class="goal">TEXT</div>
+                    <div class="target">TEXT</div>
+                </div><textarea></textarea><button class="check-btn">정답 확인</button>
+                <div class="result"></div>
+            </div>
+        </div>
+
+        <!-- Stage9 -->
+        <div class="stage stage9">
+            <div class="left-panel">
+                <h2>Stage 9 - Flex Master</h2>
+                <p>.arena를 flex 중앙정렬</p>
+                <ul>
+                    <li>display: flex</li>
+                    <li>justify-content</li>
+                    <li>align-items</li>
+                </ul>
+                <button class="skip-btn">Skip Stage</button>
+                <p class="message"></p>
+            </div>
+            <div class="right-panel">
+                <div class="arena">
+                    <div class="box"></div>
+                </div><textarea></textarea><button class="check-btn">정답 확인</button>
+                <div class="result"></div>
+            </div>
+        </div>
+
+        <!-- Stage10 -->
+        <div class="stage stage10">
+            <div class="left-panel">
+                <h2>Stage 10 - Grid Genius</h2>
+                <p>.arena를 2x2 grid로 배치</p>
+                <ul>
+                    <li>display: grid</li>
+                    <li>grid-template-columns</li>
+                    <li>grid-gap</li>
+                </ul>
+                <button class="skip-btn">Skip Stage</button>
+                <p class="message"></p>
+            </div>
+            <div class="right-panel">
+                <div class="arena">
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                </div><textarea></textarea><button class="check-btn">정답 확인</button>
+                <div class="result"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="ad-banner">광고 영역</div>
+
+    <script>
+       window.onload = function () {
+
+const stages = document.querySelectorAll(".stage");
+let currentStage = 0;
+
+/* 사용자 CSS 적용용 style */
+const userStyle = document.createElement("style");
+document.head.appendChild(userStyle);
+
+
+/* ============================= */
+/* 스테이지 표시 */
+/* ============================= */
+
+function showStage(){
+
+    stages.forEach((stage,i)=>{
+        stage.classList.toggle("active", i === currentStage);
+    });
+
+    const textarea = stages[currentStage].querySelector("textarea");
+    const result = stages[currentStage].querySelector(".result");
+
+    result.innerText = "";
+
+    /* 스테이지별 기본 코드 */
+
+    if(currentStage === 2){
+        textarea.value = `.trap {\n\n}`;
+    }
+    else if(currentStage === 3){
+        textarea.value = `.box2 {\n\n}`;
+    }
+    else if(currentStage === 8){
+        textarea.value = `.arena {\n\n}`;
+    }
+    else if(currentStage === 9){
+        textarea.value = `.arena {\n\n}`;
+    }
+    else{
+        textarea.value = `.target {\n\n}`;
+    }
+
+}
+
+
+/* ============================= */
+/* 정답 검사 */
+/* ============================= */
+
+function checkAnswer(){
+
+    const stage = stages[currentStage];
+    const textarea = stage.querySelector("textarea");
+
+    /* CSS 적용 */
+    userStyle.innerHTML = textarea.value;
+
+    /* 브라우저 렌더링 기다림 */
+    requestAnimationFrame(()=>{
+
+        let success = false;
+
+        switch(currentStage + 1){
+
+            case 1:
+            case 2:
+                const t = stage.querySelector(".target").getBoundingClientRect();
+                const g = stage.querySelector(".goal").getBoundingClientRect();
+
+                success =
+                    Math.abs(t.top - g.top) < 5 &&
+                    Math.abs(t.left - g.left) < 5;
+            break;
+
+
+            case 3:
+                const trap = getComputedStyle(stage.querySelector(".trap"));
+
+                success =
+                    parseFloat(trap.opacity) === 0 ||
+                    trap.display === "none" ||
+                    trap.visibility === "hidden";
+            break;
+
+
+            case 4:
+                const z1 = parseInt(getComputedStyle(stage.querySelector(".box1")).zIndex) || 0;
+                const z2 = parseInt(getComputedStyle(stage.querySelector(".box2")).zIndex) || 0;
+
+                success = z2 > z1;
+            break;
+
+
+            case 5:
+                const bg = getComputedStyle(stage.querySelector(".target")).backgroundColor;
+
+                success = bg.includes("50, 205, 50");
+            break;
+
+
+            case 6:
+                const s6 = getComputedStyle(stage.querySelector(".target"));
+
+                success =
+                    s6.borderStyle !== "none" &&
+                    parseFloat(s6.borderRadius) > 0;
+            break;
+
+
+            case 7:
+                const s7 = getComputedStyle(stage.querySelector(".target"));
+
+                success = s7.boxShadow !== "none";
+            break;
+
+
+            case 8:
+                const s8 = getComputedStyle(stage.querySelector(".target"));
+
+                success =
+                    s8.fontSize === "24px" &&
+                    s8.color.includes("50, 205, 50");
+            break;
+
+
+            case 9:
+                const s9 = getComputedStyle(stage.querySelector(".arena"));
+
+                success =
+                    s9.display === "flex" &&
+                    s9.justifyContent === "center" &&
+                    s9.alignItems === "center";
+            break;
+
+
+            case 10:
+                const s10 = getComputedStyle(stage.querySelector(".arena"));
+
+                success =
+                    s10.display === "grid" &&
+                    s10.gridTemplateColumns.split(" ").length === 2;
+            break;
+
+        }
+
+        const result = stage.querySelector(".result");
+
+        if(success){
+
+            result.innerText = "🎉 성공!";
+
+            if(currentStage < stages.length - 1){
+
+                currentStage++;
+                setTimeout(showStage, 500);
+
+            }else{
+
+                alert("🏆 모든 스테이지 완료!");
+
+            }
+
+        }
+        else{
+
+            result.innerText = "다시 시도!";
+
+        }
+
+    });
+
+}
+
+
+/* ============================= */
+/* 버튼 이벤트 */
+/* ============================= */
+
+stages.forEach(stage=>{
+
+    stage.querySelector(".check-btn").addEventListener("click",checkAnswer);
+
+    stage.querySelector(".skip-btn").addEventListener("click",()=>{
+
+        if(currentStage < stages.length - 1){
+
+            currentStage++;
+            showStage();
+
+        }
+
+    });
+
+});
+
+
+showStage();
+
+};
+    </script>
+</body>
+
+</html>
