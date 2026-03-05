@@ -5,80 +5,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stage3</title>
+
     <link rel="stylesheet" href="Stage_jsl.css">
-    <style> 
+    <style>
+        #hinta {
+            position: absolute;
+            bottom: 10vh;
+            left: 30vw;
+        }
+
         #hintb {
             position: absolute;
-            right: 15vw;
+            left: 50vw;
             top: 20vh;
         }
 
         #hintc {
             position: absolute;
-            right: 20vw;
+            left: 70vw;
             top: 80vh;
         }
     </style>
+
+    <script src="Stage_jsl.js"></script>
+    <script src="https://unpkg.com/prettier@3.2.5/standalone.js"></script>
+    <script src="https://unpkg.com/prettier@3.2.5/plugins/html.js"></script>
+
     <script>
         window.onload = () => {
 
-            //game화면 크기설정
-            document.querySelector('#gameArea').clientHeight = window.innerHeight
-            document.querySelector('#gameArea').clientWidth = window.innerWidth
-            //우클릭, 드래그 막기
-            document.querySelector('#gameArea').onselectstart = () => false
-            document.querySelector('#gameArea').oncontextmenu = () => false
-            //출력창에서만 드래그 가능
-            document.querySelector('#output').addEventListener('selectstart', e => {
-                e.stopPropagation();
+            init()  
+
+            addEvent()  
+            document.querySelector('#reset').addEventListener('click', resetGame)      
+
+            //클리어 조건
+            //goal을 더블 클릭
+            document.querySelector('.goal').addEventListener('dblclick', evt => {
+                alert('클리어')    //클리어 메시지 출력                
             })
 
-            //키보드 입력시 이벤트
-            //object움직임           
-            document.addEventListener('keydown', objectMove)
-            //입력창에 입력            
-            document.addEventListener('keyup', consoleInput)
+            //timer
+            update()            
+        }
 
+        //기믹
+        function addEvent(){
             //기믹 생성
             //goal에 마우스 올리면 위치 랜덤하게 변경
             document.querySelector('.goal').addEventListener('mouseover', goalJump)
 
             //goal을 클릭했을때 z인덱스를 사용하여 화면 뒤로 보낼예정
             document.querySelector('.goal').addEventListener('click', goalZ)
-
-            //클리어 조건
-            //goal을 더블 클릭
-            document.querySelector('.goal').addEventListener('dblclick', evt => {
-                alert('클리어')    //클리어 메시지 출력
-                window.location.href = "stage2_jsl.html" // 다음 스테이지로 전환
-            })
-        }
-
-        //기믹
-        //goal에 마우스 올리면 위치 랜덤하게 변경
-        function goalJump(evt) {
-            document.querySelector('.goal').style.position = 'absolute'
-            document.querySelector('.goal').style.top = Math.random() * (window.innerHeight - (document.querySelector('.goal').clientHeight)) + 'px'
-            document.querySelector('.goal').style.left = Math.random() * (window.innerWidth - (document.querySelector('.goal').clientWidth)) + 'px'
-        }
-
-        //goal을 클릭했을때 z인덱스를 사용하여 화면 뒤로 보낼예정
-        function goalZ() {
-            document.querySelector('.goal').style.position = "absolute"
-            document.querySelector('.goal').style.zIndex = -20
-        }
-
-        //마지막에 goal의 글씨를 줄임       
-        function goalSmall() {
-            document.querySelector('body').addEventListener('mouseover', evt => {
-                if (document.querySelector('.goal').style.zIndex >= 0) {
-                    document.querySelector('.goal').classList.add('small')
-                    goalJump()
-                    document.querySelector('body').addEventListener('dblclick', evt => {
-                        print('느려')
-                    })
-                }
-            })
         }
 
         //object 움직임        
@@ -94,13 +72,13 @@
             if (parseInt(obj.top) > (window.innerHeight - (document.querySelector('#object').clientHeight) - 20)) {
                 down = 0
             }
-            if (parseInt(obj.top) < 0.5 * (document.querySelector('#object').clientHeight)) {
+            if (parseInt(obj.top) < 100) {
                 up = 0
             }
             if (parseInt(obj.left) > (window.innerWidth - (document.querySelector('#object').clientWidth) - 20)) {
                 right = 0
             }
-            if (parseInt(obj.left) < 0.5 * (document.querySelector('#object').clientWidth) + 3) {
+            if (parseInt(obj.left) < 20) {
                 left = 0
             }
 
@@ -125,23 +103,23 @@
             const hintb = getComputedStyle(document.querySelector('#hintb'))
             revealhintb()
 
-            const hintb1 = getComputedStyle(document.querySelector('#hintb1'))
-            revealhintb1()
-
-            const hinte1 = getComputedStyle(document.querySelector('#hinte1'))
-            revealhinte1()
+            const hintc = getComputedStyle(document.querySelector('#hintc'))
+            revealhintc()
         }
 
         //입력창에 입력하고 엔터 치면 콘솔에서 실행 & 내용 지우기
         let count = 0
+
+        //출력할 힌트들
+        const hint0 = 'hint0: 방향키를 사용해서 보라색 원을 움직여 보세요'
+        const hint1 = 'hint1: 보라색 원에 object라는 id를 부여하세요'
+        const hint2 = 'hint2: 보라색 원을 움직여 찾을수 있는 힌트는 3개입니다'
+        const hint3 = "hint3: document.querySelector('.goal').??('mouseover', goalJump)"
+        const hint4 = "hint4: document.querySelector('.goal').???('??', goalZ)"
+
         function consoleInput(evt) {
             //사용자가 쓰기 편하게 짧은 키워드 만들어두기            
-            const style = document.querySelector('.goal').style
-            //출력할 힌트들
-            const hint1 = "hint1: document.querySelector('.goal').??('mouseover', goalJump)"
-            const hint2 = "hint2: document.querySelector('.goal').???('??', goalZ)"
-            const hint3 = 'hint3: 보라색 원을 움직여 찾을수 있는 힌트는 3개입니다'
-            const hint4 = 'hint4: '
+            const style = document.querySelector('.goal').style            
 
             if (evt.key === 'Enter') {
                 // 입력창 중간에 엔터 쳐도 입력되게 방어
@@ -172,6 +150,9 @@
                         }
                     }
                     //힌트+번호 또는 번호 입력하면 힌트 보여주기
+                    else if (input.trim().substr(0, 5) == 'hint0' || input.trim().substr(0, 3) == '힌트0' || input.trim() == 0) {
+                        print(hint0)
+                    }
                     else if (input.trim().substr(0, 5) == 'hint1' || input.trim().substr(0, 3) == '힌트1' || input.trim() == 1) {
                         print(hint1)
                     } else if (input.trim().substr(0, 5) == 'hint2' || input.trim().substr(0, 3) == '힌트2' || input.trim() == 2) {
@@ -182,14 +163,10 @@
                         print(hint4)
                     }
 
-                    //style.zIndex로 안 된다는 힌트를 줌
-                    else if (input.trim().substr(0, 12) == 'style.zIndex') {
-                        print('일어날까요?')
-                    }
-
-                    //직접 명령어로 js를 조작해 클릭 이벤트를 제거했다면 다음 기믹 실행
+                    //명령어로 js를 조작해 클릭 이벤트를 제거했다면 다음 기믹 실행
                     else if (input.split(',')[0] == "document.querySelector('.goal').removeEventListener('click'"
                         && input.split(',')[1].trim() == 'goalZ)') {
+                        console.log(eval(input))
                         goalSmall()
                     }
 
@@ -200,6 +177,7 @@
                     //transform을 사용하면 힌트5a찾을수 있게 함   
                     else if (input.trim().substr(0, 15) == 'style.transform') {
                         document.querySelector('#hinte1').style.zIndex = -2
+
                     } else {
                         //입력창에 입력한 명령어를 콘솔창에서 실행
                         console.log(eval(input))
@@ -213,79 +191,65 @@
             }
         }
 
-        //출력창
-        function print(msg) {
-            const output = document.querySelector('#output')
-            output.innerHTML = ''
-            output.innerHTML += msg
-            output.scrollTop = output.scrollHeight
-        }
-
-        //힌트1 오브젝트가 힌트 근처로 접근
-        function revealhinta() {
+        //hintc hinte가 공개 &오브젝트가 힌트 근처로 접근
+        function revealhintc() {
             const obj = getComputedStyle(document.querySelector('#object'))
-            if (parseInt(obj.left) >= hinta.offsetLeft - 20
-                && parseInt(obj.left) <= hinta.offsetLeft + 400
-                && parseInt(obj.top) <= hinta.offsetTop + 40
-                && parseInt(obj.top) >= hinta.offsetTop - 40) {
-                hinta.style.zIndex = 1
+            if (parseInt(obj.left) >= hintc.offsetLeft - 20
+                && parseInt(obj.left) <= hintc.offsetLeft + 400
+                && parseInt(obj.top) <= hintc.offsetTop + 40
+                && parseInt(obj.top) >= hintc.offsetTop - 40) {
+                hintc.style.zIndex = 0
             }
-        }
-
-        //힌트2 오브젝트가 힌트 근처로 접근
-        function revealhintb() {
-            const obj = getComputedStyle(document.querySelector('#object'))
-            if (parseInt(obj.left) >= 0.7 * window.innerWidth - 20
-                && parseInt(obj.left) <= 0.7 * window.innerWidth + 300
-                && parseInt(obj.top) <= 0.2 * window.innerHeight + 60
-                && parseInt(obj.top) >= 0.2 * window.innerHeight - 60) {
-                hintb.style.zIndex = 0
-            }
-        }
-
-        //힌트2a hintb가 공개 &오브젝트가 힌트 근처로 접근
-        function revealhintb1() {
-            const obj = getComputedStyle(document.querySelector('#object'))
-            if (hintb.style.zIndex >= 1) {
-                if (parseInt(obj.left) >= 0.7 * window.innerWidth - 20
-                    && parseInt(obj.left) <= 0.7 * window.innerWidth + 300
-                    && parseInt(obj.top) <= 0.8 * window.innerHeight + 60
-                    && parseInt(obj.top) >= 0.8 * window.innerHeight - 60) {
-                    hintb1.style.zIndex = 0
-                }
-            }
-        }
-
-        //hinte1 hinte가 공개 &오브젝트가 힌트 근처로 접근
-        function revealhinte1() {
-            const obj = getComputedStyle(document.querySelector('#object'))
-            if (hinte1.style.zIndex == -2) {
-                if (parseInt(obj.left) >= 0.3 * window.innerWidth - 20
-                    && parseInt(obj.left) <= 0.3 * window.innerWidth + 300
-                    && parseInt(obj.top) <= 0.1 * window.innerHeight + 60
-                    && parseInt(obj.top) >= 0.1 * window.innerHeight - 60) {
-                    hinte1.style.zIndex = 0
-                }
-            }
-        }
+        }        
     </script>
 </head>
 
 <body>
-    <div id="gameArea">
-        <div class="text">
-            <div class="title">FIND <span class="goal">ME</span></div>
-            <div class="des">사라진 나를 찾아주세요</div>
+    <div class="top">
+        <div class="left">
+            <button type="button" class="topBtn" id="btn-main">메인 페이지</button>
         </div>
-        <div id="object"></div>
-        <textarea id="input"></textarea>
+        <div class="right">
+            <div class="beforeLogin">
+                <button type="button" class="topBtn" id="btn-login">로그인</button>
+                <button type="button" class="topBtn" id="btn-join">회원가입</button>
+            </div>
+            <div class="afterLogin">
+                <button type="button" class="topBtn" id="btn-logout">로그아웃</button>
+            </div>
+        </div>
+    </div>
+    <div id="gameArea">
+        <div id="timer">00:00:00</div>
+
+        <div class="showHtml">
+            *참조
+            <pre id="html"></pre>
+        </div>
+
+        <div id="show">
+            <div class="text">
+                <div class="title">FIND
+                    <span class="goal"> ME </span>
+                </div>
+                <div class="des">사라진 나를 찾아주세요</div>
+            </div>
+            <div class="obj 보라색 원"></div>
+            <textarea id="input"></textarea>
+            <span id="enter">enter</span>
+        </div>
         <div></div>
         <span id="hinta" class="hint">style = document.querySelector('.goal').style</span>
         <div><span id="hintb" class="hint">document.querySelector('.goal').style.??? = "scale(1)"</span></div>
-        <div><span id="hintc" class="hint">opacity</span></div>
+        <div><span id="hintc" class="hint">opacity를 조정해보세요</span></div>
+        <div><span id="hintd" class="hint"></span></div>
+
         <div class="outputWrapper">
-            <div id="output">방향키를 움직여 보라색 원을 움직여 보세요</div>
+            <div id="output">hint0: 보라색 원을 움직여 보세요</div>
         </div>
+
+        <button id="reset">reset</button>
+        <button id="home">메인 화면으로</button>
     </div>
     </div>
 </body>
