@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>myPage</title>
+
+    <link rel="stylesheet" href="./myPage.css">
+
+    <script src="./phi/jquery-3.7.1.js"></script>
+    <script src="./phi/sj.api.v1.sj.js" defer></script>
+    <script src="./myPage.js"></script>
+</head>
+
+<body>
+    <div class="GNB">
+        <button type="button" id="home">홈으로</button>
+    </div>
+
+    <div class="main">
+
+        <div class="title">계정</div>
+        <hr>
+        <div class="profile">
+            <div class="image">
+
+            </div>
+            <div class="nick">
+                <div>
+                    <input type="text" id="nickInput" placeholder="닉네임">
+                    <button type="button" id="nickBtn">확인</button>
+                </div>
+                <div id="nickEx">닉네임은 2~10글자, 특수문자 사용 불가합니다.</div>
+                <div class="message" id="nickMessage"></div>
+            </div>
+        </div>
+
+        <div class="info">
+
+        </div>
+        <div class="setting">
+
+        </div>
+
+        <br>
+        <br>
+
+        <div class="title">정보</div>
+        <hr>
+        <div class="info">
+            <div class="id content">
+                <div class="subTitle" id="idTitle">아이디</div>
+                <div class="explain" id="idInfo">user1</div>
+            </div>
+            <div class="pw content">
+                <div class="subTitle" id="pwTitle">비밀번호</div>
+                <div class="pwInfo explain">
+                    <div id="pwText">비밀번호 변경</div>
+                    <button type="button" class="checkBtn" id="pwBtn">비밀번호 변경하기</button>
+                </div>
+            </div>
+        </div>
+
+
+        <br>
+        <br>
+
+        <div class="title">계정 관리</div>
+        <hr>
+        <div class="manage">
+            <div class="delete content explain">
+                <div id="delTitle">계정 삭제</div>
+                <button type="button" class="checkBtn" id="delBtn">내 계정 삭제</button>
+            </div>
+        </div>
+
+        
+        <br>
+        <br>
+
+        <div class="title">내가 쓴 글</div>
+        <hr>
+        <div class="posts">
+            <div class="postsContent">
+                <table id="postsTable">
+                    <thead>
+                        <tr>
+                            <th class="postsTitle">제목</th>
+                            <th class="postsDate">생성일자</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="postsTableTbody">
+                        <!-- <tr>
+                            <td>postList[i].title</td>
+                            <td>postList[i].createdAt.split("T")[0]</td>
+                        </tr> -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="postsPage">
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="overlay" id="pwOverlay">
+        <div class="pop">
+            <div class="pwChange">
+                <div id="pcTitle">비밀번호 변경하기</div>
+                <div class="pwtable">
+                    <table class="pw-input">
+                        <tr class="now">
+                            <td class="input-td">
+                                <input type="text" id="nowPw" placeholder="현재 비밀번호">
+                            </td>
+                        </tr>
+
+                        <tr class="tableExplain">
+                            <td id="pw-ex" colspan="3">비밀번호는 8~20자 영어, 숫자가 하나 이상 있어야 합니다.</td>
+                        </tr>
+
+                        <tr class="new">
+                            <td class="input-td">
+                                <input type="password" id="newPw" placeholder="새 비밀번호">
+                                <button type="button" class="pwCheckBtn" id="newPw-btn">
+                                    <svg class="viewPw" width="14" height="9" viewBox="0 0 14 9" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M13.2176 3.83C13.3835 4.01375 13.4753 4.25248 13.4753 4.5C13.4753 4.74752 13.3835 4.98625 13.2176 5.17C12.1676 6.3 9.77764 8.5 6.98764 8.5C4.19764 8.5 1.80764 6.3 0.757639 5.17C0.591799 4.98625 0.5 4.74752 0.5 4.5C0.5 4.25248 0.591799 4.01375 0.757639 3.83C1.80764 2.7 4.19764 0.5 6.98764 0.5C9.77764 0.5 12.1676 2.7 13.2176 3.83Z"
+                                            stroke="#aaa" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path
+                                            d="M6.98761 6.5C8.09218 6.5 8.98761 5.60457 8.98761 4.5C8.98761 3.39543 8.09218 2.5 6.98761 2.5C5.88304 2.5 4.98761 3.39543 4.98761 4.5C4.98761 5.60457 5.88304 6.5 6.98761 6.5Z"
+                                            stroke="#aaa" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <!-- <tr class="explain">
+                            <td id="pw-chk" colspan="3">비밀번호 재확인</td>
+                        </tr> -->
+                        <tr class="new">
+                            <td class="input-td">
+                                <input type="password" id="newPwChk" placeholder="새 비밀번호 확인">
+                                <button type="button" class="pwCheckBtn" id="newPwChk-btn">
+                                    <svg class="viewPw" width="14" height="9" viewBox="0 0 14 9" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M13.2176 3.83C13.3835 4.01375 13.4753 4.25248 13.4753 4.5C13.4753 4.74752 13.3835 4.98625 13.2176 5.17C12.1676 6.3 9.77764 8.5 6.98764 8.5C4.19764 8.5 1.80764 6.3 0.757639 5.17C0.591799 4.98625 0.5 4.74752 0.5 4.5C0.5 4.25248 0.591799 4.01375 0.757639 3.83C1.80764 2.7 4.19764 0.5 6.98764 0.5C9.77764 0.5 12.1676 2.7 13.2176 3.83Z"
+                                            stroke="#aaa" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path
+                                            d="M6.98761 6.5C8.09218 6.5 8.98761 5.60457 8.98761 4.5C8.98761 3.39543 8.09218 2.5 6.98761 2.5C5.88304 2.5 4.98761 3.39543 4.98761 4.5C4.98761 5.60457 5.88304 6.5 6.98761 6.5Z"
+                                            stroke="#aaa" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+                
+                <div class="message" id="pwMessage"></div>
+
+                <div class="pcBtn">
+                    <button class="closeBtn" id="pc-closeBtn">닫기</button>
+                    <button class="changeBtn" id="pc-changeBtn">변경하기</button>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="overlay" id="delOverlay">
+        <div class="pop">
+            <div class="delAccount">
+                <div id="daTitle">계정 삭제하기</div>
+                <div id="daEx">
+                    삭제한 계정은 복구할 수 없습니다.<br>
+                    정말로 삭제하시겠습니까?
+                </div>
+                <div class="adBtn">
+                    <button class="closeBtn" id="ad-closeBtn">닫기</button>
+                    <button class="changeBtn" id="ad-changeBtn">계정 삭제하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</body>
+
+</html>

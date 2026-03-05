@@ -78,6 +78,15 @@ body {
     cursor: pointer;
 }
 
+#btn-main {
+    width: 100px;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+}
+
 .beforeLogin {
     display: block;
     /* display: none; */
@@ -97,7 +106,7 @@ body {
 
 .ad {
     border: 1px solid blue;
-    
+
     height: 410px;
 }
 
@@ -140,7 +149,8 @@ body {
     margin: 20px auto;
 }
 
-#search-btn:hover, #search-btn:focus {
+#search-btn:hover,
+#search-btn:focus {
     background: var(--MainColor);
     color: #fff;
 }
@@ -250,18 +260,23 @@ body {
 /* ---------------------------------------------------------------------- */
 .bottom {
     margin: 15px 0 30px;
-    
-        text-align: center;
-    
-        cursor: pointer;
 
-        color: #8b8b8b;
+    text-align: center;
+
+    cursor: pointer;
+
+    color: #8b8b8b;
 }
 
 .page span {
     font-weight: 300;
 
     margin: 0 5px;
+}
+
+.page>span:nth-child(1) {
+    color: var(--MainColor);
+    font-weight: 1000;
 }
 
 
@@ -382,7 +397,7 @@ body {
 
     /* 검색창 */
     #search-table {
-        width:  60%;
+        width: 60%;
         height: 30px;
     }
 

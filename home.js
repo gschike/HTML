@@ -11,6 +11,13 @@ function bind() {
     const beforeLogin = document.querySelector(".beforeLogin");
     const afterLogin = document.querySelector(".afterLogin");
 
+    // GNB
+    // 마이 페이지로 이동
+    const btn_myPage = document.querySelector("#btn-myPage");
+    btn_myPage.addEventListener("click", () => {
+        window.location.href = "./myPage.html"
+    })
+
     let loginUser;
 
 

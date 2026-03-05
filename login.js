@@ -151,7 +151,7 @@ function bind() {
         let loginRes;
 
         try {
-            loginRes = await DD.V1.SJ.Auth.login(loginBody);
+            loginRes = await API.V1.SJ.Auth.login(loginBody);
             logRes("SJ-AUTH-3 LOGIN", loginRes);
 
             login_message.innerHTML = ""

@@ -178,14 +178,14 @@ function bind() {
     async function duplCheck() {
         const SJ_ID = join_id_value;
         const SJ_PW = join_pw_value;
-        const SJ_NICK = "SJ테스트유저";
+        const SJ_NICK = "";
 
         // SJ-AUTH-1) 중복 체크
         const checkQ = { loginId: SJ_ID };
 
         let checkRes;
         try {
-            checkRes = await DD.V1.SJ.Auth.checkLoginId(checkQ);
+            checkRes = await API.V1.SJ.Auth.checkLoginId(checkQ);
             logRes("SJ-AUTH-1 CHECK_ID", checkRes);
         } catch (e) {
             logErr("SJ-AUTH-1 CHECK_ID", e);
@@ -204,10 +204,10 @@ function bind() {
         // SJ-AUTH-2) 회원가입 (없을 때만)
         if (!exists) {
                 const signupBody = { loginId: SJ_ID, password: SJ_PW, nickname: SJ_NICK };
-                const signupUrl = DD.V1.url(DD.V1.API.SJ_AUTH_SIGNUP);
-                logCall("SJ-AUTH-2 SIGNUP", "POST", signupUrl, signupBody);
+                // const signupUrl = DD.V1.url(DD.V1.API.SJ_AUTH_SIGNUP);
+                // logCall("SJ-AUTH-2 SIGNUP", "POST", signupUrl, signupBody);
                 try {
-                    const signupRes = await DD.V1.SJ.Auth.signup(signupBody);
+                    const signupRes = await API.V1.SJ.Auth.signup(signupBody);
                     logRes("SJ-AUTH-2 SIGNUP", signupRes);
 
                     join_message.innerHTML = "회원가입 성공!";
