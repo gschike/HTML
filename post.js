@@ -276,10 +276,15 @@ function bindPostActions() {
         })
 
 
-    document.querySelector('#post-btn-edit')
-        .addEventListener('click', function () {
-            window.open('post_Writer.html')
-        })
+    document.querySelector('#post-btn-edit').addEventListener('click', function () {
+        postJson = {
+
+        }
+
+        sessionStorage.setItem("updatePost", JSON.stringify(postJson));
+
+        window.location.href = './post_Writer.html';
+    })
 
 }
 
@@ -356,10 +361,13 @@ function bindComments() {
 
         const span_left = document.createElement('span');
 
-        const count_CommentNum = document.createElement('span');
-        count_CommentNum.textContent = "(댓글 번호: " + count + ")";
+        const commentId = document.createElement("span");
+        commentId.innerHTML = `${loginUser.nickname} (${loginUser.userId})`;
 
-        span_left.append(count_CommentNum)
+        // const count_CommentNum = document.createElement('span');
+        // count_CommentNum.textContent = "(댓글 번호: " + count + ")";
+
+        span_left.append(commentId);
 
         const div_middle = document.createElement('div');
 
@@ -506,7 +514,7 @@ async function loadPost(postNo) {
 
         renderPost(postRes);
 
-        await API.V1.SJ.Posts.increaseView(postNo);
+        await API.V1.SJ.Posts.addView(postNo);
 
     } catch (e) {
 
@@ -521,9 +529,9 @@ async function loadPost(postNo) {
 function renderPost(postRes) {
 
     document.querySelector("#title").innerText = postRes.item.title;
-    document.querySelector("#postInfo-left-userName").innerText = postRes.item.authorId;
+    document.querySelector("#postInfo-left-userName").innerHTML = `<strong>${postRes.item.authorNick}</strong> (${postRes.item.authorId})`;
     document.querySelector("#postInfo-left-postingTime").innerText = postRes.item.createdAt.split("T")[0];
-    document.querySelector(".post-content").innerText = postRes.item.content;
+    document.querySelector(".post-content").innerHTML = postRes.item.content;
     document.querySelector("#postInfo-right-views-cnt").innerText = postRes.item.viewCount + 1;
 
     const btnEdit = document.querySelector("#post-btn-edit");
@@ -633,7 +641,9 @@ function modal(evtTarget) {
 
         if (evtTarget.deletePost) {
 
-            await API.V1.SJ.Posts.delete(evtTarget.postNo);
+            console.log("삭제 postNo:", evtTarget.postNo);
+
+            await API.V1.SJ.Posts.remove(evtTarget.postNo);
 
             window.location.href = "./community.html";
 
