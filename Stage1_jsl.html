@@ -44,13 +44,14 @@
             //클리어 조건
             //goal을 더블 클릭
             document.querySelector('.goal').addEventListener('dblclick', evt => {
-                alert('클리어')    //클리어 메시지 출력
+                alert('1단계 클리어'+'\n걸린 시간: '+document.querySelector('#timer').textContent)    //클리어 메시지 출력
                 window.location.href = "stage2_jsl.html" // 다음 스테이지로 전환
             })
 
             //timer            
             update()
         }
+        
 
         //기믹
         function addEvent() {

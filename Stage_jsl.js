@@ -78,9 +78,10 @@ function goalZ() {
 //마지막에 goal의 글씨를 줄임      
 function goalSmall() {
     document.querySelector('body').addEventListener('mouseover', evt => {
-        if (document.querySelector('.goal').style.zIndex >= 0) {
+        //앞의 기믹들 해제 했을때
+        if (parseInt(document.querySelector('.goal').style.zIndex) >= 0) {            
             document.querySelector('.goal').classList.add('small')
-            goalJump()
+            
             document.querySelector('body').addEventListener('dblclick', evt => {
                 print('느려')
             })
