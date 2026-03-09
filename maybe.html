@@ -11,6 +11,17 @@
             margin: 200px 0 60px 0;
         }
 
+        #logo {
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        .ps {
+            width: 200px;
+            height: 50px;
+        }
+
         .game-wrapper {
             width: 1100px;
             margin: 20px auto;
@@ -268,6 +279,11 @@
 </head>
 
 <body>
+    <div id="logo">
+        <a href="메인페이지" target="메인">
+            <img class="ps" src="LOGO.png" alt="로고">
+        </a>
+    </div>
     <div class="game-wrapper">
         <!-- Stage1 -->
         <div class="stage stage1 active">
@@ -500,206 +516,228 @@
     <div class="ad-banner">광고 영역</div>
 
     <script>
-       window.onload = function () {
+        window.onload = function () {
 
-const stages = document.querySelectorAll(".stage");
-let currentStage = 0;
+            const stages = document.querySelectorAll(".stage");
+            let currentStage = 0;
 
-/* 사용자 CSS 적용용 style */
-const userStyle = document.createElement("style");
-document.head.appendChild(userStyle);
-
-
-/* ============================= */
-/* 스테이지 표시 */
-/* ============================= */
-
-function showStage(){
-
-    stages.forEach((stage,i)=>{
-        stage.classList.toggle("active", i === currentStage);
-    });
-
-    const textarea = stages[currentStage].querySelector("textarea");
-    const result = stages[currentStage].querySelector(".result");
-
-    result.innerText = "";
-
-    /* 스테이지별 기본 코드 */
-
-    if(currentStage === 2){
-        textarea.value = `.trap {\n\n}`;
-    }
-    else if(currentStage === 3){
-        textarea.value = `.box2 {\n\n}`;
-    }
-    else if(currentStage === 8){
-        textarea.value = `.arena {\n\n}`;
-    }
-    else if(currentStage === 9){
-        textarea.value = `.arena {\n\n}`;
-    }
-    else{
-        textarea.value = `.target {\n\n}`;
-    }
-
-}
+            /* 사용자 CSS 적용용 style */
+            const userStyle = document.createElement("style");
+            document.head.appendChild(userStyle);
 
 
-/* ============================= */
-/* 정답 검사 */
-/* ============================= */
+            /* ============================= */
+            /* 스테이지 표시 */
+            /* ============================= */
 
-function checkAnswer(){
+            function showStage() {
 
-    const stage = stages[currentStage];
-    const textarea = stage.querySelector("textarea");
+                stages.forEach((stage, i) => {
+                    stage.classList.toggle("active", i === currentStage);
+                });
 
-    /* CSS 적용 */
-    userStyle.innerHTML = textarea.value;
+                const textarea = stages[currentStage].querySelector("textarea");
+                const result = stages[currentStage].querySelector(".result");
 
-    /* 브라우저 렌더링 기다림 */
-    requestAnimationFrame(()=>{
+                result.innerText = "";
 
-        let success = false;
+                /* 스테이지별 기본 코드 */
 
-        switch(currentStage + 1){
-
-            case 1:
-            case 2:
-                const t = stage.querySelector(".target").getBoundingClientRect();
-                const g = stage.querySelector(".goal").getBoundingClientRect();
-
-                success =
-                    Math.abs(t.top - g.top) < 5 &&
-                    Math.abs(t.left - g.left) < 5;
-            break;
-
-
-            case 3:
-                const trap = getComputedStyle(stage.querySelector(".trap"));
-
-                success =
-                    parseFloat(trap.opacity) === 0 ||
-                    trap.display === "none" ||
-                    trap.visibility === "hidden";
-            break;
-
-
-            case 4:
-                const z1 = parseInt(getComputedStyle(stage.querySelector(".box1")).zIndex) || 0;
-                const z2 = parseInt(getComputedStyle(stage.querySelector(".box2")).zIndex) || 0;
-
-                success = z2 > z1;
-            break;
-
-
-            case 5:
-                const bg = getComputedStyle(stage.querySelector(".target")).backgroundColor;
-
-                success = bg.includes("50, 205, 50");
-            break;
-
-
-            case 6:
-                const s6 = getComputedStyle(stage.querySelector(".target"));
-
-                success =
-                    s6.borderStyle !== "none" &&
-                    parseFloat(s6.borderRadius) > 0;
-            break;
-
-
-            case 7:
-                const s7 = getComputedStyle(stage.querySelector(".target"));
-
-                success = s7.boxShadow !== "none";
-            break;
-
-
-            case 8:
-                const s8 = getComputedStyle(stage.querySelector(".target"));
-
-                success =
-                    s8.fontSize === "24px" &&
-                    s8.color.includes("50, 205, 50");
-            break;
-
-
-            case 9:
-                const s9 = getComputedStyle(stage.querySelector(".arena"));
-
-                success =
-                    s9.display === "flex" &&
-                    s9.justifyContent === "center" &&
-                    s9.alignItems === "center";
-            break;
-
-
-            case 10:
-                const s10 = getComputedStyle(stage.querySelector(".arena"));
-
-                success =
-                    s10.display === "grid" &&
-                    s10.gridTemplateColumns.split(" ").length === 2;
-            break;
-
-        }
-
-        const result = stage.querySelector(".result");
-
-        if(success){
-
-            result.innerText = "🎉 성공!";
-
-            if(currentStage < stages.length - 1){
-
-                currentStage++;
-                setTimeout(showStage, 500);
-
-            }else{
-
-                alert("🏆 모든 스테이지 완료!");
+                if (currentStage === 2) {
+                    textarea.value = `.trap {\n css 작성 \n}`;
+                }
+                else if (currentStage === 3) {
+                    textarea.value = `.box2 {\n css 작성 \n}`;
+                }
+                else if (currentStage === 8) {
+                    textarea.value = `.arena {\n css 작성 \n}`;
+                }
+                else if (currentStage === 9) {
+                    textarea.value = `.arena {\n css 작성 \n}`;
+                }
+                else {
+                    textarea.value = `.target {\n css 작성\n}`;
+                }
 
             }
 
-        }
-        else{
 
-            result.innerText = "다시 시도!";
+            /* ============================= */
+            /* 정답 검사 */
+            /* ============================= */
 
-        }
+            function checkAnswer() {
 
-    });
+                const stage = stages[currentStage];
+                const textarea = stage.querySelector("textarea");
 
-}
+                /* CSS 적용 */
+                userStyle.innerHTML = textarea.value;
+
+                /* 브라우저 렌더링 기다림 */
+                requestAnimationFrame(() => {
+
+                    let success = false;
+
+                    switch (currentStage + 1) {
+
+                        case 1:
+                            const t1 = stage.querySelector(".target").getBoundingClientRect();
+                            const g1 = stage.querySelector(".goal").getBoundingClientRect();
+                            const delta = 5;
+
+                            success =
+                                Math.abs(t1.top - g1.top) < delta &&
+                                Math.abs(t1.left - g1.left) < delta;
 
 
-/* ============================= */
-/* 버튼 이벤트 */
-/* ============================= */
+                        case 2:
+                            const t2 = stage.querySelector(".target").getBoundingClientRect();
+                            const g2 = stage.querySelector(".goal").getBoundingClientRect();
 
-stages.forEach(stage=>{
+                            success =
+                                Math.abs(t2.top - g2.top) < 5 &&
+                                Math.abs(t2.left - g2.left) < 5;
+                            break;
 
-    stage.querySelector(".check-btn").addEventListener("click",checkAnswer);
 
-    stage.querySelector(".skip-btn").addEventListener("click",()=>{
+                        case 3:
+                            const trap = getComputedStyle(stage.querySelector(".trap"));
 
-        if(currentStage < stages.length - 1){
+                            success =
+                                parseFloat(trap.opacity) === 0 ||
+                                trap.display === "none" ||
+                                trap.visibility === "hidden";
+                            break;
 
-            currentStage++;
+
+                        case 4:
+                            const z1 = parseInt(getComputedStyle(stage.querySelector(".box1")).zIndex) || 0;
+                            const z2 = parseInt(getComputedStyle(stage.querySelector(".box2")).zIndex) || 0;
+
+                            success = z2 > z1;
+                            break;
+
+
+                        case 5:
+                            const textarea = document.querySelector(".stage5 textarea");
+                            const target = document.querySelector(".stage5 .target");
+                            const result = document.querySelector(".stage5 .result");
+
+                            // textarea에 입력한 CSS 적용
+                            const styleTag = document.createElement("style");
+                            styleTag.innerHTML = textarea.value;
+                            document.head.appendChild(styleTag);
+
+                            // target 배경색 가져오기
+                            const bg = getComputedStyle(target).backgroundColor; // "rgb(50, 205, 50)" 또는 "rgba(50, 205, 50, 1)"
+                            const rgb = bg.match(/\d+/g).map(Number); // 숫자 배열로 변환
+
+                            // 숫자 비교로 초록색(#32cd32) 체크
+                             success = rgb[0] === 50 && rgb[1] === 205 && rgb[2] === 50;
+
+                            break;
+
+
+                        case 6:
+                            const s6 = getComputedStyle(stage.querySelector(".target"));
+
+                            success =
+                                s6.borderStyle !== "none" &&
+                                parseFloat(s6.borderRadius) > 0;
+                            break;
+
+
+                        case 7:
+                            const s7 = getComputedStyle(stage.querySelector(".target"));
+
+                            success = s7.boxShadow !== "none";
+                            break;
+
+
+                        case 8:
+                            const s8 = getComputedStyle(stage.querySelector(".target"));
+
+                            success =
+                                s8.fontSize === "24px" &&
+                                s8.color.includes("50, 205, 50");
+                            break;
+
+
+                        case 9:
+                            const s9 = getComputedStyle(stage.querySelector(".arena"));
+
+                            success =
+                                s9.display === "flex" &&
+                                s9.justifyContent === "center" &&
+                                s9.alignItems === "center";
+                            break;
+
+
+                        case 10:
+                            const s10 = getComputedStyle(stage.querySelector(".arena"));
+
+                            success =
+                                s10.display === "grid" &&
+                                s10.gridTemplateColumns.split(" ").length === 2;
+                            break;
+
+                    }
+
+                    const result = stage.querySelector(".result");
+
+                    if (success) {
+
+                        result.innerText = "🎉 성공!";
+
+                        if (currentStage < stages.length - 1) {
+
+                            currentStage++;
+                            setTimeout(showStage, 500);
+
+                        } else {
+
+                            alert("🏆 모든 스테이지 완료!");
+
+                        }
+
+                    }
+                    else {
+
+                        result.innerText = "다시 시도!";
+
+                    }
+
+                });
+
+            }
+
+
+            /* ============================= */
+            /* 버튼 이벤트 */
+            /* ============================= */
+
+            stages.forEach(stage => {
+
+                stage.querySelector(".check-btn").addEventListener("click", checkAnswer);
+
+                stage.querySelector(".skip-btn").addEventListener("click", () => {
+
+                    if (currentStage < stages.length - 1) {
+
+                        currentStage++;
+                        showStage();
+
+                    }
+
+                });
+
+            });
+
+
             showStage();
 
-        }
-
-    });
-
-});
-
-
-showStage();
-
-};
+        };
     </script>
 </body>
 
