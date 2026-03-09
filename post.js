@@ -351,6 +351,7 @@ function bindComments() {
 
     function createRow(parent, text) {
 
+        // 행 / 아이디 / 닉네임 / 내용 / 수정 / 삭제 / 버튼 -> 생성 
         const row = document.createElement('div');
         row.className = 'commentRow';
 
@@ -401,13 +402,13 @@ function bindComments() {
         const loginUserNow = JSON.parse(localStorage.getItem("loginUser"));
 
         if (loginUserNow && loginUserNow.userId === commentAuthor) {
-
+            // 본인 글이면 수정 / 삭제 버튼
             span_right.append(edit, dlt_cmt);
 
         }
 
 
-
+        // 클릭 시 댓글 삭제 모달 생성
         dlt_cmt.addEventListener('click', function (e) {
             e.stopPropagation();
             modal(row);
@@ -415,7 +416,7 @@ function bindComments() {
 
 
         edit.onclick = (e) => {
-
+            // 댓글 수정
             e.stopPropagation();
 
             if (row.querySelector('.cmt')) return;
@@ -438,7 +439,7 @@ function bindComments() {
 
         }
 
-
+        // 댓글 생성
         row.append(span_left, div_middle, span_right);
 
 
@@ -551,7 +552,7 @@ function renderPost(postRes) {
 
 
 ///////////////////////////////////////////////////////
-// 댓글 입력 UI 생성
+// 댓글 입력 창 생성
 ///////////////////////////////////////////////////////
 
 function createInputComment() {
@@ -632,14 +633,14 @@ function cntComment() {
 
 // }
 
-function modal(evtTarget) {
+function modal(evtTarget) { 
 
     const popup = document.querySelector('#Delete-Popup')
     popup.style.display = 'flex'
 
     popup.querySelector('.btn-confirm').onclick = async () => {
 
-        if (evtTarget.deletePost) {
+        if (evtTarget.deletePost) { // 게시글 삭제
 
             console.log("삭제 postNo:", evtTarget.postNo);
 
@@ -647,7 +648,7 @@ function modal(evtTarget) {
 
             window.location.href = "./community.html";
 
-        } else {
+        } else { // 댓글 삭제
 
             evtTarget.remove()
             cntComment()
