@@ -56,8 +56,20 @@ body {
     font-size: 14px;
     color: #333;
     background: #fafafa;
-    
+
     padding: 20px;
+}
+
+.top {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#btn-main {
+    width: 100px;
+
+    cursor: pointer;
 }
 
 .pop {
@@ -74,7 +86,7 @@ body {
     border-radius: 6px;
     margin-bottom: 20px;
 
-    box-shadow: 5px 5px 2px 0px rgba(0,0,0,0.2);
+    box-shadow: 5px 5px 2px 0px rgba(0, 0, 0, 0.2);
 
     width: 800px;
     height: 400px;
@@ -110,7 +122,7 @@ body {
 
 
 .btn {
-   min-width: 60px;
+    min-width: 60px;
 
     padding: 5px 10px;
     margin: 10px;
@@ -121,16 +133,12 @@ body {
     border-radius: 10px;
 }
 
-#btn-comm { 
-    margin-left: 0;
-}
-
-
 .popBtn {
     width: 300px;
 }
 
-.btn:hover, .btn:focus {
+.btn:hover,
+.btn:focus {
     background: var(--MainColor);
     color: #fff;
     cursor: pointer;
@@ -144,13 +152,13 @@ body {
 
 .input {
     position: relative;
-    margin-bottom:7px;
+    margin-bottom: 7px;
 }
 
 .input-td {
     display: flex;
     align-items: center;
-    
+
     border: 2px solid #ddd;
 
     padding-left: 10px;
@@ -228,13 +236,6 @@ body {
     .top {
         margin-top: 20px;
         margin-left: 10px;
-    }
-
-    .topBtn {
-        width: 60px;
-        font-size: 12px;
-
-        margin: 1px;
     }
 
     #btn-main {

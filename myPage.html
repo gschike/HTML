@@ -14,8 +14,37 @@
 </head>
 
 <body>
-    <div class="GNB">
-        <button type="button" id="home">홈으로</button>
+    <div class="top">
+        <div class="GNB">
+            <div class="left">
+                <a href="./home.html">
+                    <img id="logo" src="./image/LOGO.png">
+                </a>
+            </div>
+
+            <div class="beforeLogin">
+                <button type="button" class="topBtn" id="btn-login">로그인</button>
+                <button type="button" class="topBtn" id="btn-join">회원가입</button>
+            </div>
+            <div class="afterLogin">
+                <button type="button" class="topBtn" id="btn-logout">로그아웃</button>
+                <button type="button" class="topBtn" id="btn-myPage">마이 페이지</button>
+            </div>
+        </div>
+        <div class="LNB">
+            <div class="LNBbtn" id="LNBmyPage">마이 페이지</div>
+            <div class="LNBbtn" id="LNBnotice">공지사항</div>
+            <div class="LNBbtn" id="LNBcomm">커뮤니티</div>
+            
+            <div class="LNBbtn gameMenu">
+                게임
+                <div class="gameList">
+                    <div class="gameItem">게임1</div>
+                    <div class="gameItem">게임2</div>
+                    <div class="gameItem">게임3</div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="main">
@@ -75,7 +104,7 @@
             </div>
         </div>
 
-        
+
         <br>
         <br>
 
@@ -161,7 +190,7 @@
                     </table>
 
                 </div>
-                
+
                 <div class="message" id="pwMessage"></div>
 
                 <div class="pcBtn">

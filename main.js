@@ -9,7 +9,6 @@ function init() {
 
 function bind() {
 
-
     const beforeLogin = document.querySelector(".beforeLogin");
     const afterLogin = document.querySelector(".afterLogin");
 

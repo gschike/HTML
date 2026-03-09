@@ -12,6 +12,12 @@
 </head>
 
 <body>
+    <div class="top">
+        <div>
+            <img id="btn-main" src="./image/LOGO.png">
+        </div>
+    </div>
+
     <div class="main">
         <div class="container">
             <button type="button" class="btn-white btn-main" id="before-btn" title="대화 돌아가기">&lt; 뒤로가기</button>
@@ -35,24 +41,34 @@
                         <div class="hoodie"></div>
                     </div>
                 </div>
-
-
             </div>
 
             <button type="button" class="btn-white btn-main" id="next-btn" title="대화 넘어가기">다음 &gt;</button>
         </div>
 
         <div class="input-container">
-            <input type="text" id="input" placeholder="정답을 입력해줘!">
-            <button type="button" class="btn-purple" id="input-btn">정답</button>
+            <input type="text" id="answer-input" placeholder="정답을 입력해줘!">
+            <button type="button" class="btn-purple" id="answer-btn">정답</button>
             <button type="button" class="btn-white" id="hint-btn">힌트보기</button>
-            <button type="button" class="btn-white btn-main" id="nextPage-btn">넘어가기</button>
+            <button type="button" class="btn-white" id="replay-btn">다시실행</button>
+            <button type="button" class="btn-white" id="nextPage-btn">넘어가기</button>
+            <button type="button" class="btn-white" id="fin-btn">게임 종료</button>
         </div>
     </div>
 
     <div class="game">
-        
+        <span class="stage1" id="frag1">첫번째 : </span>
+        <div class="stage1" id="frag2">두번째<br> : </div>
+        <span class="stage1" id="frag3">세번째 : </span>
     </div>
+
+    <div class="overlay">
+        <div class="hint">
+            <div id="hintContent"></div>
+            <button type="button" class="btn-purple" id="hintClose">닫기</button>
+        </div>
+    </div>
+
 </body>
 
 </html>

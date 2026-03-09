@@ -13,24 +13,58 @@
 </head>
 
 <body>
-    <div class="top">
-        <div class="left">
-            <button type="button" class="topBtn" id="btn-comm">목록</button>
-            <button type="button" class="topBtn" id="btn-main">메인 페이지</button>
+    <!-- 모달창 -->
+    <div id="Delete-Popup">
+        <div class="modal-content">
+            <div class="modal-text"><span>정말 삭제하시겠습니까?</span></div>
+            <div class="modal-btns">
+                <button type="button" class="btn-confirm">삭제</button>
+                <button type="button" class="btn-cancel">취소</button>
+            </div>
         </div>
+    </div>
 
-        <div class="right">
+    <!-- 헤더 -->
+    <div class="top">
+        <div class="GNB">
+            <div class="left">
+                <a href="./home.html">
+                    <img id="logo" src="./image/LOGO.png">
+                </a>
+            </div>
+
             <div class="beforeLogin">
                 <button type="button" class="topBtn" id="btn-login">로그인</button>
                 <button type="button" class="topBtn" id="btn-join">회원가입</button>
             </div>
             <div class="afterLogin">
                 <button type="button" class="topBtn" id="btn-logout">로그아웃</button>
+                <button type="button" class="topBtn" id="btn-myPage">마이 페이지</button>
+            </div>
+        </div>
+        <div class="LNB">
+            <div class="LNBbtn" id="LNBmyPage">마이 페이지</div>
+            <div class="LNBbtn" id="LNBnotice">공지사항</div>
+            <div class="LNBbtn" id="LNBcomm">커뮤니티</div>
+
+            <div class="LNBbtn gameMenu">
+                게임
+                <div class="gameList">
+                    <div class="gameItem">게임1</div>
+                    <div class="gameItem">게임2</div>
+                    <div class="gameItem">게임3</div>
+                </div>
             </div>
         </div>
     </div>
 
+
+    <!-- 메인 -->
     <div class="main">
+        <div class="left">
+            <button type="button" class="topBtn" id="btn-comm">목록</button>
+        </div>
+
         <div class="title">
             <div>
                 <h2 id="title">제목을 씁시다</h2>
@@ -42,32 +76,66 @@
                     <div id="postInfo-left-postingTime">작성 시간</div>
                 </div>
 
-                <div class="postInfo-right">
+                <!-- <div class="postInfo-right">
                     <div id="postInfo-right-views">조회 <sapn id="postInfo-right-views-cnt">0</sapn>
                     </div>
-                    <div id="postInfo-right-likes">추천 0</div>
+                    <div id="postInfo-right-likes">추천 <span>0</span></div>
                     <div id="postInfo-right-comment">
-                        <button type="button" id="btn-comment">댓글 0</button>
+                        <a href="#comment-line">
+                            <button type="button" id="btn-comment">댓글 <span>0</span></button>
+                        </a>
                     </div>
                     <div id="postInfo-right-copy">
                         <button type="button" id="btn-URL">URL 복사</button>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
 
         <hr class="line title-post-line">
 
-        <div class="post-content">
-            내용내용내용내용내용
+        <div class="content">
+            <div class="postInfo-right">
+                <div id="postInfo-right-views">조회 <sapn id="postInfo-right-views-cnt">0</sapn>
+                </div>
+                <div id="postInfo-right-likes">추천 <span>0</span></div>
+                <div id="postInfo-right-comment">
+                    <a href="#comment-line">
+                        <div id="btn-comment">댓글 <span>0</span></div>
+                    </a>
+                </div>
+                <div id="postInfo-right-copy">
+                    <button type="button" id="btn-URL">URL 복사</button>
+                </div>
+            </div>
+
+            <div class="post-content">
+                내용내용내용내용내용
+            </div>
         </div>
 
-        <hr class="line post-comment-line">
-
-        <div class="remote">
-
+    </div>
+    <div>
+        <div class="wrap">
+            <div id="recommend-wrap">
+                <div id="like" class="recommend">추천 ! <span class="recommend-cnt">0</span></div>
+                <div id="unlike" class="recommend">비추천 ! <span class="recommend-cnt">0</span></div>
+            </div>
+        </div>
+        <div id="edit-btn-wrap">
+            <div id="edit-btns">
+                <div id="post-btn-edit" class="post-btn">수정</div>
+                <div id="post-btn-dlt" class="post-btn">삭제</div>
+                <div class="go-title"> <a href="#title">제목으로</a></div>
+            </div>
         </div>
     </div>
+
+    <hr id="comment-line" class="line post-comment-line">
+    <div class="remote"></div>
+    </div>
+
+
 
     <!-- 댓글 컨테이너 -->
     <div id="wrap_Cmt">

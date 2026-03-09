@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="kr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,41 +8,232 @@
 
     <link rel="stylesheet" href="./home.css">
 
+    <script src="./phi/jquery-3.7.1.js"></script>
+    <script src="./phi/sj.api.v1.sj.js" defer></script>
     <script src="./home.js"></script>
 </head>
+
 <body>
-    <div class="GNB">
-        <div class="left">
-            <!-- <button type="button" class="topBtn" id="btn-comm">커뮤니티</button> -->
-        </div>
+    <div class="top">
+        <div class="GNB">
+            <div class="left">
+                <a href="./home.html">
+                    <img id="logo" src="./image/LOGO.png">
+                </a>
+            </div>
 
-        <div class="beforeLogin">
-            <button type="button" class="topBtn" id="btn-login">로그인</button>
-            <button type="button" class="topBtn" id="btn-join">회원가입</button>
+            <div class="beforeLogin">
+                <button type="button" class="topBtn" id="btn-login">로그인</button>
+                <button type="button" class="topBtn" id="btn-join">회원가입</button>
+            </div>
+            <div class="afterLogin">
+                <button type="button" class="topBtn" id="btn-logout">로그아웃</button>
+                <button type="button" class="topBtn" id="btn-myPage">마이 페이지</button>
+            </div>
         </div>
-        <div class="afterLogin">
-            <button type="button" class="topBtn" id="btn-logout">로그아웃</button>
-            <button type="button" class="topBtn" id="btn-myPage">마이 페이지</button>
+        <div class="LNB">
+            <div class="LNBbtn" id="LNBmyPage">마이 페이지</div>
+            <div class="LNBbtn" id="LNBnotice">공지사항</div>
+            <div class="LNBbtn" id="LNBcomm">커뮤니티</div>
+            
+            <div class="LNBbtn gameMenu">
+                게임
+                <div class="gameList">
+                    <div class="gameItem">게임1</div>
+                    <div class="gameItem">게임2</div>
+                    <div class="gameItem">게임3</div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="images">
-        <div class="ad">
+    <div class="ad" id="ad">
+        <div class="carousel">
+            <div class="viewport">
+                <div class="track">
+                    <div class="slide" id="slide1"></div>
+                    <div class="slide" id="slide2"></div>
+                    <div class="slide" id="slide3"></div>
+                </div>
+            </div>
 
+            <div class="carouselBtn">
+                <button class="prev">
+                    <svg width="11" height="17" viewBox="0 0 11 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M8.30152 2L2.15152 8.15C2.10369 8.19489 2.06557 8.24911 2.03951 8.30931C2.01345 8.3695 2 8.4344 2 8.5C2 8.5656 2.01345 8.6305 2.03951 8.69069C2.06557 8.75089 2.10369 8.80511 2.15152 8.85L8.30152 15"
+                            stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+                <button class="next">
+                    <svg width="11" height="17" viewBox="0 0 11 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M2 2L8.15 8.15C8.19783 8.19489 8.23595 8.24911 8.26201 8.30931C8.28807 8.3695 8.30152 8.4344 8.30152 8.5C8.30152 8.5656 8.28807 8.6305 8.26201 8.69069C8.23595 8.75089 8.19783 8.80511 8.15 8.85L2 15"
+                            stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
         </div>
-
     </div>
+
 
     <div class="main">
         <div class="games">
+            <div class="mainTitle" id="gamesTitle">
+                지금 인기 있는 게임
+            </div>
+            <div class="games-carousel">
+                <div class="games-viewport">
+                    <div class="games-track">
+                        <div class="games-slide" id="game1">
+                            <div class="games-slide-img">
 
+                            </div>
+                            <div class="games-slide-title">
+                                재밌는 게임 이제 근데 제목이 완전 길다면 어떻게 될까
+                            </div>
+                        </div>
+                        <div class="games-slide" id="game2">
+                            <div class="games-slide-img">
+
+                            </div>
+                            <div class="games-slide-title">
+                                신나는 게임
+                            </div>
+                        </div>
+                        <div class="games-slide" id="game3">
+                            <div class="games-slide-img">
+
+                            </div>
+                            <div class="games-slide-title">
+                                완전 쩌는 게임
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="games-btnWrap">
+                        <button class="games-prev">
+                            <svg width="11" height="17" viewBox="0 0 11 17" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M8.30152 2L2.15152 8.15C2.10369 8.19489 2.06557 8.24911 2.03951 8.30931C2.01345 8.3695 2 8.4344 2 8.5C2 8.5656 2.01345 8.6305 2.03951 8.69069C2.06557 8.75089 2.10369 8.80511 2.15152 8.85L8.30152 15"
+                                    stroke="#aaa" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                        <button class="games-next">
+                            <svg width="11" height="17" viewBox="0 0 11 17" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M2 2L8.15 8.15C8.19783 8.19489 8.23595 8.24911 8.26201 8.30931C8.28807 8.3695 8.30152 8.4344 8.30152 8.5C8.30152 8.5656 8.28807 8.6305 8.26201 8.69069C8.23595 8.75089 8.19783 8.80511 8.15 8.85L2 15"
+                                    stroke="#aaa" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="comm">
+            <div class="mainTitle" id="commTitle">커뮤니티</div>
+            <div class="gotoDiv" id="gotoCommDiv">
+                <span class="goto" id="gotoComm">전체보기 &gt;</span>
+            </div>
+            <div class="comm-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th id="comm-content-title">제목</th>
+                            <th id="comm-content-time">업로드</th>
+                        </tr>
+                    </thead>
+                    <tbody id="comm-content-tbody">
 
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="notice">
+            <div class="mainTitle" id="noticeTitle">공지사항</div>
+            <div class="gotoDiv" id="gotoNoticeDiv">
+                <span class="goto" id="gotoNotice">전체보기 &gt;</span>
+            </div>
+            <div class="notice-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th id="notice-content-title">제목</th>
+                            <th id="notice-content-time">업로드</th>
+                        </tr>
+                    </thead>
+                    <tbody id="notice-content-tbody">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="news">
+            <div class="mainTitle" id="newsTitle">최신 게임 뉴스</div>
+            <ul id="news"></ul>
+        </div>
+
+        <div class="allGames">
+            <div class="agTop">
+                <div class="mainTitle" id="agTitle">모든 게임 모아보기</div>
+                <div class="agSearch">
+                    <table id="search-table">
+                        <tr>
+                            <td id="search-table-svg">
+                                <svg width="12" height="12" viewBox="0 0 69 71" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="30.1667" cy="30.1667" r="26.6667" stroke="#aaa" stroke-width="7"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M48.5 50.0265L65.1667 66.6934" stroke="#aaa" stroke-width="7"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </td>
+                            <td id="search-table-input">
+                                <input type="text" id="search-input" placeholder="게임 검색하기">
+                            </td>
+                        </tr>
+                    </table>
+                    <button class="mainBtn" id="search-btn">검색</button>
+                </div>
+            </div>
+            <div class="agMain">
+                <div class="agGames">
+                    <div class="agGamesImg">여기다 사진</div>
+                    <div class="agGamesTitle">여기다 제목</div>
+                </div>
+                <div class="agGames">
+                    <div class="agGamesImg">여기다 사진</div>
+                    <div class="agGamesTitle">여기다 제목</div>
+                </div>
+                <div class="agGames">
+                    <div class="agGamesImg">여기다 사진</div>
+                    <div class="agGamesTitle">여기다 제목</div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <a href="#ad">
+        <div class="remote">
+            <div id="remoteSvg">
+                <svg width="20" height="20" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 10V4" stroke="#3d3d3d" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M5.5 5.5L7 4L8.5 5.5" stroke="#3d3d3d" stroke-linecap="round" stroke-linejoin="round" />
+                    <path
+                        d="M7 13.5C10.5899 13.5 13.5 10.5899 13.5 7C13.5 3.41015 10.5899 0.5 7 0.5C3.41015 0.5 0.5 3.41015 0.5 7C0.5 10.5899 3.41015 13.5 7 13.5Z"
+                        stroke="#3d3d3d" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </div>
+            <div id="remoteTxt">위로</div>
+        </div>
+    </a>
 
 
 
 </body>
+
 </html>

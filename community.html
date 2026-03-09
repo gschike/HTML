@@ -14,18 +14,34 @@
 
 <body>
     <div class="top">
-        <div class="left">
-            <img id="btn-main" src="./image/LOGO.png">
-            <!-- <button type="button" class="topBtn" id="btn-main">메인 페이지</button> -->
-        </div>
+        <div class="GNB">
+            <div class="left">
+                <a href="./home.html">
+                    <img id="logo" src="./image/LOGO.png">
+                </a>
+            </div>
 
-        <div class="right">
             <div class="beforeLogin">
                 <button type="button" class="topBtn" id="btn-login">로그인</button>
                 <button type="button" class="topBtn" id="btn-join">회원가입</button>
             </div>
             <div class="afterLogin">
                 <button type="button" class="topBtn" id="btn-logout">로그아웃</button>
+                <button type="button" class="topBtn" id="btn-myPage">마이 페이지</button>
+            </div>
+        </div>
+        <div class="LNB">
+            <div class="LNBbtn" id="LNBmyPage">마이 페이지</div>
+            <div class="LNBbtn" id="LNBnotice">공지사항</div>
+            <div class="LNBbtn" id="LNBcomm">커뮤니티</div>
+            
+            <div class="LNBbtn gameMenu">
+                게임
+                <div class="gameList">
+                    <div class="gameItem">게임1</div>
+                    <div class="gameItem">게임2</div>
+                    <div class="gameItem">게임3</div>
+                </div>
             </div>
         </div>
     </div>
@@ -51,7 +67,7 @@
                         </svg>
                     </td>
                     <td id="search-table-input">
-                        <input type="text" id="search-input" placeholder="제목 혹은 내용으로 검색하기">
+                        <input type="text" id="search-input" placeholder="제목 혹은 내용으로 검색">
                     </td>
                 </tr>
             </table>
@@ -113,15 +129,11 @@
     </table> -->
 
     <div class="bottom">
-        <span id="lt">&lt;</span>
+        <span id="pagePrev">&lt;</span>
         <span class="page">
             <!-- <span>1</span> -->
         </span>
-        <span id="gt">&gt;</span>
-    </div>
-
-    <div class="footer">
-
+        <span id="pageNext">&gt;</span>
     </div>
 
 </body>

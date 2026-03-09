@@ -1,243 +1,655 @@
-
 window.addEventListener("load", () => {
     init();
 })
 
 function init() {
+
     const params = new URLSearchParams(window.location.search);
     const postNo = params.get("postNo");
 
     loadPost(postNo);
+
     bind();
 }
 
+
+
 function bind() {
+
+    bindGNB();
+    bindLNB();
+    bindPostActions();
+    bindComments();
+
+}
+
+
+
+///////////////////////////////////////////////////////
+// GNB
+///////////////////////////////////////////////////////
+
+function bindGNB() {
+
+    const beforeLogin = document.querySelector(".beforeLogin");
+    const afterLogin = document.querySelector(".afterLogin");
+
+    const btn_myPage = document.querySelector("#btn-myPage");
+
+    btn_myPage.addEventListener("click", () => {
+        window.location.href = "./myPage.html"
+    })
+
+    let loginUser;
+
     let isLogin = localStorage.getItem("loginPossible");
 
     if (isLogin == "true") {
-        changeLogin();
+
+        try {
+
+            loginUser = JSON.parse(localStorage.getItem("loginUser"));
+
+            if (!loginUser) throw new Error("유저 정보 없음");
+
+            console.log("로그인 상태:", isLogin);
+            console.log("loginUser:", loginUser);
+
+            console.log("현재 로그인 유저:", loginUser.userId);
+            console.log("권한:", loginUser.role);
+
+            loginUser = loginUser.userId;
+
+            changeLogin();
+
+        } catch (e) {
+
+            console.log("로그인 안 됨");
+            changeLogout();
+
+        }
+
     } else {
+
         changeLogout();
+
     }
 
-    const btn_comm = document.querySelector("#btn-comm");
-    const btn_main = document.querySelector("#btn-main");
+
     const btn_login = document.querySelector("#btn-login");
-    const btn_join = document.querySelector("#btn-join");
-    const btn_logout = document.querySelector("#btn-logout");
 
-
-    // 목록 버튼 누르면 목록으로 이동
-    btn_comm.addEventListener("click", () => {
-        window.location.href = "./community.html";
-    })
-
-    // 메인페이지 버튼 누르면 창 이동
-    btn_main.addEventListener("click", () => {
-        window.location.href = "./main.html";
-    })
-
-    // 로그인 버튼 누르면 창 이동
     btn_login.addEventListener("click", () => {
+        sessionStorage.setItem("prevPage", location.href);
         window.location.href = "./login.html";
     })
 
-    // 회원가입 버튼 누르면 창 이동
+
+    const btn_join = document.querySelector("#btn-join");
+
     btn_join.addEventListener("click", () => {
         window.location.href = "./join.html";
     })
 
-    // 로그아웃 클릭 시 로그인 상태 변경
-    btn_logout.addEventListener("click", function () {
-        localStorage.removeItem("loginUser");
 
+    const btn_logout = document.querySelector("#btn-logout");
+
+    btn_logout.addEventListener("click", () => {
+
+        localStorage.removeItem("loginUser");
         localStorage.setItem("loginPossible", "false");
+
         isLogin = localStorage.getItem("loginPossible");
+
         changeLogout();
+
     })
 
 
-
-
     function changeLogin() {
-        // beforeLogin, afterLogin
-        const beforeLogin = document.querySelector(".beforeLogin");
-        const afterLogin = document.querySelector(".afterLogin");
-
         beforeLogin.style.display = "none";
         afterLogin.style.display = "flex";
     }
 
     function changeLogout() {
-        // beforeLogin, afterLogin
-        const beforeLogin = document.querySelector(".beforeLogin");
-        const afterLogin = document.querySelector(".afterLogin");
-
         login = false;
+        loginUser = "";
         beforeLogin.style.display = "flex";
         afterLogin.style.display = "none";
     }
 
+}
 
 
-    ///////////////////////////////////////////////////////////
-    // 댓글
-    let count = 0
+
+///////////////////////////////////////////////////////
+// LNB
+///////////////////////////////////////////////////////
+
+function bindLNB() {
+
+    const LNBmyPage = document.getElementById("LNBmyPage");
+
+    LNBmyPage.addEventListener("click", () => {
+
+        if (localStorage.getItem("loginPossible") != "true") {
+            alert("마이페이지는 로그인 후 이용 가능합니다.");
+            sessionStorage.setItem("prevPage", "./myPage.html");
+            window.location.href = "./login.html";
+            return;
+        }
+
+        window.location.href = "./myPage.html";
+
+    })
+
+
+    const LNBnotice = document.getElementById("LNBnotice");
+
+    LNBnotice.addEventListener("click", () => {
+
+        localStorage.setItem("postType", "notice");
+        window.location.href = "./community.html";
+
+    })
+
+
+    const LNBcomm = document.getElementById("LNBcomm");
+
+    LNBcomm.addEventListener("click", () => {
+
+        localStorage.setItem("postType", "comm");
+        window.location.href = "./community.html";
+
+    })
+
+}
+
+
+
+///////////////////////////////////////////////////////
+// 게시글 액션 (추천 / 삭제 / 수정)
+///////////////////////////////////////////////////////
+
+function bindPostActions() {
+
+    // 목록 누르면 커뮤니티로 이동
+    document.querySelector("#btn-comm").addEventListener("click", () => {
+        window.location.href = "./community.html";
+    });
+
+
+    const like = document.querySelector("#like");
+    const unlike = document.querySelector("#unlike");
+
+    let likeCount = 1;
+    let unlikeCount = 1;
+
+    // 중복방지(추가)
+    let liked = false;
+    let unliked = false;
+    //
+
+    // like.onclick = () => {
+
+    //     like.onselectstart = function () { return false; }
+
+    //     like, addEventListener('dblclick', function () { return false; })
+
+    //     document.querySelector("#like>span").textContent = likeCount;
+
+    //     document.querySelector("#postInfo-right-likes>span").textContent = likeCount;
+
+    //     likeCount++;
+
+    // }
+
+    like.onclick = () => {
+        // 비로그인 시 막는 기능
+        if (localStorage.getItem("loginPossible") != "true") {
+            alert("추천 기능을 이용하려면 로그인을 해주세요.");
+
+            return;
+        }
+
+        if (liked) return;
+
+        liked = true;
+
+        document.querySelector("#like>span").textContent = likeCount;
+        document.querySelector("#postInfo-right-likes>span").textContent = likeCount;
+
+        likeCount++;
+
+    }
+
+
+    // unlike.onclick = () => {
+
+    //     unlike.onselectstart = function () { return false; }
+
+    //     unlike, addEventListener('dblclick', function () { return false; })
+
+    //     document.querySelector("#unlike>span").textContent = unlikeCount;
+
+    //     unlikeCount++;
+
+    // }
+
+
+    unlike.onclick = () => {
+        // 비로그인 시 막는 기능
+        if (localStorage.getItem("loginPossible") != "true") {
+            alert("추천 기능을 이용하려면 로그인을 해주세요.");
+
+            return;
+        }
+
+        if (unliked) return;
+
+        unliked = true;
+
+        document.querySelector("#unlike>span").textContent = unlikeCount;
+
+        unlikeCount++;
+
+    }
+
+
+    // 삭제 수정
+
+    // document.querySelector('#post-btn-dlt')
+    //     .addEventListener('click', function () {
+    //         modal()
+    //     })
+
+    document.querySelector('#post-btn-dlt')
+        .addEventListener('click', function () {
+
+            const params = new URLSearchParams(window.location.search);
+            const postNo = params.get("postNo");
+
+            modal({
+                deletePost: true,
+                postNo: postNo
+            })
+
+        })
+
+
+    document.querySelector('#post-btn-edit')
+        .addEventListener('click', function () {
+            window.open('post_Writer.html')
+        })
+
+}
+
+
+
+///////////////////////////////////////////////////////
+// 댓글 시스템
+///////////////////////////////////////////////////////
+
+function bindComments() {
+
+    let count = 1
+
     const inputCmtarea = document.querySelector('.inputCmt')
+
     const mainInput = createInputComment()
+
     inputCmtarea.append(mainInput.cmt)
 
+
     mainInput.add_txt.addEventListener('click', function () {
-        //isLogin 정보 가져오기
+
         let isLogin = localStorage.getItem("loginPossible");
 
-        console.log(isLogin);
-
         if (isLogin == "true") {
+
             const val = mainInput.txtarea.value.trim()
+
             if (!val) return
+
             createRow(document.querySelector('.cmt_Space'), val)
+
             mainInput.txtarea.value = ""
+
+            cntComment();
+
         } else {
+
             alert("댓글을 입력하려면 로그인 해주세요.")
+
         }
 
     })
 
+
+
     function getFormattedDate() {
+
         const today = new Date()
+
         const year = today.getFullYear()
         const month = String(today.getMonth() + 1).padStart(2, '0')
         const day = String(today.getDate()).padStart(2, '0')
+
         const hour = String(today.getHours()).padStart(2, '0')
         const minute = String(today.getMinutes()).padStart(2, '0')
         const second = String(today.getSeconds()).padStart(2, '0')
 
         return `${year}.${month}.${day} ${hour}:${minute}:${second}`
+
     }
 
+
+
     function createRow(parent, text) {
+
         const row = document.createElement('div');
         row.className = 'commentRow';
 
-        //localStorage 정보 가져오기
         let loginUser = JSON.parse(localStorage.getItem("loginUser"));
 
         const row_top = document.createElement("div");
         row_top.className = "commentRow-top";
 
-        // 왼쪽 묶음
         const span_left = document.createElement('span');
-        // <닉네임>
-        const nickname = document.createElement('em');
-        nickname.textContent = loginUser.userId;
-        // <댓글 번호>
+
         const count_CommentNum = document.createElement('span');
         count_CommentNum.textContent = "(댓글 번호: " + count + ")";
-        // 왼쪽 묶음 조립
-        span_left.append(nickname, count_CommentNum)
 
+        span_left.append(count_CommentNum)
 
-        // 중간 묶음
         const div_middle = document.createElement('div');
-        // <내용>
+
         const contents = document.createElement('p');
         contents.textContent = text;
-        // 중간 묶음 조립
+
         div_middle.append(contents)
 
-
-        // 오른쪽 묶음
         const span_right = document.createElement('span');
         span_right.className = "span_right";
-        // <날짜>
+
         const timestamp = document.createElement('span');
         timestamp.textContent = getFormattedDate();
-        // <삭제 버튼>
+
+        const edit = document.createElement('div');
+        edit.className = "edit";
+
+        const edit_text = document.createElement('span');
+        edit_text.textContent = '수정';
+
+        edit.append(edit_text);
+
         const dlt_cmt = document.createElement('button');
         dlt_cmt.textContent = 'x';
-        // 오른쪽 묶음 조립
-        span_right.append(timestamp, dlt_cmt)
 
-        // [삭제 버튼 이벤트]
+        // span_right.append(timestamp, edit, dlt_cmt);
+        const commentAuthor = loginUser.userId;
+
+        span_right.append(timestamp)
+
+        const loginUserNow = JSON.parse(localStorage.getItem("loginUser"));
+
+        if (loginUserNow && loginUserNow.userId === commentAuthor) {
+
+            span_right.append(edit, dlt_cmt);
+
+        }
+
+
+
         dlt_cmt.addEventListener('click', function (e) {
-            e.stopPropagation(); // 삭제 버튼 클릭 시 답글창이 열리지 않게
-            if (confirm("정말 삭제하시겠습니까?")) {
-                row.remove();
-            }
+            e.stopPropagation();
+            modal(row);
         });
 
-        // 조립
+
+        edit.onclick = (e) => {
+
+            e.stopPropagation();
+
+            if (row.querySelector('.cmt')) return;
+
+            const Ptxt = div_middle.querySelector('p');
+
+            const editInput = createInputComment();
+
+            editInput.txtarea.value = Ptxt.textContent;
+
+            row.append(editInput.cmt);
+
+            editInput.add_txt.onclick = () => {
+
+                Ptxt.textContent = editInput.txtarea.value;
+
+                editInput.cmt.remove();
+
+            }
+
+        }
+
+
         row.append(span_left, div_middle, span_right);
 
-        // [중요] 답글 토글 이벤트 (무한 대댓글용)
-        row.addEventListener('click', function (e) {
-            e.stopPropagation();
-            if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON') return;
 
-            // 다른 창 끄기 로직
+        row.addEventListener('click', function (e) {
+
+            e.stopPropagation();
+
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON' || e.target.tagName === 'SPAN') return;
+
             document.querySelectorAll('.cmt_Space .cmt').forEach(el => {
+
                 if (el.parentElement !== this) el.remove();
+
             });
 
             const existingInput = this.querySelector(':scope > .cmt');
+
             if (existingInput) {
+
                 existingInput.remove();
+
+                cntComment()
+
             } else {
-                const subInput = createInputComment(); // 위에서 만드신 공장 함수 호출
+
+                const subInput = createInputComment();
+
                 this.append(subInput.cmt);
 
                 subInput.add_txt.onclick = (event) => {
+
                     event.stopPropagation();
+
                     const val = subInput.txtarea.value.trim();
+
                     if (val) {
-                        // ⭐ 대댓글을 달 때 자기 자신(createRow)을 다시 호출 (재귀)
-                        createRow(row, val);
-                        subInput.cmt.remove();
+
+                        createRow(row, val)
+
+                        subInput.cmt.remove()
+
+                        cntComment()
+
                     }
+
                 };
+
             }
+
         });
+
         count++
+
         parent.append(row);
+
     }
 
+}
 
 
-} // bind
 
+///////////////////////////////////////////////////////
+// 게시글 로딩
+///////////////////////////////////////////////////////
 
 async function loadPost(postNo) {
+
     try {
+
         const postRes = await API.V1.SJ.Posts.get(postNo);
+
         console.log("게시글 정보:", postRes);
 
         renderPost(postRes);
+
+        await API.V1.SJ.Posts.increaseView(postNo);
+
     } catch (e) {
+
         console.log("게시글 조회 실패", e)
+
     }
+
 }
 
+
+
 function renderPost(postRes) {
+
     document.querySelector("#title").innerText = postRes.item.title;
     document.querySelector("#postInfo-left-userName").innerText = postRes.item.authorId;
     document.querySelector("#postInfo-left-postingTime").innerText = postRes.item.createdAt.split("T")[0];
     document.querySelector(".post-content").innerText = postRes.item.content;
-    document.querySelector("#postInfo-right-views-cnt").innerText = postRes.item.viewCount;
+    document.querySelector("#postInfo-right-views-cnt").innerText = postRes.item.viewCount + 1;
+
+    const btnEdit = document.querySelector("#post-btn-edit");
+    const btnDelete = document.querySelector("#post-btn-dlt");
+
+    const loginUser = JSON.parse(localStorage.getItem("loginUser"));
+
+    if (!loginUser || loginUser.userId !== postRes.item.authorId) {
+
+        btnEdit.style.display = "none";
+        btnDelete.style.display = "none";
+
+    }
+
 }
 
+
+
+///////////////////////////////////////////////////////
+// 댓글 입력 UI 생성
+///////////////////////////////////////////////////////
+
 function createInputComment() {
+
     const cmt = document.createElement('div')
+
     cmt.className = 'cmt'
 
+    const input_wrap = document.createElement('div')
+
+    input_wrap.className = 'input_wrap'
+
     const txtarea = document.createElement('input')
+
     txtarea.type = 'text'
+
     txtarea.className = 'cmt_input'
 
+    txtarea.placeholder = "댓글을 입력하세요...";
+
     const add_txt = document.createElement('button')
+
     add_txt.className = 'add_txt'
+
     add_txt.textContent = '등록'
 
-    cmt.append(txtarea, add_txt)
+    input_wrap.append(txtarea, add_txt)
+
+    cmt.append(input_wrap)
+
     return { cmt, txtarea, add_txt }
+
+}
+
+
+
+///////////////////////////////////////////////////////
+// 댓글 수 카운트
+///////////////////////////////////////////////////////
+
+function cntComment() {
+
+    const currentCount = document.querySelectorAll('.commentRow').length;
+
+    const targets = document.querySelectorAll('#btn-comment > span, #cmt_commentCount');
+
+    targets.forEach(el => el.textContent = currentCount);
+
+}
+
+
+
+///////////////////////////////////////////////////////
+// 삭제 모달
+///////////////////////////////////////////////////////
+
+// function modal(evtTarget) {
+
+//     const popup = document.querySelector('#Delete-Popup')
+
+//     popup.style.display = 'flex'
+
+//     popup.querySelector('.btn-confirm').onclick = (evt) => {
+
+//         evtTarget.remove()
+
+//         cntComment()
+
+//         popup.style.display = 'none'
+
+//     }
+
+//     popup.querySelector('.btn-cancel').onclick = () => {
+
+//         popup.style.display = 'none'
+
+//     }
+
+// }
+
+function modal(evtTarget) {
+
+    const popup = document.querySelector('#Delete-Popup')
+    popup.style.display = 'flex'
+
+    popup.querySelector('.btn-confirm').onclick = async () => {
+
+        if (evtTarget.deletePost) {
+
+            await API.V1.SJ.Posts.delete(evtTarget.postNo);
+
+            window.location.href = "./community.html";
+
+        } else {
+
+            evtTarget.remove()
+            cntComment()
+
+        }
+
+        popup.style.display = 'none'
+
+    }
+
+    popup.querySelector('.btn-cancel').onclick = () => {
+        popup.style.display = 'none'
+    }
+
 }

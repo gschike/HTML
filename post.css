@@ -16,12 +16,6 @@
     box-sizing: border-box;
 }
 
-body {
-    margin: 0;
-
-    /* height: 500vh; */
-}
-
 button {
     all: unset;
     /* 모든 기본 스타일 초기화 */
@@ -54,31 +48,75 @@ input {
     /* 폰트 상속 */
 }
 
+a {
+    text-decoration: none;
+    /* 밑줄 제거 */
+    color: inherit;
+    /* 부모 요소의 글자색을 그대로 상속 */
+    display: inline-block;
+    /* 크기 조절(width, height)이 가능하게 변경 */
+}
 
+body {
+    margin: 0;
+    font-family: 'Malgun Gothic', sans-serif;
+    font-size: 14px;
+    color: #333;
+    background: #fafafa;
 
-
-
-
-/* ---------------------------------------------------------------------- */
+    /* min-height: 200vh; */
+}
 
 .top {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    background-color: rgba(255, 255, 255, 0.705);
+}
+
+
+
+
+/* ========== GNB ========== */
+
+.GNB {
     /* border: 1px solid red; */
     border-bottom: 3px solid var(--MainColor);
-    background-color: rgba(255, 255, 255, 0.705);
 
-    padding: 15px 50px;
+
+    padding: 10px 50px;
 
     display: flex;
     justify-content: space-between;
-
-    position: sticky;
-    z-index: 9999;
-    top: 0;
+    align-items: center;
 }
 
-.beforeLogin {
-    /* width: 100%; */
+#logo {
+    width: 100px;
+}
 
+.topBtn {
+    min-width: 60px;
+
+    padding: 5px 10px;
+    margin: 10px;
+
+    background: #fff;
+    color: var(--MainColor);
+    border: 1px solid var(--MainColor);
+    border-radius: 15px;
+}
+
+.topBtn:hover,
+.topBtn:focus {
+    background: var(--MainColor);
+    color: #fff;
+    cursor: pointer;
+}
+
+
+.beforeLogin {
     display: flex;
     /* display: none; */
 
@@ -86,36 +124,96 @@ input {
 }
 
 .afterLogin {
-    /* width: 100%; */
-
     display: none;
     /* display: flex; */
 
     justify-content: flex-end;
 }
 
-.topBtn {
-    min-width: 60px;
 
-    padding: 2px 10px;
-    margin: 10px 3px;
 
-    background: #fff;
-    color: var(--MainColor);
-    border: 1px solid var(--MainColor);
-    border-radius: 15px;
 
-    font-size: 14px;
+/* ========== LNB ========== */
+.LNB {
+    display: flex;
+    justify-content: space-around;
+
+    padding: 20px 10px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    box-shadow: 0 1px 2px 0px var(--SubColor);
 }
 
-.topBtn:hover {
-    background: var(--MainColor);
-    color: #fff;
+.LNB>div {
     cursor: pointer;
 }
 
-#btn-main {
-    width: 80px;
+.LNB>div:hover,
+.LNB>div:focus {
+    text-decoration: underline;
+    text-decoration-color: var(--SubColor);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+}
+
+
+/* 게임 드롭다운 */
+
+.gameMenu {
+    position: relative;
+}
+
+/* hover 끊김 방지 브릿지 */
+.gameMenu::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    height: 10px;
+}
+
+.gameList {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translate(-50%, -10px);
+
+    background: white;
+    border: 1px solid var(--SubColor);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+    flex-direction: column;
+
+    min-width: 120px;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease,
+        visibility 0.25s;
+}
+
+.gameItem {
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.gameItem:hover {
+    background: var(--SubColor);
+}
+
+/* hover 시 게임 리스트 표시 */
+.gameMenu:hover .gameList {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
 }
 
 
@@ -163,6 +261,8 @@ input {
 .postInfo-right {
     float: right;
     display: flex;
+
+    font-size: 14px;
 }
 
 #postInfo-right-views {
@@ -191,15 +291,115 @@ input {
 }
 
 
+
+
 .line {
     margin: 20px auto;
 }
 
-
 .post-content {
     padding: 20px;
+    padding-top: 30px;
 }
 
+.wrap {
+    display: flex;
+    justify-content: center;
+}
+
+#recommend-wrap {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+
+    padding: 40px 0;
+    padding-right: 10%;
+    width: 100%;
+}
+
+.recommend {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    width: 100px;
+    height: auto;
+    border-radius: 15px;
+
+    padding: 5px;
+
+    /* 보라색 박스 대신 깔끔한 화이트/그레이 조합 */
+    background-color: #fff;
+    border: 2px solid var(--MainColor);
+    border-radius: 20px;
+    color: var(--MainColor);
+    font-weight: bold;
+}
+
+.recommend:hover {
+    background-color: var(--MainColor);
+    color: white;
+    transform: translateY(-3px);
+    /* 살짝 떠오르는 효과 */
+    box-shadow: 0 5px 15px rgba(123, 45, 210, 0.2);
+}
+
+.recommend-cnt {
+    font-size: 18px;
+    /* margin-top: 5px; */
+}
+
+#edit-btns {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    /* 버튼 사이 간격 */
+    width: auto;
+    /* 고정폭 해제 */
+
+    padding-right: 10%;
+}
+
+/* 상단 '댓글 0' 버튼 디자인과 통일 */
+.post-btn,
+.go-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #e6e6e6;
+    /* image_01e4cb의 회색 배경 */
+    border: 1px solid #ccc;
+    color: #333;
+
+    padding: 5px 15px;
+    min-width: 60px;
+    height: 32px;
+    border-radius: 15px;
+    /* 알약 모양 */
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+.post-btn:hover,
+.go-title:hover {
+    background-color: var(--MainColor);
+    color: #fff;
+    border-color: var(--MainColor);
+}
+
+/* '제목으로' 링크 스타일 초기화 */
+.go-title>a {
+    color: inherit;
+    text-decoration: none;
+    width: 100%;
+    text-align: center;
+}
 
 
 
@@ -214,122 +414,119 @@ input {
 
 /* 댓글 목록 영역 */
 .cmt_Space {
-    border-top: 2px solid #333;
-    /* 상단 강조선 */
-    margin-top: 15px;
+    border-top: 1px solid #333;
+    margin-top: 20px;
 }
 
-/* 댓글 한 줄(Row) */
-.commentRow,
-[class^="commentRow"] {
+/* 댓글 한 행 (부모/자식 공통) */
+.commentRow {
     display: flex;
-    flex-wrap: wrap;
-    /* 대댓글창이 아래로 떨어질 수 있게 */
-    align-items: flex-start;
-    padding: 10px 5px;
-    border-bottom: 1px solid var(--BorderColor);
+    flex-direction: column;
+    /* 내용과 답글창이 세로로 배치되도록 */
+    padding: 12px 10px;
+    border-bottom: 1px solid #eee;
     background: #fff;
-    position: relative;
-}
-
-/* 닉네임 스타일 */
-em {
-    font-style: normal;
-    font-weight: bold;
-    color: var(--NickColor);
-    margin-right: 12px;
-    font-size: 13px;
-    white-space: nowrap;
-}
-
-/* 본문 내용 */
-p {
-    margin: 0;
-    padding: 0;
-    flex: 1;
-    /* 중간 공간 차지 */
-    font-size: 13px;
-    color: #444;
-    line-height: 1.4;
-}
-
-/* 날짜와 삭제 버튼 영역 */
-/* span {
-    font-size: 11px;
-    color: var(--DateColor);
-    margin-right: 8px;
-    white-space: nowrap;
-} */
-
-/* 삭제 버튼 (x) */
-/* button:not(.add_txt) {
-    background: #ccc;
-    color: #fff;
-    border: none;
-    width: 16px;
-    height: 16px;
-    font-size: 10px;
-    cursor: pointer;
-    line-height: 14px;
-    padding: 0;
-    border-radius: 2px;
-}
-
-button:not(.add_txt):hover {
-    background: #999;
-} */
-
-/* 대댓글 들여쓰기 디자인 */
-.commentRow div {
-    padding-left: 40px;
-    /* 들여쓰기 */
     width: 100%;
-    border-left: 1px solid #ccc;
-    /* 세로 연결선 */
-    padding-left: 10px;
-    margin-top: 5px;
+}
+
+/* 대댓글일 경우의 스타일 (깊이 표현) */
+.commentRow .commentRow {
+    margin-top: 10px;
+    padding-left: 25px;
+    /* 들여쓰기 */
+    border-left: 2px solid var(--SubColor);
+    /* 세로 가이드선 */
+    border-bottom: none;
+    /* 내부에선 하단선 제거 */
     background: #fafafa;
-    /* 대댓글은 살짝 배경색 다르게 */
-
-    box-sizing: border-box;
+    /* 대댓글은 살짝 어두운 배경 */
 }
 
-/* 대댓글 'ㄴ' 아이콘 흉내 */
-div[class^="commentRow"] p::before {
-    content: "ㄴ";
-    color: #3b4890;
+/* 댓글 정보 가로 정렬 레이아웃 */
+.commentRow>span:first-child,
+/* 닉네임/번호 영역 */
+.commentRow>div:nth-child(2),
+/* 내용 영역 */
+.commentRow>.span_right {
+    /* 날짜/삭제 버튼 */
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+/* 닉네임 및 번호 */
+.commentRow span span {
+    font-size: 13px;
     font-weight: bold;
-    margin-right: 5px;
+    color: #555;
 }
 
+/* 댓글 내용 */
+.commentRow p {
+    flex: 1;
+    font-size: 14px;
+    color: #333;
+    margin: 5px 0;
+    line-height: 1.5;
+    word-break: break-all;
+}
+
+.edit {
+    cursor: pointer;
+}
+
+/* 오른쪽 영역 (날짜와 삭제버튼) */
+.span_right {
+    justify-content: flex-end;
+    gap: 10px;
+    font-size: 11px;
+    color: #999;
+}
+
+/* 삭제 버튼 스타일 */
+.span_right button {
+    background: #ddd;
+    color: #666;
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+    font-size: 10px;
+    line-height: 18px;
+}
+
+/* 답글 입력창 컨테이너 정렬 */
 .cmt {
     width: 100%;
-    margin-top: 10px;
+    background: #f1f1f1;
     padding: 10px;
-    background: var(--SubColor);
+    margin-top: 8px;
     border-radius: 4px;
 }
 
+.input_wrap {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
 .cmt_input {
-    width: calc(100% - 70px);
-    height: 60px !important;
-    /* 높이 조절 */
-    border: 1px solid #ccc;
-    padding: 8px;
-    box-sizing: border-box;
+    flex: 1;
+    background: #fff !important;
+    border: 1px solid #ccc !important;
+    padding: 10px !important;
+    height: 65px !important;
+    border-radius: 4px;
 }
 
 .add_txt {
-    width: 60px;
-    height: 60px;
-    background: var(--MainColor);
-    color: white;
-    border: none;
-    cursor: pointer;
-    vertical-align: top;
+    width: 70px;
+    height: 65px;
+    background: var(--MainColor) !important;
+    color: #fff !important;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: bold;
 }
-
-/* gemini css */
 
 /* 댓글 전체 컨테이너 */
 .cmt_Space {
@@ -371,7 +568,7 @@ div[class^="commentRow"] p::before {
 
 .nickname {
     font-weight: bold;
-    color: #333;
+    color: var(--MainColor);
     white-space: nowrap;
 }
 
@@ -392,7 +589,7 @@ div[class^="commentRow"] p::before {
 .dlt_btn {
     cursor: pointer;
     background: #999;
-    color: #fff;
+    color: var(--MainColor);
     border: none;
     width: 16px;
     height: 16px;
@@ -406,22 +603,172 @@ div[class^="commentRow"] p::before {
     margin-left: 25px;
 }
 
-@media screen and (max-width: 750px) {
+/* 모달 css */
+#Delete-Popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
 
-    body {
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+}
+
+/* 팝업 하얀색 박스 */
+.modal-content {
+    background: white;
+    padding: 35px 25px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    border: 2px solid var(--MainColor);
+
+    width: 50%;
+    height: 20%;
+}
+
+/* 정말 삭제? */
+.modal-text span {
+    font-size: 1.1rem;
+    color: #333;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 25px;
+}
+
+
+.modal-btns {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+
+.modal-btns button {
+    width: 90px;
+    height: 40px;
+    border-radius: 20px;
+
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+}
+
+#comment-line {
+    width: 85%;
+}
+
+
+.btn-confirm {
+    background-color: #f0f0f0;
+    color: #3b3a3a;
+}
+
+.btn-cancel {
+    background-color: var(--MainColor);
+    color: white;
+}
+
+.btn-confirm:hover {
+    background-color: #5a1ea0;
+    color: #f0f0f0;
+    transform: scale(1.05);
+}
+
+.btn-cancel:hover {
+    transform: scale(1.05);
+}
+
+@media screen and (max-width: 800px) {
+
+
+    /* ========== top ========== */
+
+    .GNB {
+        padding: 5px 10px;
+
+        width: 100%;
+    }
+
+    #logo {
+        width: 70px;
+    }
+
+    .topBtn {
+        font-size: 10px;
+
+        width: 20px;
+
         margin: 5px;
     }
 
+
+    .LNB {
+        padding: 10px 10px;
+    }
+
+    .LNBbtn {
+        font-size: 12px;
+    }
+
+
+
+    .games-btnWrap {
+        position: absolute;
+        top: 92%;
+        left: 0;
+        transform: translateY(-50%);
+        width: 100%;
+
+        display: flex;
+        justify-content: space-between;
+
+        padding: 0 10px;
+        z-index: 10;
+    }
+
+    .gameMenu:hover .gameList {
+        transform: translate(-50%, 0px);
+
+        left: 0;
+    }
+
+
+
+    /* ============================= */
+
     #wrap_Cmt {
-        /* border: 1px solid red; */
-        /* width: 450px; */
-
-        padding: 5px 10px;
+        width: 100%;
+        padding: 0 20px;
     }
 
-    .left>div {
-        padding-left: 15px;
+    #recommend-wrap {
+        flex-direction: row;
+        width: 100%;
+        gap: 10px;
+        justify-content: center;
+        padding: 20px 0;
     }
+
+    .recommend {
+        width: 45%;
+        height: auto;
+        border-radius: 15px;
+    }
+
+    .recommend-cnt {
+        font-size: 14px;
+        margin-top: 2px;
+        padding-bottom: 4px;
+    }
+
+    /* 세정님 css */
 
     .cmt {
         margin: 0 auto;
@@ -438,22 +785,11 @@ div[class^="commentRow"] p::before {
         height: 100px;
     }
 
-    .top {
-        padding: 15px 8px;
-    }
 
     .main {
         padding: 15px 10px 0;
     }
 
-    .topBtn {
-        font-size: 12px;
-        width: 50px;
-    }
-    
-    #btn-main {
-        display: none;
-    }
 
     #title {
         font-size: 16px;
@@ -465,18 +801,39 @@ div[class^="commentRow"] p::before {
         font-size: 12px;
     }
 
-    .postInfo-right button {
-        display: none;
+    .line {
+        margin: 15px auto;
     }
 
-    .line {
-        margin: 15px 0;
+    #comment-line {
+        width: 90%;
     }
 
     .post-content {
         padding: 10px;
+        padding-top: 30px;
 
         font-size: 12px;
     }
 
+    .recommend {
+        font-size: 12px;
+
+        width: 22%;
+    }
+
+    #fl_Left {
+        margin-bottom: 10px;
+    }
+
+    #edit-btns {
+        padding-right: 10px;
+    }
+
+    .post-btn,
+    .go-title {
+        font-size: 11px;
+
+        height: auto;
+    }
 }

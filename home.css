@@ -1,4 +1,4 @@
-          :root {
+:root {
     --MainColor: #7b2dd2;
     --SubColor: rgb(230, 230, 230);
 
@@ -54,6 +54,16 @@ body {
     font-size: 14px;
     color: #333;
     background: #fafafa;
+
+    min-height: 200vh;
+}
+
+.top {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    background-color: rgba(255, 255, 255, 0.705);
 }
 
 
@@ -62,12 +72,19 @@ body {
 /* ========== GNB ========== */
 
 .GNB {
-    border: 1px solid red;
+    /* border: 1px solid red; */
+    border-bottom: 3px solid var(--MainColor);
 
-    padding: 15px;
+
+    padding: 10px 50px;
 
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+
+#logo {
+    width: 100px;
 }
 
 .topBtn {
@@ -82,7 +99,8 @@ body {
     border-radius: 15px;
 }
 
-.topBtn:hover, .topBtn:focus {
+.topBtn:hover,
+.topBtn:focus {
     background: var(--MainColor);
     color: #fff;
     cursor: pointer;
@@ -106,16 +124,174 @@ body {
 
 
 
+/* ========== LNB ========== */
+.LNB {
+    display: flex;
+    justify-content: space-around;
+
+    padding: 20px 10px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    box-shadow: 0 1px 2px 0px var(--SubColor);
+}
+
+.LNB>div {
+    cursor: pointer;
+}
+
+.LNB>div:hover,
+.LNB>div:focus {
+    text-decoration: underline;
+    text-decoration-color: var(--SubColor);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+}
+
+/* 게임 드롭다운 */
+
+.gameMenu {
+    position: relative;
+}
+
+/* hover 끊김 방지 브릿지 */
+.gameMenu::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    height: 10px;
+}
+
+.gameList {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translate(-50%, -10px);
+
+    background: white;
+    border: 1px solid var(--SubColor);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+    flex-direction: column;
+
+    min-width: 120px;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease,
+        visibility 0.25s;
+}
+
+.gameItem {
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.gameItem:hover {
+    background: var(--SubColor);
+}
+
+/* hover 시 게임 리스트 표시 */
+.gameMenu:hover .gameList {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+}
+
+
+
 
 /* ========== images ========== */
 
 .ad {
-    border: 1px solid blue;
-    
+    margin-top: 40px;
+    /* border: 1px solid blue; */
+
     height: 410px;
+
+    padding: 0 200px;
+
+    background-color: var(--SubColor);
+}
+
+.carousel {
+    width: 100%;
+    position: relative;
+
+    display: flex;
+    justify-content: center;
 }
 
 
+.viewport {
+    overflow: hidden;
+    width: 100%;
+    height: 410px;
+}
+
+.track {
+    display: flex;
+    transition: transform 0.4s ease;
+}
+
+.slide {
+    flex: 0 0 100%;
+
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+    height: 410px;
+}
+
+#slide1 {
+    background-image: url("https://picsum.photos/1200/410");
+}
+
+#slide2 {
+    background-image: url("https://picsum.photos/1200/410");
+}
+
+#slide3 {
+    background-image: url("https://picsum.photos/1200/410");
+}
+
+
+.carouselBtn {
+    position: absolute;
+    top: 80%;
+    transform: translateY(-50%);
+    z-index: 10;
+
+    display: flex;
+    justify-content: space-between;
+
+    width: 120%;
+}
+
+.carouselBtn button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+
+    background-color: #33333367;
+}
+
+.carouselBtn button svg {
+    margin-top: 3px;
+}
 
 
 
@@ -125,19 +301,555 @@ body {
 .main {
     display: flex;
     justify-content: center;
+
+    flex-wrap: wrap;
 }
 
-.main>div {
-    width: 430px;
-    height: 400px;
+.games,
+.comm,
+.notice,
+.news {
+    width: 500px;
+    /* height: 400px; */
 
     margin: 30px;
+    border: 1px solid var(--SubColor);
+
+    padding: 30px;
 }
-.games {
-    border: 1px solid green;
-}
-.comm {
-    border: 1px solid purple;
+
+.mainTitle {
+    margin-bottom: 25px;
+
+    text-align: center;
+    font-size: 20px;
+    font-weight: 1000;
 }
 
 
+
+/* ========== games ========== */
+
+.games-carousel {
+    width: 100%;
+}
+
+.games-viewport {
+    position: relative;
+    overflow: hidden;
+}
+
+.games-track {
+    display: flex;
+    gap: 20px;
+    transition: transform 0.4s ease;
+}
+
+.games-slide {
+    flex: 0 0 70%;
+
+    width: 300px;
+
+    cursor: pointer;
+}
+
+
+
+.games-slide.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.games-slide-img {
+    border: 1px solid red;
+
+    height: 300px;
+}
+
+.games-slide-title {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: #3b3b3b;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    padding: 20px;
+}
+
+/* 버튼 영역 */
+.games-btnWrap {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    transform: translateY(-100%);
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+
+    padding: 0 20px;
+    z-index: 10;
+}
+
+.games-btnWrap button {
+    width: 45px;
+    height: 45px;
+    border: 1px solid var(--SubColor);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 26px;
+    background: rgba(255, 255, 255, 0.5);
+    color: white;
+    cursor: pointer;
+}
+
+
+
+/* ========== comm ========== */
+#commTitle {
+    margin-bottom: 5px;
+}
+
+.gotoDiv {
+    text-align: right;
+    padding: 10px 20px;
+}
+
+.goto {
+    font-size: 11px;
+
+    cursor: pointer;
+}
+
+.comm-content>table, .notice-content>table {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.comm-content>table th, .notice-content>table th {
+    border-bottom: 1px solid var(--SubColor);
+
+    padding-bottom: 10px;
+}
+
+.comm-content>table td, .notice-content>table td {
+    padding: 5px 0;
+
+    cursor: pointer;
+}
+
+.contentTitle {
+    width: 80%;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.contentTitle:hover,
+.contentTitle:focus {
+    text-decoration: underline;
+}
+
+.contentTime {
+    width: 20%;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rowLink{
+    display:block;
+    width:100%;
+    height:100%;
+    text-decoration:none;
+    color:inherit;
+}
+
+tbody tr:hover {
+    background:#f5f5f5;
+    cursor:pointer;
+}
+
+
+
+
+
+
+/* ========== news ========== */
+/* 리스트 초기화 */
+ul,
+ol {
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+}
+
+li::before {
+    content: "•";
+}
+
+li {
+    padding: 5px;
+    margin: 10px 0;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+li:hover,
+li:focus {
+    text-decoration: underline;
+
+    background:#f5f5f5;
+    cursor:pointer;
+}
+
+
+
+/* ========== allGames ========== */
+.allGames {
+    width: 90%;
+    /* height: 400PX; */
+
+    border: 1px solid var(--SubColor);
+
+    padding: 30px;
+
+    margin-bottom: 30px;
+}
+
+.agTop {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+#agTitle {
+    margin: 2px;
+}
+
+.agSearch {
+    display: flex;
+}
+
+#search-table {
+    border: 2px solid var(--MainColor);
+
+    padding: 3px 5px;
+}
+
+#search-table-input {
+    margin-left: 3px;
+}
+
+#search-input {
+    width: 250px;
+}
+
+#search-btn {
+    /* border: 1px solid red; */
+    border: 1px solid var(--SubColor);
+    border-radius: 5px;
+
+    background-color: white;
+    color: black;
+
+    padding: 3px 10px;
+    margin-left: 7px;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#search-btn:hover,
+#search-btn:focus {
+    border-color: var(--SubColor);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
+}
+
+.agMain {
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.agGames {
+    display: flex;
+
+    width: 300px;
+
+    align-items: center;
+
+    padding: 10px;
+    margin: 10px;
+
+    border: 1px solid var(--SubColor);
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.agGames:hover,
+.agGames:focus {
+    border-color: var(--SubColor);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
+}
+
+.agGamesImg {
+    border: 1px solid red;
+    border-radius: 50%;
+
+    width: 50px;
+    height: 50px;
+}
+
+.agGamesTitle {
+    margin-left: 20px;
+
+    font-size: 15px;
+}
+
+
+
+
+
+/* ========== remote ========== */
+a {
+    text-decoration: none;
+    /* 밑줄 제거 */
+    color: inherit;
+    /* 부모 요소의 색상 상속 */
+    cursor: pointer;
+    /* 마우스 포인터 설정 */
+}
+
+a:hover {
+    text-decoration: none;
+    /* 호버 시에도 밑줄 제거 (필요시) */
+}
+
+.remote {
+    border: 1px solid var(--SubColor);
+    width: 60px;
+    height: 60px;
+
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+
+    text-align: center;
+    color: #3d3d3d;
+    font-weight: 700;
+
+    background-color: white;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+
+
+
+/* ---------------------------------------------------------------------- */
+
+
+@media screen and (max-width: 800px) {
+
+
+    .main>div {
+        width: 90%;
+    }
+
+
+    /* ========== top ========== */
+
+    .GNB {
+        padding: 5px 10px;
+
+        width: 100%;
+    }
+
+    #logo {
+        width: 70px;
+    }
+
+    .topBtn {
+        font-size: 10px;
+
+        width: 20px;
+
+        margin: 5px;
+    }
+
+
+    .LNB {
+        padding: 10px 10px;
+    }
+
+    .LNBbtn {
+        font-size: 12px;
+    }
+
+
+
+    .games-btnWrap {
+        position: absolute;
+        top: 92%;
+        left: 0;
+        transform: translateY(-50%);
+        width: 100%;
+
+        display: flex;
+        justify-content: space-between;
+
+        padding: 0 10px;
+        z-index: 10;
+    }
+
+    .gameMenu:hover .gameList {
+        transform: translate(-50%, 0px);
+
+        left: 0;
+    }
+
+
+
+    /* ========== images ========== */
+    .ad {
+        margin-top: 20px;
+
+        /* display: flex;*/
+
+        padding: 0;
+    }
+
+    .carouselBtn {
+        width: 95%;
+
+        top: 90%;
+    }
+
+
+
+
+    /* ========== games ========== */
+    .games {
+        width: 90%;
+
+        padding: 20px 2px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .games-track {
+        transform: translate(0, 0);
+    }
+
+    .games-slide-img {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        border: 1px solid red;
+    }
+
+
+    .games-viewport {
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .games-track {
+        display: flex;
+        gap: 20px;
+        transition: transform 0.4s ease;
+    }
+
+    .games-slide {
+        flex: 0 0 70%;
+        display: flex;
+        flex-direction: column;
+
+        align-items: center;
+    }
+
+    .games-slide-title {
+        width: 70%;
+    }
+
+
+
+
+
+    /* ========== comm ========== */
+
+    .comm, .notice {
+        margin: 20px;
+        padding: 20px 15px;
+    }
+
+    .comm-content>table, .notice-content>table {
+        width: 90%;
+    }
+
+    #comm-content-time,
+    #notice-content-time,
+    .contentTime {
+        display: none;
+    }
+
+    .gotoDiv {
+        padding: 0;
+    }
+
+    .comm-content>table {
+        margin: 0 auto;
+    }
+
+    .contentTitle {
+        padding-left: 10px;
+    }
+
+
+
+    /* ========== allGames ========== */
+    .allGames {
+        padding: 20px 10px;
+
+        margin-bottom: 30px;
+    }
+
+    .agTop {
+        flex-direction: column;
+    }
+
+    #agTitle {
+        margin-bottom: 20px;
+    }
+
+    #search-input {
+        width: 90%;
+    }
+
+    .agGames {
+        width: 90%;
+    }
+
+
+}

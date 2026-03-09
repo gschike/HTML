@@ -5,7 +5,7 @@
     --hoodie-color: #bdc3c7;
     /* 편한 회색 후드 */
 
-    --MainColor: rgb(123, 45, 210);
+    --MainColor: rgb(123, 50, 210);
     --SubColor: rgb(230, 230, 230);
 
     --color1: rgb(34, 178, 255);
@@ -16,6 +16,16 @@
     --color6: rgb(99, 12, 167);
     --color7: rgb(255, 94, 147);
     --color8: rgb(72, 201, 176);
+}
+
+body {
+    margin: 0;
+    font-family: 'Malgun Gothic', sans-serif;
+    font-size: 14px;
+    color: #333;
+    background: #fafafa;
+
+    padding: 20px;
 }
 
 
@@ -58,7 +68,15 @@ button {
     color: white;
 }
 
-#nextPage-btn {
+.btn-purple:hover {
+    filter: brightness(1.2);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.397);
+    transform: translateY(-1px);
+}
+
+#nextPage-btn,
+#replay-btn,
+#fin-btn {
     padding: 5px 10px;
     margin: 3px;
     margin-bottom: 6px;
@@ -68,6 +86,27 @@ button {
     height: 40px;
 
     font-weight: 700;
+
+    display: none;
+}
+
+
+
+
+
+
+/* ================= 위 ================= */
+
+.top {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#btn-main {
+    width: 100px;
+
+    cursor: pointer;
 }
 
 
@@ -93,7 +132,7 @@ button {
     margin: 20px auto 0;
 }
 
-#input {
+#answer-input {
     border: 2px solid #ddd;
 
     padding-left: 10px;
@@ -107,7 +146,7 @@ button {
     font-size: 14px;
 }
 
-#input-btn {
+#answer-btn {
     padding: 5px 10px;
     margin: 3px;
     margin-left: 6px;
@@ -124,10 +163,6 @@ button {
     font-size: 15px;
 
     height: 40px;
-}
-
-#nextPage-btn {
-    display: none;
 }
 
 
@@ -256,4 +291,117 @@ button {
     height: 60px;
     background: var(--hoodie-color);
     border-radius: 20px 20px 5px 5px;
+}
+
+
+
+
+/* ================= 게임요소 ================= */
+
+.stage1 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+
+    background-color: white;
+    border: 2px solid #ccc;
+
+    padding: 5px;
+}
+
+#frag1 {
+    position: absolute;
+
+    top: 60%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    display: none;
+}
+
+#frag1::after {
+    content: "230";
+}
+
+#frag2 {
+    /* display: inline-block; */
+
+    font-size: 15px;
+
+    position: absolute;
+
+    top: 45%;
+    left: 51%;
+
+    transform: translate(-50%, -50%);
+
+    z-index: -999;
+
+    display: none;
+}
+
+#frag2::after {
+    content: "357";
+}
+
+#frag3 {
+    filter: blur(10px);
+
+    position: absolute;
+
+    top: 67%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    display: none;
+}
+
+#frag3::after {
+    content: "519";
+}
+
+
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+
+    display: none;
+    /* display: flex; */
+
+    z-index: 9;
+}
+
+.hint {
+    border: 2px solid var(--MainColor);
+    background-color: white;
+
+    border-radius: 10px;
+
+    /* width: 400px; */
+    /* height: 500px; */
+    padding: 20px 30px;
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    justify-content: center;
+    align-items: space-between;
+}
+
+#hintClose {
+    padding: 3px 12px;
+    margin: 3px;
+    margin-left: 6px;
+
+    font-size: 15px;
+
+    height: 40px;
 }
