@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML 커뮤니티</title>
+    <link rel="stylesheet" href="community_Mng.css">
+
+    <script src="./phi/jquery-3.7.1.js"></script>
+    <script src="./phi/sj.api.v1.sj.js" defer></script>
+    <script src="community_Mng.js"></script>
+</head>
+
+<body>
+    <div class="top">
+        <div class="GNB">
+            <div class="left">
+                <a href="./home.html">
+                    <img id="logo" src="./image/LOGO.png">
+                </a>
+            </div>
+
+            <div class="beforeLogin">
+                <button type="button" class="topBtn" id="btn-login">로그인</button>
+                <button type="button" class="topBtn" id="btn-join">회원가입</button>
+            </div>
+            <div class="afterLogin">
+                <button type="button" class="topBtn" id="btn-logout">로그아웃</button>
+                <button type="button" class="topBtn" id="btn-myPage">마이 페이지</button>
+            </div>
+        </div>
+        <div class="LNB">
+            <div class="LNBbtn" id="LNBmyPage">마이 페이지</div>
+            <div class="LNBbtn" id="LNBnotice">공지사항</div>
+            <div class="LNBbtn" id="LNBcomm">커뮤니티</div>
+            
+            <div class="LNBbtn gameMenu">
+                게임
+                <div class="gameList">
+                    <div class="gameItem">게임1</div>
+                    <div class="gameItem">게임2</div>
+                    <div class="gameItem">게임3</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <hr> -->
+
+    <!-- <div class="ad">
+        
+    </div> -->
+
+
+    <div id="wrap-main">
+
+        <div class="search">
+            <table id="search-table">
+                <tr>
+                    <td id="search-table-svg">
+                        <svg width="15" height="15" viewBox="0 0 69 71" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="30.1667" cy="30.1667" r="26.6667" stroke="#aaa" stroke-width="7"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M48.5 50.0265L65.1667 66.6934" stroke="#aaa" stroke-width="7"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </td>
+                    <td id="search-table-input">
+                        <input type="text" id="search-input" placeholder="제목 혹은 내용으로 검색">
+                    </td>
+                </tr>
+            </table>
+            <button class="mainBtn" id="search-btn">검색</button>
+        </div>
+
+
+        <div id="buttons">
+            <div>
+                <button class="mainBtn" id="notice">공지사항</button>
+                <button class="mainBtn" id="main_list">전체글</button>
+            </div>
+            <button class="mainBtn" id="write">글쓰기</button>
+        </div>
+
+
+        <table id="table">
+            <thead>
+                <th>번호</th>
+                <th>제목</th>
+                <th>글쓴이</th>
+                <th>작성일</th>
+                <th>조회</th>
+                <th>추천</th>
+            </thead>
+            <tbody id="content">
+                <!-- 테이블 붙이기 -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 번호 / 제목 / 글쓴이 / 작성일 / 조회 / 추천 수
+    <tr>
+        <td>postId</td>
+        <td>title</td>
+        <td>authorId</td>
+        <td>createdAt</td>
+        <td>viewCount</td>
+        <td>...</td>
+    </tr> -->
+
+
+    <!-- 참고용 -->
+    <!-- <table id="board6">
+        <tr>
+            <td>
+                <input id="Todo_input" type="text" value="할 일을 적어주세요.">
+            </td>
+            <td>
+                <button id="btnAdd">추가</button>
+            </td>
+            <td>
+                <button id="dltAll">선택삭제</button>
+            </td>
+            <td>
+                <input type="checkbox" id="sltAll">전체
+            </td>
+        </tr>
+    </table> -->
+
+    <div class="bottom">
+        <span id="pagePrev">&lt;</span>
+        <span class="page">
+            <!-- <span>1</span> -->
+        </span>
+        <span id="pageNext">&gt;</span>
+    </div>
+
+</body>
+
+</html>

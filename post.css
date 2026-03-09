@@ -528,6 +528,21 @@ body {
     font-weight: bold;
 }
 
+#readmore_wrap {
+    position: relative;
+}
+
+.readMore {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    text-align: center;
+    height: 40px;
+}
+
+
 /* 댓글 전체 컨테이너 */
 .cmt_Space {
     border-top: 1px solid #ddd;

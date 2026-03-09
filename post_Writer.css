@@ -303,6 +303,46 @@
         accent-color: var(--main-purple);
     }
 
+    /* 리치 텍스트 에디터 */
+
+    /* 1. 에디터 전체 테두리 색상 변경 */
+    .ql-toolbar.ql-snow,
+    .ql-container.ql-snow {
+        border-color: var(--main-purple) !important;
+        /* 메인 보라색으로 변경 */
+    }
+
+    /* 2. 툴바의 버튼 및 아이콘 색상 (평상시) */
+    .ql-snow .ql-stroke {
+        stroke: #555;
+        /* 아이콘 선 색상 */
+    }
+
+    .ql-snow .ql-fill {
+        fill: #555;
+        /* 아이콘 채우기 색상 */
+    }
+
+    /* 3. 툴바 버튼에 마우스를 올렸을 때(Hover)나 활성화되었을 때 */
+    .ql-snow.ql-toolbar button:hover,
+    .ql-snow.ql-toolbar button.ql-active,
+    .ql-snow .ql-picker-label:hover,
+    .ql-snow .ql-picker-label.ql-active,
+    .ql-snow .ql-picker-item:hover,
+    .ql-snow .ql-picker-item.ql-active {
+        color: var(--main-purple) !important;
+    }
+
+    .ql-snow.ql-toolbar button:hover .ql-stroke,
+    .ql-snow.ql-toolbar button.ql-active .ql-stroke {
+        stroke: var(--main-purple) !important;
+    }
+
+    .ql-snow.ql-toolbar button:hover .ql-fill,
+    .ql-snow.ql-toolbar button.ql-active .ql-fill {
+        fill: var(--main-purple) !important;
+    }
+
     .ql-container.ql-snow {
         border: none !important;
         min-height: 300px;
@@ -311,11 +351,14 @@
 
     /* 툴바 배경색 살짝 주기 */
     .ql-toolbar.ql-snow {
-        background-color: #fcfaff;
-        border: none !important;
-        border-bottom: 1px solid var(--border-color) !important;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        background-color: var(--sub-purple);
+        /* 툴바 배경을 연한 보라색으로 */
     }
 
     #editor {
-        background-color: white;
+        background-color: #ffffff;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
     }

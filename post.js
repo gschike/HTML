@@ -21,6 +21,8 @@ function bind() {
     bindPostActions();
     bindComments();
 
+
+
 }
 
 
@@ -162,12 +164,14 @@ function bindLNB() {
 
     })
 
+
 }
 
 
 
+
 ///////////////////////////////////////////////////////
-// 게시글 액션 (추천 / 삭제 / 수정)
+// 게시글 액션 (url복사 / 추천 / 삭제 / 수정)
 ///////////////////////////////////////////////////////
 
 function bindPostActions() {
@@ -202,6 +206,9 @@ function bindPostActions() {
     //     likeCount++;
 
     // }
+    document.getElementById("btn-URL").onclick = () => {
+        alert("주소가 복사되었습니다!"); // 성공 시 알림
+    };
 
     like.onclick = () => {
         // 비로그인 시 막는 기능
@@ -593,14 +600,43 @@ function createInputComment() {
 // 댓글 수 카운트
 ///////////////////////////////////////////////////////
 
+let pagination = 2; //10o
+
 function cntComment() {
 
+
     const currentCount = document.querySelectorAll('.commentRow').length;
+    const row = document.querySelectorAll('.commentRow');
 
     const targets = document.querySelectorAll('#btn-comment > span, #cmt_commentCount');
 
-    targets.forEach(el => el.textContent = currentCount);
+    targets.forEach(el => el.textContent = currentCount)
 
+    row.forEach((val, index) => {
+        if (index > pagination) { // 현재 댓글 수가 제한(10*)보다 크면
+            val.style.display = 'none' // 가리기
+
+
+            const readmore_wrap = document.querySelector('#readmore_wrap');
+            const readMore = document.createElement('div');
+            readMore.className = 'readMore';
+            readMore.textContent = '+더보기';
+
+            readmore_wrap.append(readMore);
+
+            readMore.onclick = () => {
+                pagination += 3; //10a
+                readMore.remove()
+                cntComment()
+
+                if (index === pagination) { readMore.remove() } //stop
+            }
+        }
+
+        else {
+            val.style.display = 'block'
+        }
+    })
 }
 
 
@@ -633,7 +669,7 @@ function cntComment() {
 
 // }
 
-function modal(evtTarget) { 
+function modal(evtTarget) {
 
     const popup = document.querySelector('#Delete-Popup')
     popup.style.display = 'flex'
@@ -664,3 +700,7 @@ function modal(evtTarget) {
     }
 
 }
+
+
+
+
