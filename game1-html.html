@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>HTML 태그 타자 게임</title>
+    <style>
+        /* Reset & body */
+        body {
+            margin: 0;
+            background: #111;
+            color: white;
+            font-family: monospace;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* 로고 맨 위 */
+        #logo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: #e0dddd;
+            color: rgb(35, 37, 107);
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            padding-left: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .pic {
+            width: 200px;
+            height: 50px;
+        }
+
+        #wrapper {
+            display: flex;
+            position : flex-start;
+            margin-top: 120px;
+            /* 로고 아래 */
+        }
+
+        #container {
+            display: flex;
+            margin-top: 120px;
+            /* 로고 아래로 */
+            width: 1050px;
+            height: 750px;
+            border: 2px solid rgb(123, 45, 210);
+            background: #1a1a1a;
+        }
+
+        #ad {
+            display: flex;
+            margin-top: 120px;
+            width: 200px;
+            height: 750px;
+            background-color: #807c7c;
+            color:#f7f4f4;
+            font-weight: bold;
+        }
+
+        /* 왼쪽 사이드바 */
+        #sidebar {
+            width: 35%;
+            padding: 15px;
+            box-sizing: border-box;
+            border-right: 2px solid rgb(123, 45, 210);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow-y: auto;
+        }
+
+        #sidebar h2 {
+            margin: 0 0 10px 0;
+            font-size: 20px;
+            border-bottom: 1px solid rgb(123, 45, 210);
+            padding-bottom: 5px;
+        }
+
+        #ui {
+            font-size: 18px;
+            line-height: 1.5;
+        }
+
+        #instructions {
+            font-size: 16px;
+            background: #222;
+            padding: 10px;
+            border: 1px solid rgb(123, 45, 210);
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        #code {
+            background: #222;
+            padding: 10px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            border: 1px solid rgb(123, 45, 210);
+            height: 200px;
+            overflow-y: auto;
+        }
+
+        /* 오른쪽 게임 화면 */
+        #main {
+            width: 65%;
+            position: relative;
+            background: linear-gradient(to bottom, #222, #111);
+            overflow: hidden;
+        }
+
+        #game {
+            width: 100%;
+            height: calc(100% - 60px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #input {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            text-align: center;
+        }
+
+        #input input {
+            width: 100%;
+            font-size: 20px;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .word {
+            position: absolute;
+            font-size: 24px;
+            top: -40px;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                top: 100%;
+            }
+        }
+
+        /* 스크롤바 스타일 */
+        #sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #sidebar::-webkit-scrollbar-thumb {
+            background: rgb(123, 45, 210);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="logo">
+        <a href="메인페이지" target="main">
+            <img class="pic" src="LOGO.png" alt="로고">
+        </a>
+
+    </div>
+    <div id="wrapper"></div>
+    <div id="container">
+
+        <!-- 왼쪽 사이드바 -->
+        <div id="sidebar">
+            <h2>게임 정보</h2>
+            <div id="ui">
+                Level: <span id="level">1</span><br>
+                Score: <span id="score">0</span><br>
+                Combo: <span id="combo">0</span>
+            </div>
+
+            <h2>게임 설명</h2>
+            <div id="instructions">level instruction</div>
+
+            <h2>완성 코드</h2>
+            <div id="code">완성 코드:</div>
+        </div>
+
+        <!-- 오른쪽 게임 화면 -->
+        <div id="main">
+            <div id="game"></div>
+            <div id="input">
+                <input id="answer" placeholder="타이핑...">
+            </div>
+        </div>
+
+    </div>
+    <div id="ad">광고배너</div>
+    </div>
+
+    <script>
+        // DOM
+        const game = document.getElementById("game")
+        const input = document.getElementById("answer")
+        const scoreEl = document.getElementById("score")
+        const comboEl = document.getElementById("combo")
+        const levelEl = document.getElementById("level")
+        const codeEl = document.getElementById("code")
+        const instructionsEl = document.getElementById("instructions")
+
+        let score = 0
+        let combo = 0
+        let level = 1
+        let activeWords = []
+        let completedCode = []
+
+        const levelDescriptions = {
+            1: "1단계: 화면에 나타나는 효과를 보고 어떤 HTML 태그인지 입력하세요. 점수 200점 달성 시 2단계로 진행됩니다. (ex - 굵게 > b)",
+            2: "2단계: 리스트 태그를 순서대로 입력하세요. (아이템 리스트 2개 사용하기).",
+            3: "3단계: 테이블 태그를 순서대로 입력하세요.",
+            4: "4단계: 선택 메뉴 만들기.(form 형식, option 2개 사용하기)",
+            5: "5단계: 로그인 폼을 완성하세요. 순서대로 입력해야 점수가 올라갑니다.(form 형식, input 은 label 안에 넣기)"
+        }
+
+        function updateInstructions() {
+            instructionsEl.innerText = levelDescriptions[level] || "게임을 진행하세요!"
+        }
+
+        // --------------------
+        // 1단계: 효과 기반
+        const effectTags = [
+            { effect: "굵게", tag: "b", style: "font-weight:bold;" },
+            { effect: "기울임", tag: "i", style: "font-style:italic;" },
+            { effect: "밑줄", tag: "u", style: "text-decoration:underline;" },
+            { effect: "줄바꿈", tag: "br", style: "" },
+            { effect: "문단", tag: "p", style: "margin-bottom:10px;" }
+        ]
+
+        const levels = {
+            2: ["ul", "li", "/li", "li", "/li", "/ul"],
+            3: ["table", "tr", "td", "/td", "/tr", "/table"],
+            4: ["form", "select", "option", "/option", "option", "/option", "/select", "/form"],
+            5: ["form", "label", "input", "/label", "button", "/form"]
+        }
+
+        function getCurrentLevelTags() {
+            return level === 1 ? effectTags : levels[level]
+        }
+
+        function spawnWord() {
+            let wordData
+            if (level === 1) {
+                wordData = effectTags[Math.floor(Math.random() * effectTags.length)]
+            } else {
+                const availableWords = getCurrentLevelTags()
+                const tag = availableWords[Math.floor(Math.random() * availableWords.length)]
+                wordData = { effect: tag, tag: tag, style: "" }
+            }
+
+            const el = document.createElement("div")
+            el.className = "word"
+            el.innerText = wordData.effect
+            el.style.cssText = wordData.style + "; position:absolute; top:-40px; left:" + (Math.random() * 85) + "%; font-size:24px;"
+            const speed = 5 + Math.random() * 2
+            el.style.animation = "fall " + speed + "s linear forwards"
+            game.appendChild(el)
+            activeWords.push({ element: el, tag: wordData.tag })
+
+            setTimeout(() => {
+                el.remove()
+                activeWords = activeWords.filter(w => w.element !== el)
+                combo = 0
+                comboEl.innerText = combo
+            }, speed * 1000)
+        }
+
+        let spawnInterval = setInterval(spawnWord, 1500)
+
+        function updateCodeDisplay() {
+            codeEl.innerText = "완성 코드:\n" + completedCode.join("\n")
+        }
+
+        input.addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+                const value = input.value.trim()
+                let expected
+                if (level === 1) {
+                    expected = null
+                    for (let w of activeWords) {
+                        if (w.tag === value) { expected = w.tag; break }
+                    }
+                } else {
+                    const currentTags = getCurrentLevelTags()
+                    expected = currentTags[completedCode.length]
+                }
+
+                if (expected && value === expected) {
+                    completedCode.push(value)
+                    updateCodeDisplay()
+                    score += 100 + combo * 10
+                    combo++
+                    scoreEl.innerText = score
+                    comboEl.innerText = combo
+
+                    activeWords.forEach(w => { if (w.tag === value) w.element.remove() })
+                    activeWords = activeWords.filter(w => w.tag !== value)
+
+                    if (level === 1 && score >= 200) {
+                        level++
+                        completedCode = []
+                        codeEl.innerText = "완성 코드:"
+                        levelEl.innerText = level
+                        updateInstructions()
+                    } else if (level > 1 && completedCode.length === getCurrentLevelTags().length) {
+                        if (level < 5) {
+                            level++
+                            completedCode = []
+                            codeEl.innerText = "완성 코드:"
+                            levelEl.innerText = level
+                            updateInstructions()
+                        } else if (level === 5 && completedCode.length === getCurrentLevelTags().length) {
+                            alert("축하합니다! 모든 단계가 완료되었습니다!")
+                        }
+                    }
+
+                    //  정답 입력 후 항상 입력창 비우기
+                    input.value = ""
+                } else {
+                    // 오답이면 입력 초기화
+                    input.value = ""
+                }
+
+
+            }
+        })
+
+        // 초기 설명 표시
+        updateInstructions()
+    </script>
+
+</body>
+
+</html>
