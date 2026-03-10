@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메인 관리자 페이지</title>
+
+    <script src="./main_Mng.js"></script>
+    <link rel="stylesheet" href="./main_Mng.css">
+</head>
+
+<body>
+    <div id="mainpageBtn">메인페이지</div>
+
+    <div id="gnb_Manager_wrap">
+        <div class="gnb_head">
+            <div id="buttons">
+                <div id="logo">LOGO</div>
+                <div id="main_btn" class="button">메인페이지</div>
+                <div id="manager_btn" class="button">관리자페이지(메인)</div>
+                <div id="userManager_btn" class="button">관리자페이지(회원관리/커뮤니티)</div>
+            </div>
+            <!-- gnb 제작자 확인 필요 -->
+        </div>
+    </div>
+
+    <div id="main_wrap">
+
+        <div id="users_wrap">
+            <!-- 실시간 방문자 수 / 오늘 방문자 수 -->
+            <div class="wrap">
+                <div class="title">방문자 통계</div>
+                <div class="visitors">
+                    <div id="today_visitor" class="visitor">day 방문자 통계: <span>0</span></div>
+                    <div id="weekly_visitor" class="visitor">week 방문자 통계: <span>781</span></div>
+                    <div id="month_visitor" class="visitor">month 방문자 통계: <span>3692</span></div>
+                </div>
+                <div id="visitor_now" class="visitor">실시간 방문자 통계: <span>3</span></div>
+            </div>
+        </div>
+
+        <div id="errorlog_wrap">
+            <div class="wrap">
+                <div class="title">버그 리포트</div>
+                <!-- 오류 로그 -->
+                <div class="errors">
+                    <div class="console center">
+                        <div>메인페이지 에러 알림이</div>
+                        <div class="background">
+                            <div class="errorlog">에러 로그:</div>
+                            <div class="contents"></div>
+                        </div>
+                    </div>
+                    <div class="console center">
+                        <div>커뮤니티페이지 에러 알림이</div>
+                        <div class="background">
+                            <div class="errorlog">에러 로그:</div>
+                            <div class="contents"></div>
+                        </div>
+                    </div>
+                    <div class="console center">
+                        <div>회원가입/로그인 에러 알림이</div>
+                        <div class="background">
+                            <div class="errorlog">에러 로그:</div>
+                            <div class="contents"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="scheduler_wrap">
+            <div class="wrap">
+                <div class="title">업데이트 스케쥴러</div>
+                <div id="calander">관리자 일정 달력</div>
+            </div>
+        </div>
+
+        <div id="gameBreak_wrap">
+            <!-- 게임 중지 버튼  -->
+            <div class="wrap">
+                <div class="title">게임 브레이크</div>
+                <div class="gamebreaker">
+                    <div class="btn_wrap">
+                        <div class="gameSTOP">게임 전체</div>
+                        <div class="stop">전체 정지</div>
+                    </div>
+                    <!-- 브레이크 시 중단 되었습니다. 페이지 나오도록 -->
+
+                    <div class="btn_wrap">
+                        <div class="gameSTOP">게임1</div>
+                        <div class="stop">정지</div>
+                    </div>
+                    <div class="btn_wrap">
+                        <div class="gameSTOP">게임2</div>
+                        <div class="stop">정지</div>
+                    </div>
+                    <div class="btn_wrap">
+                        <div class="gameSTOP">게임3</div>
+                        <div class="stop">정지</div>
+                    </div>
+                    <div class="btn_wrap">
+                        <div class="gameSTOP">게임4</div>
+                        <div class="stop">정지</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="pageBreak_wrap">
+            <!-- 페이지 중지 버튼 -->
+            <div class="wrap">
+                <div class="title">페이지 브레이크</div>
+                <div class="pagebreaker">
+                    <!-- 브레이크 시 중단 되었습니다. 페이지 나오도록 -->
+                    <div class="btn_wrap">
+                        <div class="pageSTOP">페이지 전체</div>
+                        <div class="stop">전체 정지</div>
+                    </div>
+                    <div class="btn_wrap">
+                        <div class="pageSTOP">페이지1</div>
+                        <div class="stop">정지</div>
+                    </div>
+                    <div class="btn_wrap">
+                        <div class="pageSTOP">페이지2</div>
+                        <div class="stop">정지</div>
+                    </div>
+                    <div class="btn_wrap">
+                        <div class="pageSTOP">페이지3</div>
+                        <div class="stop">정지</div>
+                    </div>
+                    <div class="btn_wrap">
+                        <div class="pageSTOP">페이지4</div>
+                        <div class="stop">정지</div>
+                    </div>
+                    <div class="btn_wrap">
+                        <div class="pageSTOP">페이지5</div>
+                        <div class="stop">정지</div>
+                    </div>
+                    <div class="btn_wrap">
+                        <div class="pageSTOP">페이지6</div>
+                        <div class="stop">정지</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal_wrap">
+        <div class="container" style="">
+            <div class="modal-text"><span>정지하시겠습니까?</span></div>
+            <div class="modal-btns">
+                <button type="button" class="btn-confirm">확인</button>
+                <button type="button" class="btn-cancel">취소</button>
+            </div>
+        </div>
+        <div class="container" style="">
+            <div class="modal-text"><span>정지하시겠습니까?</span></div>
+            <div class="modal-btns">
+                <button type="button" class="btn-confirm">확인</button>
+                <button type="button" class="btn-cancel">취소</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
