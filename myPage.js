@@ -2,6 +2,8 @@ window.addEventListener("load", () => {
     init();
 })
 
+let nowUserId = "";
+
 function init() {
 
     // =========================================================
@@ -27,6 +29,7 @@ function init() {
 function bind() {
     if (!checkLogin()) return;
 
+    userId();
     bindGNB();
     bindLNB();
     bindNickname();
@@ -71,7 +74,7 @@ function bindGNB() {
             console.log("현재 로그인 유저:", loginUser.userId);
             console.log("권한:", loginUser.role);
 
-            loginUser = loginUser.userId;
+            nowUserId = loginUser.userId;
 
             changeLogin();
 
@@ -140,6 +143,11 @@ function bindGNB() {
 ///////////////////////////////////////////////////////
 
 function bindLNB() {
+    const LNBadminPage = document.getElementById("LNBadminPage");
+    
+    if (nowUserId == "admin") {
+        LNBadminPage.style.display = "inline-block";
+    }
 
     const LNBmyPage = document.getElementById("LNBmyPage");
 
@@ -191,6 +199,17 @@ function checkLogin() {
 
     return true;
 
+}
+
+
+///////////////////////////////////////////////////////
+// 아이디 정보 가져오기
+///////////////////////////////////////////////////////
+function userId() {
+    const loginUser = JSON.parse(localStorage.getItem("loginUser"));
+    const idInfo = document.getElementById("idInfo");
+
+    idInfo.innerHTML = loginUser.userId;
 }
 
 
@@ -391,9 +410,7 @@ function bindDeleteAccount() {
 async function postList() {
 
     const postList = JSON.parse(localStorage.getItem("postList")).items;
-
     const loginUser = JSON.parse(localStorage.getItem("loginUser"));
-
     const postsTableTbody = document.getElementById("postsTableTbody")
 
     let postsIdArr = [];

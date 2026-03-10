@@ -20,6 +20,8 @@ function bind() {
     initCommunity();
     initNotice();
     initNews();
+
+    gameSearch();
 }
 
 /* =========================
@@ -100,6 +102,11 @@ function bindLNB() {
     const LNBmyPage = document.getElementById("LNBmyPage");
     const LNBnotice = document.getElementById("LNBnotice");
     const LNBcomm = document.getElementById("LNBcomm");
+
+    const LNBadminPage = document.getElementById("LNBadminPage");
+    if (nowUserId == "admin") {
+        LNBadminPage.style.display = "inline-block";
+    }
 
     LNBmyPage.addEventListener("click", () => {
 
@@ -351,4 +358,39 @@ async function postLoad() {
 
         console.log("SJ-POST-1 POSTS_LIST", e);
     }
+}
+
+///////////////////////////////////////////////////////
+// 게임 검색 기능
+///////////////////////////////////////////////////////
+
+function gameSearch() {
+    const searchBtn = document.querySelector("#search-btn");
+    const searchInput = document.querySelector("#search-input");
+    const games = document.querySelectorAll(".agGames");
+    const agTitle = document.querySelector("#agTitle");
+
+    // 검색 버튼
+    searchBtn.addEventListener("click", () => {
+        const keyword = searchInput.value.trim().toLowerCase();
+
+        games.forEach(game => {
+            const title = game.querySelector(".agGamesTitle").innerText.toLowerCase();
+
+            if (title.includes(keyword)) {
+                game.parentElement.style.display = "block";
+            } else {
+                game.parentElement.style.display = "none";
+            }
+        });
+    });
+
+    // 모든 게임 다시 보기
+    agTitle.addEventListener("click", () => {
+        searchInput.value = "";
+
+        games.forEach(game => {
+            game.parentElement.style.display = "block";
+        });
+    });
 }

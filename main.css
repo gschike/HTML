@@ -69,6 +69,8 @@ body {
     font-size: 14px;
     color: #333;
     background: #fafafa;
+
+    padding: 20px 50px;
 }
 
 .pop {
@@ -90,14 +92,31 @@ body {
     box-shadow: 5px 5px 2px 0px rgba(0, 0, 0, 0.2);
 }
 
-.top {
-    padding: 15px;
 
+
+
+
+/* ================= 위 ================= */
+
+.top {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    align-items: center;
 }
 
-.topBtn,
+#btn-main {
+    width: 100px;
+
+    cursor: pointer;
+}
+
+
+
+
+
+
+/* ================= 팝업, 버튼 개괄 ================= */
+
 .popBtn {
     min-width: 60px;
 
@@ -107,31 +126,14 @@ body {
     background: #fff;
     color: var(--MainColor);
     border: 1px solid var(--MainColor);
-    border-radius: 15px;
+    border-radius: 7px;
 }
 
-.topBtn:hover,
 .popBtn:hover,
-.topBtn:focus,
 .popBtn:focus {
     background: var(--MainColor);
     color: #fff;
     cursor: pointer;
-}
-
-#btn-ham svg {
-    width: 25px;
-    height: 15px;
-
-    margin-left: 10px;
-    margin-right: 15px;
-
-    position: relative;
-    z-index: 9;
-}
-
-.popBtn {
-    border-radius: 7px;
 }
 
 .mainBtn {
@@ -166,128 +168,11 @@ body {
     font-weight: 700;
 }
 
-.beforeLogin {
-    /* width: 100%; */
-
-    display: flex;
-    /* display: none; */
-
-    justify-content: flex-end;
-}
-
-.afterLogin {
-    /* width: 100%; */
-
-    display: none;
-    /* display: flex; */
-
-    justify-content: flex-end;
-}
 
 
-/* input 묶음
-.input {
-    position: relative;
-    margin-bottom: 20px;
-}
-
-.input-td {
-    display: flex;
-    align-items: center;
-    
-    border: 2px solid #ddd;
-
-    padding-left: 10px;
-    padding-right: 10px;
-} */
-
-/* 기본 input 스타일 */
-/* .input input {
-    width: 300px;
-    height: 40px;
-    padding: 14px 16px;
-    /* border-radius: 12px; */
-/* border-top: 2px solid #ddd;
-    border-bottom: 2px solid #ddd; */
-/* font-size: 15px;
-    outline: none;
-    transition: 0.3s;
-    box-sizing: border-box;
-} */
-/* 
-.input .tdFirst {
-    padding-left: 10px;
-    height: 40px;
-
-    border-top: 2px solid #ddd;
-    border-left: 2px solid #ddd;
-    border-bottom: 2px solid #ddd;
-} */
-
-/* placeholder 색 */
-/* .input input::placeholder {
-    color: #aaa;
-} */
-
-/* 비밀번호 보기 버튼 */
-/* .pwCheckBtn {
-    display: flex;
-    align-items: center;
-} */
-/* 
-.viewPw {
-    width: 18px;
-    height: 18px;
-} */
-/* 
-.input {
-    margin: 0 auto;
-}
-
-.inputBtnDiv {
-    display: flex;
-    justify-content: center;
-
-    margin-top: 20px;
-} */
 
 
-/* ============ 햄버거 메뉴 ============== */
-.ham-menu {
-    position: absolute;
-    top: 0;
-    right: 0;
-
-    z-index: 99;
-
-    /* border: 1px solid red; */
-    width: 300px;
-    height: 100%;
-    padding: 75px 20px;
-
-    background-color: rgba(0, 0, 0, 0.692);
-    color: white;
-
-    font-size: 15px;
-}
-
-.ham-menu div {
-    margin: 10px;
-
-    cursor: pointer;
-}
-
-#ham-menu-close {
-    position: absolute;
-    z-index: 999;
-
-    top: 18px;
-    right: 22px;
-}
-
-#ham-menu-close:hover {
-    cursor: pointer;
-}
+/* ================= main ================= */
 
 .main {
     height: 80vh;
@@ -307,18 +192,18 @@ body {
 }
 
 .manual {
-    width: 400px;
-    height: 400px;
+    width: 600px;
+    /* height: 400px; */
 
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 
-    display: none;
-}
+    padding: 40px 20px 20px;
 
-.manual {
+    display: none;
+    
     flex-direction: column;
 
     align-items: center;
@@ -326,7 +211,7 @@ body {
 }
 
 #manual-close {
-    margin: 20px;
+    margin: 20px 0 10px;
 }
 
 
@@ -336,30 +221,6 @@ body {
 
 
 @media screen and (max-width: 800px) {
-
-    .topBtn {
-        font-size: 11px;
-
-        min-width: 50px;
-    }
-
-    #btn-ham {
-        width: 35px;
-    }
-
-    #btn-ham svg {
-        margin: 0 auto;
-    }
-
-    .ham-menu {
-        width: 210px;
-
-        font-size: 14px;
-    }
-
-    .ham-menu svg {
-        width: 12px;
-    }
 
     #title {
         font-size: 18px;

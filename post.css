@@ -48,17 +48,8 @@ input {
     /* 폰트 상속 */
 }
 
-a {
-    text-decoration: none;
-    /* 밑줄 제거 */
-    color: inherit;
-    /* 부모 요소의 글자색을 그대로 상속 */
-    display: inline-block;
-    /* 크기 조절(width, height)이 가능하게 변경 */
-}
-
 body {
-    margin: 0;
+    margin: 0px;
     font-family: 'Malgun Gothic', sans-serif;
     font-size: 14px;
     color: #333;
@@ -66,6 +57,45 @@ body {
 
     /* min-height: 200vh; */
 }
+
+
+
+
+
+
+/* ========== remote ========== */
+a {
+    text-decoration: none;
+    /* 밑줄 제거 */
+    color: inherit;
+    /* 부모 요소의 색상 상속 */
+    cursor: pointer;
+    /* 마우스 포인터 설정 */
+}
+
+a:hover {
+    text-decoration: none;
+    /* 호버 시에도 밑줄 제거 (필요시) */
+}
+
+
+
+
+.gameItem {
+    max-width: 120px;
+
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+
+
 
 .top {
     position: sticky;
@@ -156,6 +186,10 @@ body {
     text-decoration-color: var(--SubColor);
     text-decoration-thickness: 2px;
     text-underline-offset: 4px;
+}
+
+#LNBadminPage {
+    display: none;
 }
 
 
@@ -386,6 +420,10 @@ body {
     transition: 0.2s;
 }
 
+.post-btn {
+    display: none;
+}
+
 .post-btn:hover,
 .go-title:hover {
     background-color: var(--MainColor);
@@ -527,21 +565,6 @@ body {
     font-size: 13px;
     font-weight: bold;
 }
-
-#readmore_wrap {
-    position: relative;
-}
-
-.readMore {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    text-align: center;
-    height: 40px;
-}
-
 
 /* 댓글 전체 컨테이너 */
 .cmt_Space {

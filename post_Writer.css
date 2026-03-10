@@ -1,364 +1,589 @@
-    :root {
-        --main-purple: #7b2dd2;
-        --sub-purple: #f4eeff;
-        --border-color: #dcdcdc;
+:root {
+    --main-purple: #7b2dd2;
+    --sub-purple: #f4eeff;
+    --border-color: #dcdcdc;
 
-        --MainColor: rgb(123, 45, 210);
-        --SubColor: rgb(230, 230, 230);
+    --MainColor: rgb(123, 45, 210);
+    --SubColor: rgb(230, 230, 230);
 
-        --color1: rgb(34, 178, 255);
-        --color2: rgb(201, 76, 42);
-        --color3: rgb(145, 222, 90);
-        --color4: rgb(18, 63, 124);
-        --color5: rgb(240, 155, 17);
-        --color6: rgb(99, 12, 167);
-        --color7: rgb(255, 94, 147);
-        --color8: rgb(72, 201, 176);
-    }
+    --color1: rgb(34, 178, 255);
+    --color2: rgb(201, 76, 42);
+    --color3: rgb(145, 222, 90);
+    --color4: rgb(18, 63, 124);
+    --color5: rgb(240, 155, 17);
+    --color6: rgb(99, 12, 167);
+    --color7: rgb(255, 94, 147);
+    --color8: rgb(72, 201, 176);
+}
 
-    /* 모달창css */
+* {
+    box-sizing: border-box;
+}
 
-    /* 모달 css */
-    #upload-Popup {
-        display: none;
-        justify-content: center;
-        align-items: center;
+button {
+    all: unset;
+    /* 모든 기본 스타일 초기화 */
+    cursor: pointer;
+    text-align: center;
+}
 
-        position: fixed;
-        top: 0;
-        left: 0;
+input {
+    -webkit-appearance: none;
+    /* 크롬, 사파리 등 브라우저 기본 스타일 제거 */
+    -moz-appearance: none;
+    appearance: none;
 
-        background: rgba(0, 0, 0, 0.6);
-        z-index: 9999;
-        width: 100%;
-        height: 100%;
-    }
+    border: none;
+    /* 테두리 제거 */
+    outline: none;
+    /* 포커스 시 테두리 제거 */
+    background-color: transparent;
+    /* 배경 투명 */
 
-    /* 팝업 하얀색 박스 */
-    .modal-content {
-        background: white;
-        padding: 35px 25px;
-        border-radius: 25px;
-        text-align: center;
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-        border: 2px solid var(--MainColor);
+    border-radius: 0;
+    /* 둥근 모서리 제거 */
+    box-shadow: none;
+    /* 그림자 제거 */
+    padding: 0;
+    /* 패딩 초기화 */
+    margin: 0;
+    /* 마진 초기화 */
+    font-family: inherit;
+    /* 폰트 상속 */
+}
 
-        width: 43%;
-        height: 10%;
-    }
+body {
+    margin: 0;
+    font-family: 'Malgun Gothic', sans-serif;
+    font-size: 14px;
+    color: #333;
+    background: #fafafa;
 
-    /* 정말 삭제? */
-    .modal-text span {
-        font-size: 1.1rem;
-        color: #333;
-        font-weight: 600;
-        display: block;
-        margin-bottom: 25px;
-    }
+    min-height: 200vh;
+}
 
+.top {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 
-    .modal-btns {
-        display: flex;
-        gap: 12px;
-        justify-content: center;
-    }
+    background-color: rgba(255, 255, 255, 0.705);
+}
 
 
-    .modal-btns button {
-        width: 90px;
-        height: 40px;
-        border-radius: 20px;
 
-        font-weight: bold;
-        cursor: pointer;
-        transition: 0.3s;
-        text-align: center;
-    }
 
-    .btn-confirm {
-        background-color: #f0f0f0;
-        color: #3b3a3a;
-    }
+/* ========== a ========== */
+a {
+    text-decoration: none;
+    /* 밑줄 제거 */
+    color: inherit;
+    /* 부모 요소의 색상 상속 */
+    cursor: pointer;
+    /* 마우스 포인터 설정 */
+}
 
-    .btn-cancel {
-        background-color: var(--MainColor);
-        color: white;
-    }
+a:hover {
+    text-decoration: none;
+    /* 호버 시에도 밑줄 제거 (필요시) */
+}
 
-    .btn-confirm:hover {
-        background-color: #5a1ea0;
-        color: #f0f0f0;
-        transform: scale(1.05);
-    }
 
-    .btn-cancel:hover {
-        transform: scale(1.05);
-    }
 
-    /* 본문 */
 
-    body {
-        background-color: #f8f9fa;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 40px 20px;
-        font-family: 'Pretendard', sans-serif;
-    }
 
-    /* 전체 랩 */
-    #wrap-all {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        /* align-items:flex-end; */
-    }
+/* ========== GNB ========== */
 
-    /* 입력존 */
-    #write-section {
-        border: 2px solid var(--MainColor);
-        border-radius: 5px;
-        display: flex;
-        width: 100%;
-    }
+.GNB {
+    /* border: 1px solid red; */
+    border-bottom: 3px solid var(--MainColor);
 
-    table {
-        width: 100%;
-        max-width: 1000px;
-        background: #fff;
-        /* 테이블 전체 테두리를 메인 보라색으로 */
-        border: 2px solid var(--main-purple);
-        border-radius: 12px;
-        border-collapse: collapse;
-        table-layout: fixed;
-        overflow: hidden;
-        box-shadow: 0 10px 25px rgba(123, 45, 210, 0.1);
-    }
 
-    th,
-    td {
-        padding: 15px 20px;
-        border-bottom: 1px solid var(--border-color);
-        box-sizing: border-box;
-    }
+    padding: 10px 50px;
 
-    /* 상단 제목 라인 */
-    thead tr:first-child {
-        display: flex;
-        align-items: stretch;
-    }
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-    thead tr:first-child th:first-child {
-        width: 120px;
-        border-right: 1px solid var(--border-color);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+#logo {
+    width: 100px;
+}
 
-    thead tr:first-child th:last-child {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
+.topBtn {
+    min-width: 60px;
 
-    input[type="text"],
-    select {
-        border: 1px solid var(--border-color);
-        border-radius: 4px;
-        outline-color: var(--main-purple);
-    }
+    padding: 5px 10px;
+    margin: 10px;
 
-    input[type="text"] {
-        flex: 1;
-        height: 32px;
-        padding: 0 10px;
-    }
+    background: #fff;
+    color: var(--MainColor);
+    border: 1px solid var(--MainColor);
+    border-radius: 15px;
+}
 
-    /* 옵션 라인 정렬 */
-    thead tr:nth-child(2) td {
-        background-color: #fafafa;
-        width: 100%;
-        display: block;
-    }
+.topBtn:hover,
+.topBtn:focus {
+    background: var(--MainColor);
+    color: #fff;
+    cursor: pointer;
+}
 
-    .option-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-    }
 
-    .radio-group {
-        display: flex;
-        gap: 15px;
-    }
+.beforeLogin {
+    display: flex;
+    /* display: none; */
 
-    .radio-group label {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        cursor: pointer;
-        font-size: 14px;
-    }
+    justify-content: flex-end;
+}
 
-    /* 작성자 강조 */
-    #nickname {
-        color: var(--main-purple);
-        font-weight: bold;
-    }
+.afterLogin {
+    display: none;
+    /* display: flex; */
 
-    /* 본문 영역 */
-    tbody tr,
-    tbody td {
-        display: block;
-        width: 100%;
-    }
+    justify-content: flex-end;
+}
 
-    textarea {
-        width: 100%;
-        min-height: 500px;
-        padding: 20px;
-        border: 1px solid var(--border-color);
-        border-radius: 8px;
-        box-sizing: border-box;
-        font-size: 15px;
-        line-height: 1.6;
-        resize: vertical;
-        display: block;
-        outline-color: var(--main-purple);
-    }
 
-    /* 버튼 공통 스타일 (보라색 테두리 버전) */
-    button {
-        background-color: #fff;
-        color: var(--main-purple);
-        border: 1px solid var(--main-purple);
-        padding: 8px 25px;
-        border-radius: 25px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: 0.2s;
-    }
 
-    button:hover {
-        background-color: var(--sub-purple);
-    }
 
-    /* [중요] 하단 작성완료 버튼 (배경색이 꽉 찬 보라색) */
-    tr:last-child td {
-        text-align: center;
-        padding: 40px;
-        border: none;
-    }
+/* ========== LNB ========== */
+.LNB {
+    display: flex;
+    justify-content: space-around;
 
-    tr:last-child button {
-        width: 220px;
-        height: 52px;
-        font-size: 18px;
-        background-color: var(--main-purple);
-        /* 배경색 적용 */
-        color: #ffffff;
-        /* 글자색 흰색 */
-        border: none;
-        box-shadow: 0 4px 15px rgba(123, 45, 210, 0.3);
-    }
+    padding: 20px 10px;
 
-    tr:last-child button:hover {
-        background-color: #6221a8;
-        transform: translateY(-2px);
-    }
+    font-size: 15px;
+    font-weight: 700;
 
-    form {
-        display: flex;
-        justify-content: flex-end;
-        padding-right: 40px;
-    }
+    box-shadow: 0 1px 2px 0px var(--SubColor);
+}
 
-    .single-upload-btn {
-        display: inline-block;
-        padding: 12px 25px;
-        background-color: var(--MainColor);
+.LNB>div {
+    cursor: pointer;
+}
 
-        color: white;
-        border-radius: 30px;
+.LNB>div:hover,
+.LNB>div:focus {
+    text-decoration: underline;
+    text-decoration-color: var(--SubColor);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+}
 
-        font-weight: bold;
-        cursor: pointer;
-        transition: transform 0.2s, background-color 0.2s;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
+#LNBadminPage {
+    display: none;
+}
 
-    .single-upload-btn:hover {
-        background-color: #5a1ea0;
-        transform: translateY(-2px);
-    }
+/* 게임 드롭다운 */
 
-    .single-upload-btn:active {
-        transform: translateY(0);
-    }
+.gameMenu {
+    position: relative;
+}
 
-    input[type="radio"] {
-        accent-color: var(--main-purple);
-    }
+/* hover 끊김 방지 브릿지 */
+.gameMenu::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    height: 10px;
+}
 
-    /* 리치 텍스트 에디터 */
+.gameList {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translate(-50%, -10px);
 
-    /* 1. 에디터 전체 테두리 색상 변경 */
-    .ql-toolbar.ql-snow,
-    .ql-container.ql-snow {
-        border-color: var(--main-purple) !important;
-        /* 메인 보라색으로 변경 */
-    }
+    background: white;
+    border: 1px solid var(--SubColor);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 
-    /* 2. 툴바의 버튼 및 아이콘 색상 (평상시) */
-    .ql-snow .ql-stroke {
-        stroke: #555;
-        /* 아이콘 선 색상 */
-    }
+    display: flex;
+    flex-direction: column;
 
-    .ql-snow .ql-fill {
-        fill: #555;
-        /* 아이콘 채우기 색상 */
-    }
+    min-width: 120px;
 
-    /* 3. 툴바 버튼에 마우스를 올렸을 때(Hover)나 활성화되었을 때 */
-    .ql-snow.ql-toolbar button:hover,
-    .ql-snow.ql-toolbar button.ql-active,
-    .ql-snow .ql-picker-label:hover,
-    .ql-snow .ql-picker-label.ql-active,
-    .ql-snow .ql-picker-item:hover,
-    .ql-snow .ql-picker-item.ql-active {
-        color: var(--main-purple) !important;
-    }
+    opacity: 0;
+    visibility: hidden;
 
-    .ql-snow.ql-toolbar button:hover .ql-stroke,
-    .ql-snow.ql-toolbar button.ql-active .ql-stroke {
-        stroke: var(--main-purple) !important;
-    }
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease,
+        visibility 0.25s;
+}
 
-    .ql-snow.ql-toolbar button:hover .ql-fill,
-    .ql-snow.ql-toolbar button.ql-active .ql-fill {
-        fill: var(--main-purple) !important;
-    }
+.gameItem {
+    max-width: 120px;
 
-    .ql-container.ql-snow {
-        border: none !important;
-        min-height: 300px;
-        font-size: 16px;
-    }
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
 
-    /* 툴바 배경색 살짝 주기 */
-    .ql-toolbar.ql-snow {
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
-        background-color: var(--sub-purple);
-        /* 툴바 배경을 연한 보라색으로 */
-    }
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
-    #editor {
-        background-color: #ffffff;
-        border-bottom-left-radius: 8px;
-        border-bottom-right-radius: 8px;
-    }
+.gameItem:hover {
+    background: var(--SubColor);
+}
+
+/* hover 시 게임 리스트 표시 */
+.gameMenu:hover .gameList {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+}
+
+
+
+/* 모달창css */
+
+/* 모달 css */
+#upload-Popup {
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+}
+
+/* 팝업 하얀색 박스 */
+.modal-content {
+    background: white;
+    padding: 35px 25px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    border: 2px solid var(--MainColor);
+
+    width: 43%;
+    height: 10%;
+}
+
+/* 정말 삭제? */
+.modal-text span {
+    font-size: 1.1rem;
+    color: #333;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 25px;
+}
+
+
+.modal-btns {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+
+.modal-btns button {
+    width: 90px;
+    height: 40px;
+    border-radius: 20px;
+
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+}
+
+.btn-confirm {
+    background-color: #f0f0f0;
+    color: #3b3a3a;
+}
+
+.btn-cancel {
+    background-color: var(--MainColor);
+    color: white;
+}
+
+.btn-confirm:hover {
+    background-color: #5a1ea0;
+    color: #f0f0f0;
+    transform: scale(1.05);
+}
+
+.btn-cancel:hover {
+    transform: scale(1.05);
+}
+
+/* 본문 */
+
+.main {
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    font-family: 'Pretendard', sans-serif;
+}
+
+/* 전체 랩 */
+#wrap-all {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    /* align-items:flex-end; */
+}
+
+/* 입력존 */
+#write-section {
+    border: 2px solid var(--MainColor);
+    border-radius: 5px;
+    display: flex;
+    width: 100%;
+}
+
+table {
+    width: 100%;
+    max-width: 1000px;
+    background: #fff;
+    /* 테이블 전체 테두리를 메인 보라색으로 */
+    border: 2px solid var(--main-purple);
+    border-radius: 12px;
+    border-collapse: collapse;
+    table-layout: fixed;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(123, 45, 210, 0.1);
+}
+
+th,
+td {
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border-color);
+    box-sizing: border-box;
+}
+
+/* 상단 제목 라인 */
+thead tr:first-child {
+    display: flex;
+    align-items: stretch;
+}
+
+thead tr:first-child th:first-child {
+    width: 120px;
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+thead tr:first-child th:last-child {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+input[type="text"],
+select {
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    outline-color: var(--main-purple);
+}
+
+input[type="text"] {
+    flex: 1;
+    height: 32px;
+    padding: 0 10px;
+}
+
+/* 옵션 라인 정렬 */
+thead tr:nth-child(2) td {
+    background-color: #fafafa;
+    width: 100%;
+    display: block;
+}
+
+.option-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.radio-group {
+    display: flex;
+    gap: 15px;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* 작성자 강조 */
+#nickname {
+    color: var(--main-purple);
+    font-weight: bold;
+}
+
+/* 본문 영역 */
+tbody tr,
+tbody td {
+    display: block;
+    width: 100%;
+}
+
+textarea {
+    width: 100%;
+    min-height: 500px;
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 15px;
+    line-height: 1.6;
+    resize: vertical;
+    display: block;
+    outline-color: var(--main-purple);
+}
+
+/* 버튼 공통 스타일 (보라색 테두리 버전) */
+button {
+    background-color: #fff;
+    color: var(--main-purple);
+    border: 1px solid var(--main-purple);
+    padding: 8px 25px;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    background-color: var(--sub-purple);
+}
+
+/* [중요] 하단 작성완료 버튼 (배경색이 꽉 찬 보라색) */
+tr:last-child td {
+    text-align: center;
+    padding: 40px;
+    border: none;
+}
+
+tr:last-child button {
+    width: 220px;
+    height: 52px;
+    font-size: 18px;
+    background-color: var(--main-purple);
+    /* 배경색 적용 */
+    color: #ffffff;
+    /* 글자색 흰색 */
+    border: none;
+    box-shadow: 0 4px 15px rgba(123, 45, 210, 0.3);
+}
+
+tr:last-child button:hover {
+    background-color: #6221a8;
+    transform: translateY(-2px);
+}
+
+form {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 40px;
+}
+
+.single-upload-btn {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: var(--MainColor);
+
+    color: white;
+    border-radius: 30px;
+
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.single-upload-btn:hover {
+    background-color: #5a1ea0;
+    transform: translateY(-2px);
+}
+
+.single-upload-btn:active {
+    transform: translateY(0);
+}
+
+input[type="radio"] {
+    accent-color: var(--main-purple);
+}
+
+/* 리치 텍스트 에디터 */
+
+/* 1. 에디터 전체 테두리 색상 변경 */
+.ql-toolbar.ql-snow,
+.ql-container.ql-snow {
+    border-color: var(--main-purple) !important;
+    /* 메인 보라색으로 변경 */
+}
+
+/* 2. 툴바의 버튼 및 아이콘 색상 (평상시) */
+.ql-snow .ql-stroke {
+    stroke: #555;
+    /* 아이콘 선 색상 */
+}
+
+.ql-snow .ql-fill {
+    fill: #555;
+    /* 아이콘 채우기 색상 */
+}
+
+/* 3. 툴바 버튼에 마우스를 올렸을 때(Hover)나 활성화되었을 때 */
+.ql-snow.ql-toolbar button:hover,
+.ql-snow.ql-toolbar button.ql-active,
+.ql-snow .ql-picker-label:hover,
+.ql-snow .ql-picker-label.ql-active,
+.ql-snow .ql-picker-item:hover,
+.ql-snow .ql-picker-item.ql-active {
+    color: var(--main-purple) !important;
+}
+
+.ql-snow.ql-toolbar button:hover .ql-stroke,
+.ql-snow.ql-toolbar button.ql-active .ql-stroke {
+    stroke: var(--main-purple) !important;
+}
+
+.ql-snow.ql-toolbar button:hover .ql-fill,
+.ql-snow.ql-toolbar button.ql-active .ql-fill {
+    fill: var(--main-purple) !important;
+}
+
+.ql-container.ql-snow {
+    border: none !important;
+    min-height: 300px;
+    font-size: 16px;
+}
+
+/* 툴바 배경색 살짝 주기 */
+.ql-toolbar.ql-snow {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    background-color: var(--sub-purple);
+    /* 툴바 배경을 연한 보라색으로 */
+}
+
+#editor {
+    background-color: #ffffff;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}

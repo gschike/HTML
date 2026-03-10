@@ -307,13 +307,14 @@ function bindGame() {
 ////////////////////////////////////////////////
 // 세번째 스테이지
 function stage3_1() {
+    let 첫번째_조각 = 0;
     const encoded = "NjUtNDAtNTAtNTM=";
 
     const nums = atob(encoded)
         .split("-")
         .map(n => parseInt(n));
 
-    let 첫번째_조각 = nums.reduce((a, b) => a + b, 0) + 1;
+    첫번째_조각 = nums.reduce((a, b) => a + b, 0) + 1;
 
     첫번째_조각; // breakpoint 1
 

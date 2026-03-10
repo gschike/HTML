@@ -4,6 +4,9 @@ window.addEventListener("load", () => {
     init();
 })
 
+let nowUserId = "";
+let loginUser = null;
+
 function init() {
     quill = new Quill('#editor', {
         theme: 'snow',
@@ -19,6 +22,9 @@ function init() {
 }
 
 function bind() {
+    bindGNB();
+    bindLNB();
+
     // 1. display 요소를 미리 찾아둡니다.
     const display = document.querySelector('#display');
     updatePreview()
@@ -94,4 +100,113 @@ function bind() {
         }
     }
 
+}
+
+/* =========================
+   GNB
+========================= */
+
+function bindGNB() {
+
+    const beforeLogin = document.querySelector(".beforeLogin");
+    const afterLogin = document.querySelector(".afterLogin");
+
+    const btn_myPage = document.querySelector("#btn-myPage");
+    const btn_login = document.querySelector("#btn-login");
+    const btn_join = document.querySelector("#btn-join");
+    const btn_logout = document.querySelector("#btn-logout");
+
+    let isLogin = localStorage.getItem("loginPossible");
+
+    if (isLogin === "true") {
+        try {
+            loginUser = JSON.parse(localStorage.getItem("loginUser"));
+
+            if (!loginUser) throw new Error("유저 없음");
+
+            nowUserId = loginUser.userId;
+
+            changeLogin();
+
+        } catch (e) {
+            changeLogout();
+        }
+    } else {
+        changeLogout();
+    }
+
+    btn_myPage.addEventListener("click", () => {
+        window.location.href = "./myPage.html";
+    });
+
+    btn_login.addEventListener("click", () => {
+        sessionStorage.setItem("prevPage", location.href);
+        window.location.href = "./login.html";
+    });
+
+    btn_join.addEventListener("click", () => {
+        window.location.href = "./join.html";
+    });
+
+    btn_logout.addEventListener("click", () => {
+
+        localStorage.removeItem("loginUser");
+        localStorage.setItem("loginPossible", "false");
+
+        changeLogout();
+    });
+
+    function changeLogin() {
+        beforeLogin.style.display = "none";
+        afterLogin.style.display = "flex";
+    }
+
+    function changeLogout() {
+        nowUserId = "";
+        loginUser = null;
+
+        beforeLogin.style.display = "flex";
+        afterLogin.style.display = "none";
+    }
+}
+
+
+/* =========================
+   LNB
+========================= */
+
+function bindLNB() {
+
+    const LNBmyPage = document.getElementById("LNBmyPage");
+    const LNBnotice = document.getElementById("LNBnotice");
+    const LNBcomm = document.getElementById("LNBcomm");
+
+    const LNBadminPage = document.getElementById("LNBadminPage");
+    if (nowUserId == "admin") {
+        LNBadminPage.style.display = "inline-block";
+    }
+
+    LNBmyPage.addEventListener("click", () => {
+
+        if (localStorage.getItem("loginPossible") !== "true") {
+            alert("마이페이지는 로그인 후 이용 가능합니다.");
+            sessionStorage.setItem("prevPage", "./myPage.html");
+            window.location.href = "./login.html";
+            return;
+        }
+
+        window.location.href = "./myPage.html";
+    });
+
+    LNBnotice.addEventListener("click", () => {
+
+        localStorage.setItem("postType", "notice");
+        window.location.href = "./community.html";
+    });
+
+    LNBcomm.addEventListener("click", () => {
+
+        localStorage.setItem("postType", "comm");
+        window.location.href = "./community.html";
+    });
 }

@@ -2,6 +2,8 @@ window.addEventListener("load", () => {
     init();
 })
 
+let nowUserId = "";
+
 function init() {
 
     const params = new URLSearchParams(window.location.search);
@@ -13,16 +15,14 @@ function init() {
 }
 
 
+const params = new URLSearchParams(window.location.search);
+const postNo = params.get("postNo");
 
 function bind() {
-
     bindGNB();
     bindLNB();
     bindPostActions();
     bindComments();
-
-
-
 }
 
 
@@ -60,7 +60,7 @@ function bindGNB() {
             console.log("현재 로그인 유저:", loginUser.userId);
             console.log("권한:", loginUser.role);
 
-            loginUser = loginUser.userId;
+            nowUserId = loginUser.userId;
 
             changeLogin();
 
@@ -114,7 +114,7 @@ function bindGNB() {
 
     function changeLogout() {
         login = false;
-        loginUser = "";
+        nowUserId = "";
         beforeLogin.style.display = "flex";
         afterLogin.style.display = "none";
     }
@@ -128,6 +128,12 @@ function bindGNB() {
 ///////////////////////////////////////////////////////
 
 function bindLNB() {
+
+    const LNBadminPage = document.getElementById("LNBadminPage");
+
+    if (nowUserId == "admin") {
+        LNBadminPage.style.display = "inline-block";
+    }
 
     const LNBmyPage = document.getElementById("LNBmyPage");
 
@@ -164,14 +170,12 @@ function bindLNB() {
 
     })
 
-
 }
 
 
 
-
 ///////////////////////////////////////////////////////
-// 게시글 액션 (url복사 / 추천 / 삭제 / 수정)
+// 게시글 액션 (추천 / 삭제 / 수정)
 ///////////////////////////////////////////////////////
 
 function bindPostActions() {
@@ -206,9 +210,6 @@ function bindPostActions() {
     //     likeCount++;
 
     // }
-    document.getElementById("btn-URL").onclick = () => {
-        alert("주소가 복사되었습니다!"); // 성공 시 알림
-    };
 
     like.onclick = () => {
         // 비로그인 시 막는 기능
@@ -284,8 +285,16 @@ function bindPostActions() {
 
 
     document.querySelector('#post-btn-edit').addEventListener('click', function () {
-        postJson = {
+        const params = new URLSearchParams(window.location.search);
+        const postNo = params.get("postNo");
 
+        const title = document.querySelector("#title").innerHTML;
+        const post_content = document.querySelector(".post-content").innerHTML;
+
+        postJson = {
+            postNo: postNo,
+            title: title,
+            content: post_content
         }
 
         sessionStorage.setItem("updatePost", JSON.stringify(postJson));
@@ -358,7 +367,6 @@ function bindComments() {
 
     function createRow(parent, text) {
 
-        // 행 / 아이디 / 닉네임 / 내용 / 수정 / 삭제 / 버튼 -> 생성 
         const row = document.createElement('div');
         row.className = 'commentRow';
 
@@ -409,13 +417,13 @@ function bindComments() {
         const loginUserNow = JSON.parse(localStorage.getItem("loginUser"));
 
         if (loginUserNow && loginUserNow.userId === commentAuthor) {
-            // 본인 글이면 수정 / 삭제 버튼
+
             span_right.append(edit, dlt_cmt);
 
         }
 
 
-        // 클릭 시 댓글 삭제 모달 생성
+
         dlt_cmt.addEventListener('click', function (e) {
             e.stopPropagation();
             modal(row);
@@ -423,7 +431,7 @@ function bindComments() {
 
 
         edit.onclick = (e) => {
-            // 댓글 수정
+
             e.stopPropagation();
 
             if (row.querySelector('.cmt')) return;
@@ -446,7 +454,7 @@ function bindComments() {
 
         }
 
-        // 댓글 생성
+
         row.append(span_left, div_middle, span_right);
 
 
@@ -524,6 +532,9 @@ async function loadPost(postNo) {
 
         await API.V1.SJ.Posts.addView(postNo);
 
+        // const post_content = document.querySelector(".post-content").innerHTML;
+        // console.log("post_content", post_content);
+
     } catch (e) {
 
         console.log("게시글 조회 실패", e)
@@ -547,10 +558,10 @@ function renderPost(postRes) {
 
     const loginUser = JSON.parse(localStorage.getItem("loginUser"));
 
-    if (!loginUser || loginUser.userId !== postRes.item.authorId) {
+    if (loginUser.userId == "admin" || loginUser.userId === postRes.item.authorId) {
 
-        btnEdit.style.display = "none";
-        btnDelete.style.display = "none";
+        btnEdit.style.display = "flex";
+        btnDelete.style.display = "flex";
 
     }
 
@@ -559,7 +570,7 @@ function renderPost(postRes) {
 
 
 ///////////////////////////////////////////////////////
-// 댓글 입력 창 생성
+// 댓글 입력 UI 생성
 ///////////////////////////////////////////////////////
 
 function createInputComment() {
@@ -600,43 +611,14 @@ function createInputComment() {
 // 댓글 수 카운트
 ///////////////////////////////////////////////////////
 
-let pagination = 2; //10o
-
 function cntComment() {
 
-
     const currentCount = document.querySelectorAll('.commentRow').length;
-    const row = document.querySelectorAll('.commentRow');
 
     const targets = document.querySelectorAll('#btn-comment > span, #cmt_commentCount');
 
-    targets.forEach(el => el.textContent = currentCount)
+    targets.forEach(el => el.textContent = currentCount);
 
-    row.forEach((val, index) => {
-        if (index > pagination) { // 현재 댓글 수가 제한(10*)보다 크면
-            val.style.display = 'none' // 가리기
-
-
-            const readmore_wrap = document.querySelector('#readmore_wrap');
-            const readMore = document.createElement('div');
-            readMore.className = 'readMore';
-            readMore.textContent = '+더보기';
-
-            readmore_wrap.append(readMore);
-
-            readMore.onclick = () => {
-                pagination += 3; //10a
-                readMore.remove()
-                cntComment()
-
-                if (index === pagination) { readMore.remove() } //stop
-            }
-        }
-
-        else {
-            val.style.display = 'block'
-        }
-    })
 }
 
 
@@ -676,7 +658,7 @@ function modal(evtTarget) {
 
     popup.querySelector('.btn-confirm').onclick = async () => {
 
-        if (evtTarget.deletePost) { // 게시글 삭제
+        if (evtTarget.deletePost) {
 
             console.log("삭제 postNo:", evtTarget.postNo);
 
@@ -684,7 +666,7 @@ function modal(evtTarget) {
 
             window.location.href = "./community.html";
 
-        } else { // 댓글 삭제
+        } else {
 
             evtTarget.remove()
             cntComment()
@@ -700,7 +682,3 @@ function modal(evtTarget) {
     }
 
 }
-
-
-
-
