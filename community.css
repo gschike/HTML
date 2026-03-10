@@ -177,6 +177,16 @@ a:hover {
     text-underline-offset: 4px;
 }
 
+#LNBadminPage {
+    display: none;
+}
+
+/* !!!!! */
+#LNBmyPage {
+    display: none;
+}
+
+
 /* 게임 드롭다운 */
 
 .gameMenu {
@@ -249,9 +259,6 @@ a:hover {
 
 
 /* =================== main =================== */
-#LNBadminPage {
-    display: none;
-}
 
 .search {
     display: flex;
@@ -416,6 +423,17 @@ a:hover {
 .page>span:nth-child(1) {
     color: var(--MainColor);
     font-weight: 1000;
+}
+
+.pageNum {
+    color: black;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.pageNum.active {
+    color: purple;
+    font-weight: bold;
 }
 
 

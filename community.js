@@ -6,31 +6,40 @@ function init() {
 }
 
 let nowUserId = "";
+let loginUser = "";
 
 
 // 전체 이벤트 바인딩
 function bind() {
 
+    // 커뮤니티 기본 UI 및 메뉴 기능
     community();
 
+    // 게시글 타입 확인 (공지 / 일반)
     let postType = localStorage.getItem("postType")
 
+    // 공지사항 모드
     if (postType == "notice") {
         notice();
         return;
     }
 
+    // 일반 커뮤니티 DB 연결
     connectDB();
 }
 
+
+
 let pageNum = 0;
-let currentPosts = [];
+
+
 
 ///////////////////////////////////////////////////////
 // 커뮤니티 메인 페이지 UI / GNB / LNB / 검색
 ///////////////////////////////////////////////////////
 function community() {
 
+    // 글쓰기 버튼 클릭 시 글쓰기 창 열기
     const write = document.querySelector('#write')
 
     const name = 'open 연습'
@@ -38,6 +47,15 @@ function community() {
     const url = './post_Writer.html'
 
     write.addEventListener('click', function () {
+        // window.open(url, name, option);
+        if (localStorage.getItem("loginPossible") != "true") {
+            alert("글쓰기는 로그인 후 이용 가능합니다.");
+
+            return;
+        }
+
+        sessionStorage.removeItem("updatePost");
+
         window.location.href = url;
     })
 
@@ -45,10 +63,16 @@ function community() {
     const beforeLogin = document.querySelector(".beforeLogin");
     const afterLogin = document.querySelector(".afterLogin");
 
+
+
     ///////////////////////////////////////////////////////
     // GNB 기능
     ///////////////////////////////////////////////////////
 
+    let loginUser;
+
+
+    // 로그인 상태 확인
     let isLogin = localStorage.getItem("loginPossible");
 
     if (isLogin == "true") {
@@ -59,12 +83,14 @@ function community() {
 
             if (!loginUser) throw new Error("유저 정보 없음");
 
+            // 로그인 된 계정의 userId
             nowUserId = loginUser.userId;
 
             changeLogin();
 
         } catch (e) {
 
+            console.log("로그인 안 됨");
             changeLogout();
 
         }
@@ -75,6 +101,9 @@ function community() {
 
     }
 
+
+
+    // 로그인 페이지 이동
     const btn_login = document.querySelector("#btn-login");
 
     btn_login.addEventListener("click", () => {
@@ -82,12 +111,16 @@ function community() {
         window.location.href = "./login.html";
     })
 
+
+    // 회원가입 페이지 이동
     const btn_join = document.querySelector("#btn-join");
 
     btn_join.addEventListener("click", () => {
         window.location.href = "./join.html";
     })
 
+
+    // 로그아웃 처리
     const btn_logout = document.querySelector("#btn-logout");
 
     btn_logout.addEventListener("click", () => {
@@ -96,15 +129,25 @@ function community() {
 
         localStorage.setItem("loginPossible", "false");
 
+        isLogin = localStorage.getItem("loginPossible");
+
         changeLogout();
+
+        nowUserId = "";
+
+        location.reload();
 
     })
 
+
+
+    // 로그인 UI 변경
     function changeLogin() {
         beforeLogin.style.display = "none";
         afterLogin.style.display = "flex";
     }
 
+    // 로그아웃 UI 변경
     function changeLogout() {
         login = false;
         loginUser = "";
@@ -112,16 +155,25 @@ function community() {
         afterLogin.style.display = "none";
     }
 
+
+
     ///////////////////////////////////////////////////////
     // LNB 기능
     ///////////////////////////////////////////////////////
 
+    // 관리자 페이지
     const LNBadminPage = document.getElementById("LNBadminPage");
+
     if (nowUserId == "admin") {
         LNBadminPage.style.display = "inline-block";
     }
 
+    // 마이페이지 메뉴
     const LNBmyPage = document.getElementById("LNBmyPage");
+
+    if (nowUserId != "") {
+        LNBmyPage.style.display = "inline-block";
+    }
 
     LNBmyPage.addEventListener("click", () => {
 
@@ -136,29 +188,38 @@ function community() {
 
     })
 
+
+
+    // 공지사항 메뉴
     const LNBnotice = document.getElementById("LNBnotice");
 
     LNBnotice.addEventListener("click", () => {
 
         localStorage.setItem("postType", "notice");
 
-        notice();
+        window.location.href = "./community.html";
 
     })
 
+
+
+    // 커뮤니티 메뉴
     const LNBcomm = document.getElementById("LNBcomm");
 
     LNBcomm.addEventListener("click", () => {
 
         localStorage.setItem("postType", "comm");
 
-        connectDB();
+        window.location.href = "./community.html";
 
     })
+
+
 
     ///////////////////////////////////////////////////////
     // 검색 기능
     ///////////////////////////////////////////////////////
+
 
     const search_btn = document.querySelector("#search-btn");
 
@@ -166,39 +227,74 @@ function community() {
 
         const search_input = document.querySelector("#search-input").value;
 
-        if (!search_input) {
-            alert("검색어를 입력하세요.");
-            return;
-        }
+        // if (!search_input) {
+        //     alert("검색어를 입력하세요.");
+        //     return;
+        // }
 
         const postList = JSON.parse(localStorage.getItem("postList"));
 
-        if (!postList) return;
+        const content = document.querySelector("#content");
 
-        currentPosts = [];
+        content.innerHTML = "";
+
+        let searchCount = 0;
 
         for (let i = 0; i < postList.items.length; i++) {
 
             if (postList.items[i].title.includes(search_input)
                 || postList.items[i].content.includes(search_input)) {
 
-                currentPosts.push(postList.items[i]);
+                let content_tr = document.createElement("tr");
 
+                content_tr.innerHTML = `
+                    <td>${postList.items[i].postId}</td>
+                    <td>${postList.items[i].title}</td>
+                    <td>${postList.items[i].authorNick}</td>
+                    <td>${postList.items[i].createdAt.split('T')[0]}</td>
+                    <td>${postList.items[i].viewCount}</td>
+                    <td>0</td>
+                `
+
+                // 게시글 클릭 시 상세 페이지 이동
+                content_tr.addEventListener("click", () => {
+                    window.location.href = `./post.html?postNo=${postList.items[i].postId}`;
+                })
+
+                content.append(content_tr);
+
+                searchCount++
             }
+        }
+
+        pages[0].click();
+
+        ///////////////////////////////////////////////////////
+        // 검색 페이지네이션 생성
+        ///////////////////////////////////////////////////////
+
+        let searchLength = Math.floor(searchCount / 20) + 1;
+
+        const page = document.querySelector(".page");
+
+        page.innerHTML = "";
+
+        for (let i = 0; i < searchLength; i++) {
+
+            page.innerHTML += `<span class="pageNum">${i + 1}</span>`;
 
         }
 
-        pageNum = 0;
-
-        renderPagination();
-        renderPosts();
-
     })
+
+
 
     ///////////////////////////////////////////////////////
     // 게시글 목록 기능
     ///////////////////////////////////////////////////////
 
+
+    // 전체글 버튼
     const main_list = document.querySelector("#main_list");
 
     main_list.addEventListener("click", () => {
@@ -209,6 +305,8 @@ function community() {
 
     })
 
+
+    // 공지사항 버튼
     const noticeBtn = document.querySelector("#notice");
 
     noticeBtn.addEventListener("click", () => {
@@ -221,110 +319,197 @@ function community() {
 
 }
 
-///////////////////////////////////////////////////////
-// 게시글 출력
-///////////////////////////////////////////////////////
-function renderPosts() {
 
-    const content = document.querySelector("#content");
-
-    content.innerHTML = "";
-
-    for (let i = pageNum * 20; i < 20 * (pageNum + 1) && i < currentPosts.length; i++) {
-
-        let post = currentPosts[i];
-
-        let content_tr = document.createElement("tr");
-
-        content_tr.innerHTML = `
-            <td>${post.postId}</td>
-            <td>${post.title}</td>
-            <td>${post.authorNick}</td>
-            <td>${post.createdAt.split('T')[0]}</td>
-            <td>${post.viewCount}</td>
-            <td>0</td>
-        `
-
-        content_tr.addEventListener("click", () => {
-            window.location.href = `./post.html?postNo=${post.postId}`;
-        })
-
-        content.append(content_tr);
-
-    }
-
-}
-
-///////////////////////////////////////////////////////
-// 페이지네이션
-///////////////////////////////////////////////////////
-function renderPagination() {
-
-    const page = document.querySelector(".page");
-
-    page.innerHTML = "";
-
-    const pageLength = Math.ceil(currentPosts.length / 20);
-
-    for (let i = 0; i < pageLength; i++) {
-
-        const span = document.createElement("span");
-
-        span.className = "pageNum";
-
-        span.innerText = i + 1;
-
-        span.addEventListener("click", () => {
-
-            pageNum = i;
-
-            renderPosts();
-
-        })
-
-        page.append(span);
-
-    }
-
-}
 
 ///////////////////////////////////////////////////////
 // 게시글 DB 연결 및 목록 로드
 ///////////////////////////////////////////////////////
 async function connectDB() {
 
+
+    // API 호출 로그
+    const logCall = (label, method, url, body) => {
+        console.log(`[CALL] ${label} :: ${method} ${url}`);
+        if (body !== undefined) console.log(`[BODY] ${label}`, body);
+    };
+
+    const logRes = (label, res) => console.log(`[RES] ${label}`, res);
+
+    const logErr = (label, xhr) => {
+        const rj = xhr?.responseJSON;
+        const status = xhr?.status;
+        const msg = rj?.message || rj?.error || xhr?.statusText || "요청 실패";
+        console.log(`[ERR] ${label} :: status=${status}`, rj || msg);
+    };
+
+
+
+    // 게시글 목록 불러오기
+    await postLoad();
+
+    const postList = JSON.parse(localStorage.getItem("postList"));
+
+    console.log("postList:", postList);
+
+
+
+    const content = document.querySelector("#content");
+
+    const page = document.querySelector(".page");
+
+
+
+    ///////////////////////////////////////////////////////
+    // 페이지네이션 생성
+    ///////////////////////////////////////////////////////
+
+    const pageLength = Math.floor(postList.items.length / 20) + 1;
+
+    page.innerHTML = "";
+
+    for (let i = 0; i < pageLength; i++) {
+
+        page.innerHTML += `<span class="pageNum">${i + 1}</span>`;
+
+    }
+
+    const pages = document.querySelectorAll(".pageNum");
+
+
+
+
+
+    ///////////////////////////////////////////////////////
+    // 페이지 이동 이벤트
+    ///////////////////////////////////////////////////////
+
+    // 페이지네이션 화살표 기능 (한 페이지씩 이동)
+
+    const pagePrev = document.querySelector("#pagePrev");
+    const pageNext = document.querySelector("#pageNext");
+
+    pagePrev.addEventListener("click", () => {
+
+        if (pageNum <= 0) return;
+
+        pageNum--;
+
+        pages[pageNum].click();
+
+    });
+
+    pageNext.addEventListener("click", () => {
+
+        if (pageNum >= pages.length - 1) return;
+
+        pageNum++;
+
+        pages[pageNum].click();
+
+    });
+
+    // 페이지 클릭 시 해당 페이지로 이동
+    for (let i = 0; i < pages.length; i++) {
+
+        pages[i].addEventListener("click", () => {
+
+            for (let j = 0; j < pages.length; j++) {
+
+                pages[j].style.color = "#8b8b8b";
+                pages[j].style.fontWeight = "100";
+
+            }
+
+            pages[i].style.color = "rgb(123, 45, 210)";
+            pages[i].style.fontWeight = "1000";
+
+            pageNum = i;
+
+            content.innerHTML = "";
+
+            for (let k = pageNum * 20; k < 20 * (pageNum + 1) && k < postList.items.length; k++) {
+
+                let content_tr = document.createElement("tr");
+
+                content_tr.innerHTML = `
+                    <td>${postList.items[k].postId}</td>
+                    <td>${postList.items[k].title}</td>
+                    <td>${postList.items[k].authorNick}</td>
+                    <td>${postList.items[k].createdAt.split('T')[0]}</td>
+                    <td>${postList.items[k].viewCount}</td>
+                    <td>0</td>
+                `
+
+                // 게시글 클릭 시 상세 페이지 이동
+                content_tr.addEventListener("click", () => {
+                    window.location.href = `./post.html?postNo=${postList.items[k].postId}`;
+                })
+
+                content.append(content_tr);
+
+            }
+
+        })
+
+    }
+
+
+
+    ///////////////////////////////////////////////////////
+    // 첫 페이지 게시글 출력
+    ///////////////////////////////////////////////////////
+
+    content.innerHTML = "";
+
+    for (let i = pageNum * 20; i < 20 * (pageNum + 1) && i < postList.items.length; i++) {
+
+        let content_tr = document.createElement("tr");
+
+        content_tr.innerHTML = `
+            <td>${postList.items[i].postId}</td>
+            <td>${postList.items[i].title}</td>
+            <td>${postList.items[i].authorNick}</td>
+            <td>${postList.items[i].createdAt.split('T')[0]}</td>
+            <td>${postList.items[i].viewCount}</td>
+            <td>0</td>
+        `
+
+        content_tr.addEventListener("click", () => {
+            window.location.href = `./post.html?postNo=${postList.items[i].postId}`;
+        })
+
+        content.append(content_tr);
+
+    }
+
+
+
+    ///////////////////////////////////////////////////////
+    // 게시글 목록 API 호출
+    ///////////////////////////////////////////////////////
     async function postLoad() {
 
-        const listQ = { page: 1, pageSize: 500 };
+        const listQ = { page: 1, pageSize: 100 };
 
         try {
 
             const listRes = await API.V1.SJ.Posts.list(listQ);
 
+            logRes("SJ-POST-1 POSTS_LIST", listRes);
+
             localStorage.setItem("postList", JSON.stringify(listRes));
 
         } catch (e) {
 
-            console.log(e);
+            logErr("SJ-POST-1 POSTS_LIST", e);
 
         }
 
     }
 
-    await postLoad();
-
-    const postList = JSON.parse(localStorage.getItem("postList"));
-
-    if (!postList) return;
-
-    currentPosts = postList.items;
-
-    pageNum = 0;
-
-    renderPagination();
-    renderPosts();
-
 }
+
+
 
 ///////////////////////////////////////////////////////
 // 로그인 UI 변경 함수
@@ -339,6 +524,8 @@ function changeLogin() {
 
 }
 
+
+
 ///////////////////////////////////////////////////////
 // 로그아웃 UI 변경 함수
 ///////////////////////////////////////////////////////
@@ -348,39 +535,71 @@ function changeLogout() {
     const afterLogin = document.querySelector(".afterLogin");
 
     login = false;
+    loginUser = "";
 
     beforeLogin.style.display = "flex";
     afterLogin.style.display = "none";
 
 }
 
+
+
 ///////////////////////////////////////////////////////
 // 공지사항 게시글 출력
 ///////////////////////////////////////////////////////
 function notice() {
 
-    let postList = JSON.parse(localStorage.getItem("postList"));
+    const postList = JSON.parse(localStorage.getItem("postList"));
 
-    if (!postList) {
-        connectDB();
-        return;
-    }
+    const content = document.querySelector("#content");
 
-    currentPosts = [];
+    content.innerHTML = "";
+
+    let adminCount = 0;
 
     for (let i = 0; i < postList.items.length; i++) {
 
         if (postList.items[i].authorId == 'admin') {
 
-            currentPosts.push(postList.items[i]);
+            let content_tr = document.createElement("tr");
+
+            content_tr.innerHTML = `
+                <td>${postList.items[i].postId}</td>
+                <td>${postList.items[i].title}</td>
+                <td>${postList.items[i].authorNick}</td>
+                <td>${postList.items[i].createdAt.split('T')[0]}</td>
+                <td>${postList.items[i].viewCount}</td>
+                <td>0</td>
+            `
+
+            content_tr.addEventListener("click", () => {
+                window.location.href = `./post.html?postNo=${postList.items[i].postId}`;
+            })
+
+            content.append(content_tr);
+
+            adminCount++;
 
         }
 
     }
 
-    pageNum = 0;
 
-    renderPagination();
-    renderPosts();
+
+    ///////////////////////////////////////////////////////
+    // 공지사항 페이지네이션 생성
+    ///////////////////////////////////////////////////////
+
+    let noticeLength = Math.floor(adminCount / 20) + 1;
+
+    const page = document.querySelector(".page");
+
+    page.innerHTML = "";
+
+    for (let i = 0; i < noticeLength; i++) {
+
+        page.innerHTML += `<span class="pageNum">${i + 1}</span>`;
+
+    }
 
 }

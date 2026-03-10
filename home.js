@@ -3,7 +3,7 @@ window.addEventListener("load", () => {
 });
 
 let nowUserId = "";
-let loginUser = null;
+let loginUser = "";
 
 function init() {
     bind();
@@ -76,6 +76,11 @@ function bindGNB() {
         localStorage.setItem("loginPossible", "false");
 
         changeLogout();
+        // !!!!!!!!
+        nowUserId = "";
+
+        location.reload();
+
     });
 
     function changeLogin() {
@@ -84,11 +89,9 @@ function bindGNB() {
     }
 
     function changeLogout() {
-        nowUserId = "";
-        loginUser = null;
-
         beforeLogin.style.display = "flex";
         afterLogin.style.display = "none";
+
     }
 }
 
@@ -102,10 +105,15 @@ function bindLNB() {
     const LNBmyPage = document.getElementById("LNBmyPage");
     const LNBnotice = document.getElementById("LNBnotice");
     const LNBcomm = document.getElementById("LNBcomm");
-
     const LNBadminPage = document.getElementById("LNBadminPage");
+    
     if (nowUserId == "admin") {
         LNBadminPage.style.display = "inline-block";
+    }
+
+    // !!!!!
+    if (nowUserId != "") {
+        LNBmyPage.style.display = "inline-block";
     }
 
     LNBmyPage.addEventListener("click", () => {
@@ -306,6 +314,13 @@ function initNotice() {
         `;
     });
 
+    const gotoNotice = document.getElementById("gotoNotice");
+
+    gotoNotice.addEventListener("click", () => {
+
+        localStorage.setItem("postType", "notice");
+        window.location.href = "./community.html";
+    });
 
 }
 

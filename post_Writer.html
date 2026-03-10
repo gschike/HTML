@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>글 작성 페이지</title>
     <link rel="stylesheet" href="post_Writer.css">
+
+    <script src="./phi/jquery-3.7.1.js"></script>
+    <script src="./phi/sj.api.v1.sj.js" defer></script>
     <script src="post_Writer.js"></script>
 
     <!-- rich text 라이브러리 -->
@@ -87,7 +90,7 @@
                                     <option name="post_Type" value="3"> 홈페이지 추가 </option>
                                 </select>
                             </th>
-                            <th> 제목: <input type="text"> </th>
+                            <th> 제목: <input type="text" id="title"> </th>
                         </tr>
 
                         <tr>

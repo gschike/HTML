@@ -191,6 +191,9 @@ a:hover {
 #LNBadminPage {
     display: none;
 }
+#LNBmyPage {
+    display: none;
+}
 
 
 /* 게임 드롭다운 */

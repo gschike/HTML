@@ -153,6 +153,11 @@ body {
     display: none;
 }
 
+/* !!!!! */
+#LNBmyPage {
+    display: none;
+}
+
 /* 게임 드롭다운 */
 
 .gameMenu {

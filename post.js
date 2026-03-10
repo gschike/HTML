@@ -23,9 +23,24 @@ function bind() {
     bindLNB();
     bindPostActions();
     bindComments();
+
+    urlCopy();
 }
 
+// URL 버튼 클릭 시 주소 복사
+function urlCopy() {
+    const urlBtn = document.querySelector("#btn-URL");
 
+    urlBtn.addEventListener("click", async () => {
+        try {
+            const url = window.location.href; // 현재 페이지 주소
+            await navigator.clipboard.writeText(url);
+            alert('URL이 복사되었습니다: ' + url);
+        } catch (err) {
+            console.error('복사 실패:', err);
+        }
+    })
+}
 
 ///////////////////////////////////////////////////////
 // GNB
@@ -54,12 +69,6 @@ function bindGNB() {
 
             if (!loginUser) throw new Error("유저 정보 없음");
 
-            console.log("로그인 상태:", isLogin);
-            console.log("loginUser:", loginUser);
-
-            console.log("현재 로그인 유저:", loginUser.userId);
-            console.log("권한:", loginUser.role);
-
             nowUserId = loginUser.userId;
 
             changeLogin();
@@ -68,6 +77,7 @@ function bindGNB() {
 
             console.log("로그인 안 됨");
             changeLogout();
+            nowUserId = "";
 
         }
 
@@ -104,6 +114,10 @@ function bindGNB() {
 
         changeLogout();
 
+        nowUserId = "";
+
+        location.reload();
+
     })
 
 
@@ -136,6 +150,10 @@ function bindLNB() {
     }
 
     const LNBmyPage = document.getElementById("LNBmyPage");
+
+    if (nowUserId != "") {
+        LNBmyPage.style.display = "inline-block";
+    }
 
     LNBmyPage.addEventListener("click", () => {
 

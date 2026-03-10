@@ -117,6 +117,8 @@ function bindGNB() {
 
         changeLogout();
 
+        nowUserId = "";
+
         window.location.href = "./home.html";
 
     })
@@ -394,6 +396,8 @@ function bindDeleteAccount() {
 
         localStorage.setItem("loginPossible", "false");
         localStorage.removeItem("loginUser");
+
+        nowUserId = "";
 
         window.location.href = "./home.html";
 

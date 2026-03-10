@@ -4,8 +4,7 @@ window.addEventListener("load", () => {
     init();
 })
 
-let nowUserId = "";
-let loginUser = null;
+const loginUser = JSON.parse(localStorage.getItem("loginUser"))
 
 function init() {
     quill = new Quill('#editor', {
@@ -18,13 +17,21 @@ function init() {
             ]
         }
     });
+
+    if (sessionStorage.getItem("updatePost")) {
+        bind();
+        getPost();
+
+        return;
+    }
+
+    loadInfo();
+    bindGNB();
+    bindLNB();
     bind();
 }
 
 function bind() {
-    bindGNB();
-    bindLNB();
-
     // 1. display 요소를 미리 찾아둡니다.
     const display = document.querySelector('#display');
     updatePreview()
@@ -80,31 +87,42 @@ function bind() {
         // fetch('/api/post', { method: 'POST', body: content });
     }
 
-    function modal() { // 모달
+    function modal() {
         const upload_Popup = document.querySelector('#upload-Popup');
-        const popup = document.querySelector('#write-complete');
 
         upload_Popup.style.display = 'flex'
 
-        // 등록 버튼 클릭
         document.querySelector('.btn-confirm').onclick = () => {
-            upload_Popup.style.display = 'none'
-            // 메인 페이지로 !!!!!
 
+            const title = document.querySelector("#title");
+
+            if (title.value == "") {
+                alert("제목을 입력해주세요.");
+                return;
+            }
+
+            upload_Popup.style.display = 'none';
+
+            if (sessionStorage.getItem("updatePost")) {
+                updatePost();
+            } else {
+                createPost();
+            }
         }
-
-        // // 취소 버튼 클릭
 
         document.querySelector('.btn-cancel').onclick = () => {
             upload_Popup.style.display = 'none'
         }
     }
 
+
+
 }
 
-/* =========================
-   GNB
-========================= */
+
+///////////////////////////////////////////////////////
+// GNB
+///////////////////////////////////////////////////////
 
 function bindGNB() {
 
@@ -112,49 +130,99 @@ function bindGNB() {
     const afterLogin = document.querySelector(".afterLogin");
 
     const btn_myPage = document.querySelector("#btn-myPage");
-    const btn_login = document.querySelector("#btn-login");
-    const btn_join = document.querySelector("#btn-join");
-    const btn_logout = document.querySelector("#btn-logout");
+
+    btn_myPage.addEventListener("click", () => {
+        const result = confirm("페이지를 떠나면 지금까지 작성된 내용은 저장되지 않습니다. 이동 하시겠습니까?");
+
+        if (!result) {
+            return;
+        }
+
+        window.location.href = "./myPage.html"
+    })
+
+    let loginUser;
 
     let isLogin = localStorage.getItem("loginPossible");
 
-    if (isLogin === "true") {
+    if (isLogin == "true") {
+
         try {
+
             loginUser = JSON.parse(localStorage.getItem("loginUser"));
 
-            if (!loginUser) throw new Error("유저 없음");
+            if (!loginUser) throw new Error("유저 정보 없음");
 
-            nowUserId = loginUser.userId;
+            console.log("로그인 상태:", isLogin);
+            console.log("loginUser:", loginUser);
+
+            console.log("현재 로그인 유저:", loginUser.userId);
+            console.log("권한:", loginUser.role);
+
+            loginUser = loginUser.userId;
 
             changeLogin();
 
         } catch (e) {
+
+            console.log("로그인 안 됨");
             changeLogout();
+
         }
+
     } else {
+
         changeLogout();
+
     }
 
-    btn_myPage.addEventListener("click", () => {
-        window.location.href = "./myPage.html";
-    });
+
+    const btn_login = document.querySelector("#btn-login");
 
     btn_login.addEventListener("click", () => {
+        const result = confirm("페이지를 떠나면 지금까지 작성된 내용은 저장되지 않습니다. 이동 하시겠습니까?");
+
+        if (!result) {
+            return;
+        }
+
         sessionStorage.setItem("prevPage", location.href);
         window.location.href = "./login.html";
-    });
+    })
+
+
+    const btn_join = document.querySelector("#btn-join");
 
     btn_join.addEventListener("click", () => {
+        const result = confirm("페이지를 떠나면 지금까지 작성된 내용은 저장되지 않습니다. 이동 하시겠습니까?");
+
+        if (!result) {
+            return;
+        }
+
         window.location.href = "./join.html";
-    });
+    })
+
+
+    const btn_logout = document.querySelector("#btn-logout");
 
     btn_logout.addEventListener("click", () => {
+        const result = confirm("로그아웃 시 커뮤니티 페이지로 이동하고, 지금까지 작성된 내용은 저장되지 않습니다. 로그아웃 하시겠습니까?");
+
+        if (!result) {
+            return;
+        }
 
         localStorage.removeItem("loginUser");
         localStorage.setItem("loginPossible", "false");
 
-        changeLogout();
-    });
+        isLogin = localStorage.getItem("loginPossible");
+
+        // changeLogout();
+
+        window.location.href = "./community.html";
+    })
+
 
     function changeLogin() {
         beforeLogin.style.display = "none";
@@ -162,33 +230,33 @@ function bindGNB() {
     }
 
     function changeLogout() {
-        nowUserId = "";
-        loginUser = null;
-
+        login = false;
+        loginUser = "";
         beforeLogin.style.display = "flex";
         afterLogin.style.display = "none";
     }
+
 }
 
 
-/* =========================
-   LNB
-========================= */
+
+///////////////////////////////////////////////////////
+// LNB
+///////////////////////////////////////////////////////
 
 function bindLNB() {
 
     const LNBmyPage = document.getElementById("LNBmyPage");
-    const LNBnotice = document.getElementById("LNBnotice");
-    const LNBcomm = document.getElementById("LNBcomm");
-
-    const LNBadminPage = document.getElementById("LNBadminPage");
-    if (nowUserId == "admin") {
-        LNBadminPage.style.display = "inline-block";
-    }
 
     LNBmyPage.addEventListener("click", () => {
 
-        if (localStorage.getItem("loginPossible") !== "true") {
+        const result = confirm("페이지를 떠나면 지금까지 작성된 내용은 저장되지 않습니다. 이동 하시겠습니까?");
+
+        if (!result) {
+            return;
+        }
+
+        if (localStorage.getItem("loginPossible") != "true") {
             alert("마이페이지는 로그인 후 이용 가능합니다.");
             sessionStorage.setItem("prevPage", "./myPage.html");
             window.location.href = "./login.html";
@@ -196,17 +264,119 @@ function bindLNB() {
         }
 
         window.location.href = "./myPage.html";
-    });
+
+    })
+
+
+    const LNBnotice = document.getElementById("LNBnotice");
 
     LNBnotice.addEventListener("click", () => {
 
+        const result = confirm("페이지를 떠나면 지금까지 작성된 내용은 저장되지 않습니다. 이동 하시겠습니까?");
+
+        if (!result) {
+            return;
+        }
+
         localStorage.setItem("postType", "notice");
         window.location.href = "./community.html";
-    });
+
+    })
+
+
+    const LNBcomm = document.getElementById("LNBcomm");
 
     LNBcomm.addEventListener("click", () => {
+        const result = confirm("페이지를 떠나면 지금까지 작성된 내용은 저장되지 않습니다. 이동 하시겠습니까?");
+
+        if (!result) {
+            return;
+        }
 
         localStorage.setItem("postType", "comm");
         window.location.href = "./community.html";
-    });
+
+    })
+
 }
+
+function loadInfo() {
+    const nickname = document.querySelector("#nickname");
+
+    // console.log(JSON.parse(localStorage.getItem("loginUser")));
+    nickname.innerText = (JSON.parse(localStorage.getItem("loginUser"))).nickname;
+}
+
+async function createPost() {
+
+    const title = document.querySelector('#title');
+    const editor = document.querySelector("#editor");
+
+    const res = await API.V1.SJ.Posts.create({
+        authorNo: loginUser.userNo,
+        title: title.value,
+        content: quill.root.innerHTML,
+        tags: ["게시글"]
+    });
+
+    const postNo = res.item.postId;   // 서버가 반환한 게시글 번호
+
+    window.location.href = `./post.html?postNo=${postNo}`;
+
+}
+
+// async function createPost() {
+
+//     const title = document.querySelector('#title');
+
+//     const res = await API.V1.SJ.Posts.create({
+//         authorNo: loginUser.userNo,
+//         title: title.value,
+//         content: quill.root.innerHTML,
+//         tags: ["게시글"]
+//     });
+
+//     console.log("API 응답:", res);
+
+// }
+
+function getPost() {
+    const title = document.querySelector('#title');
+    const upload_Popup = document.querySelector('#upload-Popup');
+
+    const post = JSON.parse(sessionStorage.getItem("updatePost"));
+
+    title.value = post.title;
+    quill.root.innerHTML = post.content;
+
+    document.querySelector('.btn-confirm').onclick = () => {
+
+        if (title.value == "") {
+            alert("제목을 입력해주세요.");
+            return;
+        }
+
+        if (quill.getText().trim() === "") {
+            alert("내용을 입력해주세요.");
+            return;
+        }
+
+        upload_Popup.style.display = 'none';
+
+        updatePost();
+    }
+}
+
+async function updatePost() {
+    const title = document.querySelector('#title');
+    const editor = document.querySelector("#editor");
+
+    const postNo = JSON.parse(sessionStorage.getItem("updatePost")).postNo;
+    API.V1.SJ.Posts.update(postNo, {
+        title: title.value,
+        content: quill.root.innerHTML
+    })
+
+    sessionStorage.removeItem("updatePost");
+    window.location.href = `./post.html?postNo=${postNo}`;
+};
