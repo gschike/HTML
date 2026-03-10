@@ -7,13 +7,16 @@
     <title>member management</title>
 
     <script>
+        let deleteTarget = null
         window.onload = () => {
-            //회원 삭제 버튼 누르면 회원 정보 삭제
+            //회원 삭제 버튼 누르면 삭제 확인창 나오게    
             document.querySelectorAll('.delete').forEach(ob => {
                 ob.addEventListener('click', evt => {
-                    evt.target.closest('tr').remove()
+                    document.querySelector('#deleteAlert').style.display = "block"
+                    deleteTarget = evt.target.closest('tr')
                 })
             })
+
 
             //전체 선택 버튼 누르면 모든 체크박스 선택
             document.querySelector('.allChk').addEventListener('click', evt => {
@@ -28,14 +31,9 @@
                 }
             })
 
-            //선택 회원 정보 삭제
+            //선택 회원 삭제 버튼 눌렀을 때 삭제 확인창 나오게
             document.querySelector('.chkDel').addEventListener('click', evt => {
-                for (let ob of document.querySelectorAll('.chkbox')) {
-                    if (ob.checked) {
-                        ob.closest('tr').remove()
-                    }
-                }
-                document.querySelector('.allChk').checked = false
+                document.querySelector('#deleteAlert').style.display = "block"
             })
 
             //모든 체크박스 체크면 전체 선택도 체크
@@ -54,27 +52,95 @@
                 }
             })
 
-        }   
+            //search
+            //검색 누르면 id나 닉네임 포함하는 계정만 보이게
+            document.querySelector('.memberSearch').addEventListener('click', evt => {
+                search(evt)
+            })
+
+            //입력하는 중에도 필터 걸리게
+            document.querySelector('#memberSearch').addEventListener('keydown', evt => {
+                search(evt)
+            })
+
+            //삭제 확인 누르면 삭제
+            document.querySelector('#deleteConfirm').addEventListener('click', evt => {
+                //회원 삭제 버튼 눌렀을때 삭제
+                if (deleteTarget) {
+                    deleteTarget.remove()
+                }
+                //선택한 회원들 모두 삭제
+                for (let ob of document.querySelectorAll('.chkbox')) {
+                    if (ob.checked) {
+                        ob.closest('tr').remove()
+                    }
+                }
+                document.querySelector('.allChk').checked = false
+                //삭제 확인창 다시 사라지게
+                document.querySelector('#deleteAlert').style.display = "none"
+                //삭제 대기열 리셋
+                deleteTarget = null
+            })
+
+            //삭제 취소 누르면 취소
+            document.querySelector('#deleteCancel').addEventListener('click', evt => {
+                //삭제 확인창 다시 사라지게
+                document.querySelector('#deleteAlert').style.display = "none"
+                //삭제 대기열 리셋
+                deleteTarget = null
+            })
+
+        }
+        //검색 기능
+        function search(evt) {
+            let keyword = document.querySelector('#memberSearch').value.toLowerCase()
+            document.querySelectorAll('.memberList tr').forEach(tr => {
+                let id = tr.querySelector('.id').textContent.toLowerCase()
+                let nickname = tr.querySelector('.nickname').textContent.toLowerCase()
+
+                if (id.includes(keyword) || nickname.includes(keyword)) {
+                    tr.style.display = ''
+                } else {
+                    tr.style.display = 'none'
+                }
+            })
+        }
+
+        function openModal(url) {
+            fetch(url)
+                .then(res => res.text())
+                .then(data => {
+                    document.querySelector("#modalBody").innerHTML = data
+                    document.querySelector("#modal").style.display = "block"
+                })
+            document.querySelector("#closeModal").addEventListener("click", () => {
+                document.querySelector("#modal").style.display = "none"
+            })
+        }        
     </script>
     <style>
         body {
             font-family: Arial, sans-serif;
             background: #f4f6f9;
             padding: 30px;
+            margin: 0;
         }
 
         h2 {
             margin-bottom: 20px;
         }
 
+        /* 테이블 디자인 */
         table {
             width: 90vw;
             border-collapse: collapse;
             background: white;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 6px;
         }
 
-        th,td {
+        th,
+        td {
             padding: 12px;
             border-bottom: 1px solid #ddd;
             text-align: center;
@@ -89,6 +155,7 @@
             background: #f1f1f1;
         }
 
+        /* 버튼 디자인 */
         button {
             padding: 6px 12px;
             border: none;
@@ -102,22 +169,119 @@
             background: #C94C2A;
         }
 
-        .block{
+        #block {
             margin-left: 5px;
         }
 
+        /* 상세 정보보기 */
+        .info{
+            color: gray;
+        }
+
+        /* 작성글,댓글보기 */
+        .written,
+        .comment {
+            margin-left: 5px;
+            color: gray;             
+        }        
+
         .top-bar {
             margin-bottom: 15px;
+        }
+
+        /* 검색 */
+        .search {
+            float: right;
+            position: relative;
+            right: 5vw;
+            font-size: 28px;
+        }
+
+        .memberSearch {
+            background-color: rgb(34, 178, 255);
+        }
+
+        /* 삭제 확인창 */
+        #deleteAlert {
+            position: absolute;
+            top: 30vh;
+            left: 25vw;
+            display: none;
+            background-color: gainsboro;
+            padding: 5vh 10vw;
+        }
+
+        .deleteWrap {
+            width: 30vw;
+            height: 20vh;
+            display: inline-block;
+            margin-top: 5vh;
+        }
+
+        #deleteCheck {
+            font-size: 38px;
+        }
+
+        #deleteConfirm,
+        #deleteCancel {
+            background-color: rgb(18, 63, 124);
+            font-size: 30px;
+            float: right;
+            margin-top: 30px;
+            margin-left: 15px;
+        }
+
+        /* 관리자페이지로 돌아가기 */
+        #backAdminPage {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* 모달 */
+        #modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background: white;
+            width: 600px;
+            margin: 10% auto;
+            padding: 20px;
         }
     </style>
 </head>
 
 <body>
+    <a href="" id="backAdminPage"> &lt; 관리자 페이지</a>
     <h2>회원 관리</h2>
 
     <div class="top-bar">
         <input type="checkbox" class="allChk"> 전체 선택
         <button class="chkDel">선택 회원 삭제</button>
+        <span class="search">
+            <input type="text" id="memberSearch">
+            <button class="memberSearch">검색</button>
+        </span>
+    </div>
+    <div id="deleteAlert">
+        <div class="deleteWrap">
+            <div id="deleteCheck">정말 삭제하시겠습니까?</div>
+            <button id="deleteCancel">취소</button>
+            <button id="deleteConfirm">확인</button>
+        </div>
+    </div>
+
+    <div id="modal">
+        <div class="modal-content">
+            <button id="closeModal">닫기</button>
+            <div id="modalBody"></div>
+        </div>
     </div>
 
     <table>
@@ -125,44 +289,303 @@
             <tr>
                 <th>선택</th>
                 <th>ID</th>
+                <th>닉네임</th>
                 <th>상세 정보</th>
                 <th>관리</th>
-                <th>작성 글 보기</th>
-                <th>작성 댓글 보기</th>                
             </tr>
         </thead>
         <tbody class="memberList">
             <tr>
                 <td><input type="checkbox" class="chkbox"></td>
-                <td>id1</td>
-                <td>상세 정보</td>
-                <td><button class="delete">회원 삭제</button><button class="block">회원 제재</button></td>
-                <td></td>
-                <td></td>
+                <td class="id">user1</td>
+                <td class="nickname">우와아아앙</td>
+                <td><a href="#" onclick="openModal('myPage.html')" class="info">상세 정보 보기</a></td>
+                <td>
+                    <button class="delete">회원 삭제</button>
+                    <select name="ban" id="block">
+                        <option value="3">3일 정지</option>
+                        <option value="7">7일 정지</option>
+                        <option value="14">14일 정지</option>
+                        <option value="30">30일 정지</option>
+                    </select>
+                    <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
+                    <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
+                </td>
+
             </tr>
             <tr>
                 <td><input type="checkbox" class="chkbox"></td>
-                <td>id2</td>
-                <td>상세 정보</td>
-                <td><button class="delete">회원 삭제</button><button class="block">회원 제재</button></td>
-                <td></td>
-                <td></td>
+                <td class="id">test1</td>
+                <td class="nickname">유저5</td>
+                <td><a href="#" onclick="openModal('myPage.html')" class="info">상세 정보 보기</a></td>
+                <td>
+                    <button class="delete">회원 삭제</button>
+                    <select name="ban" id="block">
+                        <option value="3">3일 정지</option>
+                        <option value="7">7일 정지</option>
+                        <option value="14">14일 정지</option>
+                        <option value="30">30일 정지</option>
+                    </select>
+                    <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
+                    <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
+                </td>
+
             </tr>
             <tr>
                 <td><input type="checkbox" class="chkbox"></td>
-                <td>id3</td>
-                <td>상세 정보</td>
-                <td><button class="delete">회원 삭제</button><button class="block">회원 제재</button></td>
-                <td></td>
-                <td></td>
+                <td class="id">test11</td>
+                <td class="nickname">유저6</td>
+                <td><a href="#" onclick="openModal('myPage.html')" class="info">상세 정보 보기</a></td>
+                <td>
+                    <button class="delete">회원 삭제</button>
+                    <select name="ban" id="block">
+                        <option value="3">3일 정지</option>
+                        <option value="7">7일 정지</option>
+                        <option value="14">14일 정지</option>
+                        <option value="30">30일 정지</option>
+                    </select>
+                    <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
+                    <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
+                </td>
+
             </tr>
             <tr>
                 <td><input type="checkbox" class="chkbox"></td>
-                <td>id4</td>
-                <td>상세 정보</td>
-                <td><button class="delete">회원 삭제</button><button class="block">회원 제재</button></td>
-                <td></td>
-                <td></td>
+                <td class="id">user5</td>
+                <td class="nickname">유저7</td>
+                <td><a href="#" onclick="openModal('myPage.html')" class="info">상세 정보 보기</a></td>
+                <td>
+                    <button class="delete">회원 삭제</button>
+                    <select name="ban" id="block">
+                        <option value="3">3일 정지</option>
+                        <option value="7">7일 정지</option>
+                        <option value="14">14일 정지</option>
+                        <option value="30">30일 정지</option>
+                    </select>
+                    <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
+                    <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" class="chkbox"></td>
+                <td class="id">user6</td>
+                <td class="nickname">유저8</td>
+                <td><a href="#" onclick="openModal('myPage.html')" class="info">상세 정보 보기</a></td>
+                <td>
+                    <button class="delete">회원 삭제</button>
+                    <select name="ban" id="block">
+                        <option value="3">3일 정지</option>
+                        <option value="7">7일 정지</option>
+                        <option value="14">14일 정지</option>
+                        <option value="30">30일 정지</option>
+                    </select>
+                    <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
+                    <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" class="chkbox"></td>
+                <td class="id">test2</td>
+                <td class="nickname">유저9</td>
+                <td><a href="#" onclick="openModal('myPage.html')" class="info">상세 정보 보기</a></td>
+                <td>
+                    <button class="delete">회원 삭제</button>
+                    <select name="ban" id="block">
+                        <option value="3">3일 정지</option>
+                        <option value="7">7일 정지</option>
+                        <option value="14">14일 정지</option>
+                        <option value="30">30일 정지</option>
+                    </select>
+                    <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
+                    <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" class="chkbox"></td>
+                <td class="id">user0302</td>
+                <td class="nickname">유저10</td>
+                <td><a href="#" onclick="openModal('myPage.html')" class="info">상세 정보 보기</a></td>
+                <td>
+                    <button class="delete">회원 삭제</button>
+                    <select name="ban" id="block">
+                        <option value="3">3일 정지</option>
+                        <option value="7">7일 정지</option>
+                        <option value="14">14일 정지</option>
+                        <option value="30">30일 정지</option>
+                    </select>
+                    <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
+                    <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" class="chkbox"></td>
+                <td class="id">userjhs</td>
+                <td class="nickname">유저11</td>
+                <td><a href="#" onclick="openModal('myPage.html')" class="info">상세 정보 보기</a></td>
+                <td>
+                    <button class="delete">회원 삭제</button>
+                    <select name="ban" id="block">
+                        <option value="3">3일 정지</option>
+                        <option value="7">7일 정지</option>
+                        <option value="14">14일 정지</option>
+                        <option value="30">30일 정지</option>
+                    </select>
+                    <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
+                    <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" class="chkbox"></td>
+                <td class="id">userh</td>
+                <td class="nickname">유저12</td>
+                <td><a href="#" onclick="openModal('myPage.html')" class="info">상세 정보 보기</a></td>
+                <td>
+                    <button class="delete">회원 삭제</button>
+                    <select name="ban" id="block">
+                        <option value="3">3일 정지</option>
+                        <option value="7">7일 정지</option>
+                        <option value="14">14일 정지</option>
+                        <option value="30">30일 정지</option>
+                    </select>
+                    <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
+                    <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" class="chkbox"></td>
+                <td class="id">test11999</td>
+                <td class="nickname">유저13</td>
+                <td><a href="#" onclick="openModal('myPage.html')" class="info">상세 정보 보기</a></td>
+                <td>
+                    <button class="delete">회원 삭제</button>
+                    <select name="ban" id="block">
+                        <option value="3">3일 정지</option>
+                        <option value="7">7일 정지</option>
+                        <option value="14">14일 정지</option>
+                        <option value="30">30일 정지</option>
+                    </select>
+                    <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
+                    <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" class="chkbox"></td>
+                <td class="id">user0305</td>
+                <td class="nickname">유저20</td>
+                <td><a href="#" onclick="openModal('myPage.html')" class="info">상세 정보 보기</a></td>
+                <td>
+                    <button class="delete">회원 삭제</button>
+                    <select name="ban" id="block">
+                        <option value="3">3일 정지</option>
+                        <option value="7">7일 정지</option>
+                        <option value="14">14일 정지</option>
+                        <option value="30">30일 정지</option>
+                    </select>
+                    <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
+                    <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" class="chkbox"></td>
+                <td class="id">user2</td>
+                <td class="nickname">유저16</td>
+                <td><a href="#" onclick="openModal('myPage.html')" class="info">상세 정보 보기</a></td>
+                <td>
+                    <button class="delete">회원 삭제</button>
+                    <select name="ban" id="block">
+                        <option value="3">3일 정지</option>
+                        <option value="7">7일 정지</option>
+                        <option value="14">14일 정지</option>
+                        <option value="30">30일 정지</option>
+                    </select>
+                    <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
+                    <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" class="chkbox"></td>
+                <td class="id">user0303</td>
+                <td class="nickname">유저17</td>
+                <td><a href="#" onclick="openModal('myPage.html')" class="info">상세 정보 보기</a></td>
+                <td>
+                    <button class="delete">회원 삭제</button>
+                    <select name="ban" id="block">
+                        <option value="3">3일 정지</option>
+                        <option value="7">7일 정지</option>
+                        <option value="14">14일 정지</option>
+                        <option value="30">30일 정지</option>
+                    </select>
+                    <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
+                    <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" class="chkbox"></td>
+                <td class="id">user9</td>
+                <td class="nickname">유저19</td>
+                <td><a href="#" onclick="openModal('myPage.html')" class="info">상세 정보 보기</a></td>
+                <td>
+                    <button class="delete">회원 삭제</button>
+                    <select name="ban" id="block">
+                        <option value="3">3일 정지</option>
+                        <option value="7">7일 정지</option>
+                        <option value="14">14일 정지</option>
+                        <option value="30">30일 정지</option>
+                    </select>
+                    <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
+                    <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" class="chkbox"></td>
+                <td class="id">user9</td>
+                <td class="nickname">유저19</td>
+                <td><a href="#" onclick="openModal('myPage.html')" class="info">상세 정보 보기</a></td>
+                <td>
+                    <button class="delete">회원 삭제</button>
+                    <select name="ban" id="block">
+                        <option value="3">3일 정지</option>
+                        <option value="7">7일 정지</option>
+                        <option value="14">14일 정지</option>
+                        <option value="30">30일 정지</option>
+                    </select>
+                    <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
+                    <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" class="chkbox"></td>
+                <td class="id">user0307</td>
+                <td class="nickname">미정</td>
+                <td><a href="#" onclick="openModal('myPage.html')" class="info">상세 정보 보기</a></td>
+                <td>
+                    <button class="delete">회원 삭제</button>
+                    <select name="ban" id="block">
+                        <option value="3">3일 정지</option>
+                        <option value="7">7일 정지</option>
+                        <option value="14">14일 정지</option>
+                        <option value="30">30일 정지</option>
+                    </select>
+                    <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
+                    <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" class="chkbox"></td>
+                <td class="id">jhstest1</td>
+                <td class="nickname">TBD</td>
+                <td><a href="#" onclick="openModal('myPage.html')" class="info">상세 정보 보기</a></td>
+                <td>
+                    <button class="delete">회원 삭제</button>
+                    <select name="ban" id="block">
+                        <option value="3">3일 정지</option>
+                        <option value="7">7일 정지</option>
+                        <option value="14">14일 정지</option>
+                        <option value="30">30일 정지</option>
+                    </select>
+                    <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
+                    <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
+                </td>
             </tr>
         </tbody>
     </table>

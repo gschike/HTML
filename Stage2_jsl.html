@@ -48,7 +48,13 @@
                 window.location.href = "stage3_jsl.html" // 다음 스테이지로 전환
             })
 
+            //timer
             update()
+
+             //skip
+            document.querySelector('#skip').addEventListener('click', evt => {
+                window.location.href = "stage3_jsl.html"
+            })
         }
         
 
@@ -206,8 +212,12 @@
 
 <body>
     <div class="top">
-        <div class="left">
-            <button type="button" class="topBtn" id="btn-main">메인 페이지</button>
+        <div id="logo">
+            <a href="메인페이지" target="main">
+                <img class="pic" src="LOGO.png" alt="로고" style="height:80px;">
+            </a>
+        </div>
+        <div class="left">            
         </div>
 
         <div class="right">
@@ -246,8 +256,12 @@
         </div>
         <button id="reset">reset</button>
         <button id="home">메인 화면으로</button>
+        <div id="adminControl">
+            <button id="skip">skip</button>
+            <button id="shutdown">shutdown</button>
+        </div>
     </div>
-    </div>
+    
 </body>
 
 </html>

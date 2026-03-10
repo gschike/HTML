@@ -46,7 +46,12 @@
             })
 
             //timer
-            update()            
+            update()   
+            
+             //skip
+            document.querySelector('#skip').addEventListener('click', evt => {
+                window.location.href = "main.html"
+            })
         }
 
         //기믹
@@ -113,8 +118,8 @@
         //출력할 힌트들
         const hint0 = 'hint0: 방향키를 사용해서 보라색 원을 움직여 보세요'
         const hint1 = 'hint1: 보라색 원에 object라는 id를 부여하세요'
-        const hint2 = 'hint2: 보라색 원을 움직여 찾을수 있는 힌트는 3개입니다'
-        const hint3 = "hint3: document.querySelector('.goal').??('mouseover', goalJump)"
+        const hint2 = "hint2: document.querySelector('???').???('id','object')"
+        const hint3 = "hint3: document.querySelector('.goal').???('mouseover', goalJump)"
         const hint4 = "hint4: document.querySelector('.goal').???('??', goalZ)"
 
         function consoleInput(evt) {
@@ -165,7 +170,7 @@
 
                     //명령어로 js를 조작해 클릭 이벤트를 제거했다면 다음 기믹 실행
                     else if (input.split(',')[0] == "document.querySelector('.goal').removeEventListener('click'"
-                        && input.split(',')[1].trim() == 'goalZ)') {
+                        && input.split(',')[1].trim() == 'goalZ)') {                           
                         console.log(eval(input))
                         goalSmall()
                     }
@@ -206,9 +211,14 @@
 
 <body>
     <div class="top">
-        <div class="left">
-            <button type="button" class="topBtn" id="btn-main">메인 페이지</button>
+        <div id="logo">
+            <a href="메인페이지" target="main">
+                <img class="pic" src="LOGO.png" alt="로고" style="height:80px;">
+            </a>
         </div>
+        <div class="left">            
+        </div>
+
         <div class="right">
             <div class="beforeLogin">
                 <button type="button" class="topBtn" id="btn-login">로그인</button>
@@ -250,8 +260,12 @@
 
         <button id="reset">reset</button>
         <button id="home">메인 화면으로</button>
+        <div id="adminControl">
+            <button id="skip">skip</button>
+            <button id="shutdown">shutdown</button>
+        </div>
     </div>
-    </div>
+    
 </body>
 
 </html>

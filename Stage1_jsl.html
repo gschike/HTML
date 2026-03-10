@@ -44,14 +44,19 @@
             //클리어 조건
             //goal을 더블 클릭
             document.querySelector('.goal').addEventListener('dblclick', evt => {
-                alert('1단계 클리어'+'\n걸린 시간: '+document.querySelector('#timer').textContent)    //클리어 메시지 출력
+                alert('1단계 클리어' + '\n걸린 시간: ' + document.querySelector('#timer').textContent)    //클리어 메시지 출력
                 window.location.href = "stage2_jsl.html" // 다음 스테이지로 전환
             })
 
             //timer            
             update()
+
+            //skip
+            document.querySelector('#skip').addEventListener('click', evt => {
+                window.location.href = "stage2_jsl.html"
+            })
         }
-        
+
 
         //기믹
         function addEvent() {
@@ -197,8 +202,12 @@
 
 <body>
     <div class="top">
-        <div class="left">
-            <button type="button" class="topBtn" id="btn-main">메인 페이지</button>
+        <div id="logo">
+            <a href="메인페이지" target="main">
+                <img class="pic" src="LOGO.png" alt="로고" style="height:80px;">
+            </a>
+        </div>
+        <div class="left">            
         </div>
 
         <div class="right">
@@ -211,6 +220,8 @@
             </div>
         </div>
     </div>
+
+
     <div id="gameArea">
         <div id="timer">00:00:00.000</div>
 
@@ -224,6 +235,7 @@
                 <div class="title">FIND
                     <span class="goal"> ME </span>
                 </div>
+
                 <div class="des">사라진 나를 찾아주세요</div>
             </div>
             <div id="object" class="obj 보라색 원"></div>
@@ -241,6 +253,10 @@
         </div>
         <button id="reset">reset</button>
         <button id="home">메인 화면으로</button>
+        <div id="adminControl">
+            <button id="skip">skip</button>
+            <button id="shutdown">shutdown</button>
+        </div>
     </div>
 </body>
 

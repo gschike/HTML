@@ -28,7 +28,7 @@ function init() {
     //메인화면으로
     document.querySelector('#home').addEventListener('click', evt => {
         window.location.href = "home.html"
-    })
+    })    
 }
 
 //출력창
@@ -80,8 +80,7 @@ function goalSmall() {
     document.querySelector('body').addEventListener('mouseover', evt => {
         //앞의 기믹들 해제 했을때
         if (parseInt(document.querySelector('.goal').style.zIndex) >= 0) {            
-            document.querySelector('.goal').classList.add('small')
-            
+            document.querySelector('.goal').classList.add('small')            
             document.querySelector('body').addEventListener('dblclick', evt => {
                 print('느려')
             })
