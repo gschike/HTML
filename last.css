@@ -176,6 +176,10 @@ button {
     height: 40px;
 }
 
+#hintClose {
+    padding: 5px 10px;
+}
+
 
 .container {
     display: flex;
@@ -405,6 +409,8 @@ button {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    text-align: center;
 }
 
 .popBtn {

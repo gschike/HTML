@@ -194,6 +194,22 @@ const pageContent = [
     talkContent_3_4
 ];
 
+
+///////////////////////////////////
+// 힌트 내용
+const hintText = [
+    "첫번째 조각은 'display: none' 으로 숨겨져 있어!<br>styles에서 display 항목의 체크를 풀면 첫번째 조각이 보일 거야!",
+    "두번째 조각은 'z-index' 로 아래에 숨겨져 있어!<br>styles에서 z-index 항목의 체크를 풀면 두번째 조각이 보일 거야!",
+    "세번쨰 조각은 'filter: blur' 로 흐리게 되어 있어!<br>styles에서 z-index 항목의 체크를 풀면 두번째 조각이 보일 거야!",
+    "첫번째 조각은 sessionStorage에 그대로 보일 거야!",
+    "두번째 조각을 'true'로 만들려면 콘솔 창에 명령어를 입력해야 해!<br>sessionStorage.setItem('두번째 조각','true') 를 입력해보자!",
+    "가짜 조각을 없애려면 콘솔 창에 명령어를 입력해야 해!<br>sessionStorage.removeItem('가짜 조각') 을 입력해보자!",
+    "첫번째 조각의 값을 확인하려면 breakpoint를 걸고,<br>sources 창 우측의 'scope' 내용을 확인해보자!",
+    "두번쨰 조각의 값을 확인하려면 breakpoint를 걸고,<br>F10을 눌러서 '진짜 조각'이라고 적힌 곳까지 내려가보자!",
+    "세번째 조각의 값을 확인하려면 breakpoint를 걸고,<br>360번째 줄의 breakpoint를 우클릭 한 후, 'Edit breakpoint...'를 눌러,<br>그리고 주어진 조건을 적어주고 다시 실행해보자!",
+    "지금은 힌트가 없습니다!"
+]
+
 ////////////////////////////////////////////////
 // 게임 진행
 
@@ -301,6 +317,70 @@ function bindGame() {
     nextPageBtn.addEventListener("click", () => {
         nextPage();
     });
+
+    // 힌트 버튼
+    const hintBtn = document.querySelector("#hint-btn");
+    const hintContent = document.querySelector("#hintContent");
+    const hintClose = document.querySelector("#hintClose");
+    const hintOverlay = document.querySelector(".hint");
+
+    hintBtn.addEventListener("click", () => {
+        hintOverlay.style.display = "flex";
+        console.log(pageIndex);
+        console.log(hintText);
+
+        hintContent.innerText = hintText[9];
+
+        if (pageIndex == 2) {
+            hintContent.innerHTML = hintText[0];
+            return;
+        }
+
+        if (pageIndex == 3) {
+            hintContent.innerHTML = hintText[1];
+            return;
+        }
+
+        if (pageIndex == 4) {
+            hintContent.innerHTML = hintText[2];
+            return;
+        }
+
+        if (pageIndex == 6) {
+            hintContent.innerHTML = hintText[3];
+            return;
+        }
+
+        if (pageIndex == 7) {
+            hintContent.innerHTML = hintText[4];
+            return;
+        }
+
+        if (pageIndex == 8) {
+            hintContent.innerHTML = hintText[5];
+            return;
+        }
+
+        if (pageIndex == 10) {
+            hintContent.innerHTML = hintText[6];
+            return;
+        }
+        
+        if (pageIndex == 11) {
+            hintContent.innerHTML = hintText[7];
+            return;
+        }
+
+        if (pageIndex == 12) {
+            hintContent.innerHTML = hintText[8];
+            return;
+        }
+
+    })
+
+    hintClose.addEventListener("click", () => {
+        hintOverlay.style.display = "none";
+    })
 
 }
 
