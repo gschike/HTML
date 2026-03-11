@@ -28,12 +28,17 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Pretendard', sans-serif;
+    /* 윈도우(맑은 고딕), 맥(Apple SD), 기본 고딕체 순서로 설정하여 어디서든 깨지지 않게 함 */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans KR", "Malgun Gothic", sans-serif;
     background-color: var(--LogBg);
     color: var(--color4);
+    /* 폰트 렌더링 최적화 */
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.02em;
+    /* 고딕체 가독성을 위한 자간 조절 */
 }
 
-/* 메인페이지 버튼 */
+/* fixed 메인페이지 버튼 */
 #mainpageBtn {
     position: fixed;
     bottom: 30px;
@@ -288,7 +293,7 @@ body {
 
 .errorlog,
 .contents {
-    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-family: "Consolas", "Monaco", "Courier New", monospace;
     /* 코딩용 글꼴 */
     font-size: 13px;
     /* 로그에 어울리는 크기 */
