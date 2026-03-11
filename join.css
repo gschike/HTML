@@ -221,6 +221,10 @@ body {
     background-color: #ccc;
 
     text-align: center;
+
+    background-image: url(./image/광고_findme.jpg);
+    background-position: center;
+    background-size: cover;
 }
 
 

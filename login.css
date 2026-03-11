@@ -189,6 +189,10 @@ body {
     background-color: #ccc;
 
     text-align: center;
+
+    background-image: url(./image/광고_css.jpg);
+    background-position: left;
+    background-size: cover;
 }
 
 
