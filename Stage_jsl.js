@@ -6,8 +6,13 @@ function init() {
     document.querySelector('#gameArea').onselectstart = () => false
     document.querySelector('#gameArea').oncontextmenu = () => false
     //출력창에서만 드래그 가능
-    document.querySelector('#output').addEventListener('selectstart', e => {
-        e.stopPropagation();
+    document.querySelector('#output').addEventListener('selectstart', evt => {
+        evt.stopPropagation()
+    })
+    document.querySelectorAll('.hint').forEach(function (e) {
+        e.addEventListener('selectstart', evt => {
+            evt.stopPropagation()
+        })
     })
 
     //키보드 입력시 이벤트
@@ -28,7 +33,18 @@ function init() {
     //메인화면으로
     document.querySelector('#home').addEventListener('click', evt => {
         window.location.href = "home.html"
-    })    
+    })
+
+    //timer
+    update()
+
+    //skip
+    document.querySelector('#skip').addEventListener('click', evt => {
+        window.location.href = "main.html"
+    })
+
+    //reset
+    document.querySelector('#reset').addEventListener('click', resetGame)
 }
 
 //출력창
@@ -79,8 +95,8 @@ function goalZ() {
 function goalSmall() {
     document.querySelector('body').addEventListener('mouseover', evt => {
         //앞의 기믹들 해제 했을때
-        if (parseInt(document.querySelector('.goal').style.zIndex) >= 0) {            
-            document.querySelector('.goal').classList.add('small')            
+        if (parseInt(document.querySelector('.goal').style.zIndex) >= 0) {
+            document.querySelector('.goal').classList.add('small')
             document.querySelector('body').addEventListener('dblclick', evt => {
                 print('느려')
             })

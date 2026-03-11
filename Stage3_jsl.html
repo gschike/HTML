@@ -36,22 +36,14 @@
 
             init()  
 
-            addEvent()  
-            document.querySelector('#reset').addEventListener('click', resetGame)      
+            //기믹 생성
+            addEvent()            
 
             //클리어 조건
             //goal을 더블 클릭
             document.querySelector('.goal').addEventListener('dblclick', evt => {
                 alert('3단계 클리어'+'\n걸린 시간: '+document.querySelector('#timer').textContent)    //클리어 메시지 출력                
-            })
-
-            //timer
-            update()   
-            
-             //skip
-            document.querySelector('#skip').addEventListener('click', evt => {
-                window.location.href = "main.html"
-            })
+            })            
         }
 
         //기믹

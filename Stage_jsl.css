@@ -15,16 +15,14 @@
 .top {
     border-bottom: 3px solid var(--MainColor);
     background-color: rgba(255, 255, 255, 0.705);
-
     padding: 15px 50px;
-
     display: flex;
     justify-content: space-between;
-
     position: sticky;
     top: 0;
 }
 
+/* 메인로고 */
 #logo {
     position: fixed;
     top: 0;
@@ -41,6 +39,7 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);    
 }
 
+/* 상단바의 버튼 */
 .topBtn {
     min-width: 60px;
     padding: 2px 10px;
@@ -62,6 +61,7 @@
     cursor: pointer;
 }
 
+/* 로그인 여부에 바뀌는 버튼 */
 .beforeLogin {
     display: none;
 }
@@ -147,6 +147,7 @@ body {
     margin-top: 10px;
 }
 
+/* enter글자 */
 #enter {
     position: relative;
     left: 25.8vw;
@@ -212,15 +213,15 @@ body {
 .disappear {
     position: absolute;
     top: -20px;
-    z-index: 2;
+    z-index: 4;
 }
 
 /* 작아지는 기믹 */
 .small {
     transform: scale(0.1);
     opacity: 0;
+    z-index: 5;
 }
-
 
 /* 타이머 */
 #timer {

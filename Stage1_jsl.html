@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="Stage_jsl.css">
     <style>
         #hinta {
-            position: relative;
-            left: 5vw;
-            top: 15vh;
+            position: absolute;
+            left: 10vw;
+            top: 65vh;
         }
 
         #hintb {
@@ -38,23 +38,15 @@
 
             init()
 
-            addEvent()
-            document.querySelector('#reset').addEventListener('click', resetGame)
+            //기믹생성
+            addEvent()            
 
             //클리어 조건
             //goal을 더블 클릭
             document.querySelector('.goal').addEventListener('dblclick', evt => {
                 alert('1단계 클리어' + '\n걸린 시간: ' + document.querySelector('#timer').textContent)    //클리어 메시지 출력
                 window.location.href = "stage2_jsl.html" // 다음 스테이지로 전환
-            })
-
-            //timer            
-            update()
-
-            //skip
-            document.querySelector('#skip').addEventListener('click', evt => {
-                window.location.href = "stage2_jsl.html"
-            })
+            })           
         }
 
 
@@ -131,8 +123,6 @@
         function consoleInput(evt) {
             //사용자가 쓰기 편하게 짧은 키워드 만들어두기            
             const style = document.querySelector('.goal').style
-
-
 
             if (evt.key === 'Enter') {
                 // 입력창 중간에 엔터 쳐도 입력되게 방어
@@ -221,7 +211,6 @@
         </div>
     </div>
 
-
     <div id="gameArea">
         <div id="timer">00:00:00.000</div>
 
@@ -235,19 +224,20 @@
                 <div class="title">FIND
                     <span class="goal"> ME </span>
                 </div>
-
                 <div class="des">사라진 나를 찾아주세요</div>
             </div>
             <div id="object" class="obj 보라색 원"></div>
             <textarea id="input"></textarea>
         </div>
-        <div></div>
+        <div></div>        
         <span id="hinta" class="hint">사라진 글자를 찾아서 더블 클릭하면 성공입니다</span>
-        <div><span id="hintb" class="hint">document.querySelector('.goal').addEventListener('mouseover',
+        <div>
+            <span id="hintb" class="hint">document.querySelector('.goal').addEventListener('mouseover',
                 goalJump)
             </span>
         </div>
         <div><span id="hintc" class="hint">잘 모르실 땐 입력창에 <span class="hintLetter">"힌트"</span>를 입력해보세요</span></div>
+        <br>
         <div class="outputWrapper">
             <div id="output">hint0 : 방향키를 사용해 보라색 원을 움직여 보세요</div>
         </div>
