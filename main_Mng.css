@@ -40,7 +40,7 @@ body {
     right: 30px;
 
     /* 크기 및 배치 */
-    width: 100px;
+    width: 90px;
     height: 45px;
     display: flex;
     justify-content: center;
@@ -73,13 +73,43 @@ body {
 /* GNB 영역 */
 #gnb_Manager_wrap {
     background-color: var(--color4);
-    padding: 15px 0;
+    padding: 15px 40px;
+    /* 좌우 여백 확보 */
+}
+
+.gnb_head {
+    max-width: 1200px;
+    /* 메인 컨텐츠와 너비 맞춤 (선택) */
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    /* 로고는 왼쪽 끝, 버튼은 오른쪽 끝 */
+    align-items: center;
+    /* 수직 중앙 정렬 */
+}
+
+#logo_wrap {
+    display: flex;
+    align-items: center;
+}
+
+/* 2. 로고 이미지 설정 (비율 유지) */
+#logo {
+    width: auto;
+    /* 너비 자동 */
+    height: 30px;
+    /* 높이 고정 (이미지 크기에 맞춰 조절하세요) */
+    display: block;
+    object-fit: contain;
+    /* 이미지가 찌그러지지 않게 함 */
+    cursor: pointer;
 }
 
 #buttons {
     display: flex;
-    justify-content: center;
-    gap: 2%;
+    justify-content: flex-end;
+    /* 오른쪽 정렬 */
+    gap: 5px;
 }
 
 .button {
@@ -95,6 +125,7 @@ body {
 .button:hover {
     background: var(--MainColor);
 }
+
 
 /* 메인 랩 */
 #main_wrap {
@@ -112,6 +143,8 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     border: 1px solid var(--BorderColor);
 }
+
+
 
 /* 방문자 통계 컨테이너 */
 .visitors {
@@ -600,4 +633,61 @@ body {
 #clicked-PW span:not(:empty) {
     border-color: #e0d5ff;
     background-color: #faf9ff;
+}
+
+@media (max-width: 768px) {
+
+    /* 1. GNB: 세로 정렬 방지 및 가로 스크롤 혹은 한 줄 정리 */
+    .gnb_head {
+        flex-direction: column;
+        /* 로고 아래로 버튼 배치 */
+        gap: 15px;
+        padding: 15px;
+    }
+
+    #buttons {
+        width: 100%;
+        justify-content: center;
+        /* 버튼 중앙 정렬 */
+        flex-wrap: wrap;
+        /* 공간 부족하면 다음 줄로 */
+        gap: 8px;
+    }
+
+    .button {
+        flex: 1 1 auto;
+        /* 버튼이 너비에 맞춰 유연하게 조절 */
+        padding: 8px 10px;
+        font-size: 11px;
+        text-align: center;
+    }
+
+    /* 2. 방문자 통계: 가로 2줄 또는 세로 1줄로 변경 */
+    .visitors {
+        flex-direction: column;
+        /* 카드들을 세로로 나열 */
+        gap: 10px;
+    }
+
+    .visitor {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .visitor>span {
+        font-size: 1.8em;
+        /* 숫자 크기 살짝 축소 */
+    }
+
+    /* 3. 메인 랩 여백 조정 */
+    #main_wrap {
+        margin: 10px auto;
+        padding: 0 10px;
+    }
+
+    /* 4. 스케줄러(iframe 등): 모바일에서 높이가 너무 작아지지 않게 */
+    #calander {
+        height: 300px;
+        /* 모바일에서는 좀 더 길게 보여야 함 */
+    }
 }

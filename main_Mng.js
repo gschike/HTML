@@ -38,14 +38,27 @@ function fxd_btn() {
 // 관리자 페이지 GNB 기능
 function Manager_gnb() {
 
+    const logo = document.querySelector('#logo')
     const main = document.querySelector('#main_btn')
     const manager = document.querySelector('#manager_btn')
+    const logOut = document.querySelector('#logOut')
+
+    if (logo) {
+        logo.onclick = () => {
+            if (confirm("메인페이지로 이동하시겠습니까?")) {
+                window.location.href = "./home.html"
+            }
+        }
+    }
 
     if (main)
         main.onclick = () => window.location.href = "./home.html"
 
     if (manager)
         manager.onclick = () => window.location.href = "./main_Mng.html"
+
+    if (logOut)
+        logOut.onclick = () => alert("관리자 페이지에서는 로그아웃 하실 수 없습니다.")
 
 }
 
@@ -302,9 +315,9 @@ function lastConfirm() {
 
     if (confirmBtn)
         confirmBtn.onclick = function () {
-
-            // 실행 기능
-
+            
+            // !!!!! 점검중 페이지
+            // window.location.href = ""
         }
 
     if (btn_cancel[2])
