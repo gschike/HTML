@@ -17,7 +17,6 @@
                 })
             })
 
-
             //전체 선택 버튼 누르면 모든 체크박스 선택
             document.querySelector('.allChk').addEventListener('click', evt => {
                 if (document.querySelector('.allChk').checked) {
@@ -106,6 +105,7 @@
             })
         }
 
+        //상세 정보, 작성 글 댓글 보기 창 띄우기
         function openModal(url) {
             fetch(url)
                 .then(res => res.text())
@@ -139,8 +139,7 @@
             margin-top: 6px;
         }
 
-        th,
-        td {
+        th, td {
             padding: 12px;
             border-bottom: 1px solid #ddd;
             text-align: center;
@@ -167,36 +166,47 @@
 
         button:hover {
             background: #C94C2A;
-        }
-
-        #block {
-            margin-left: 5px;
+        }     
+        
+        /* 전체선택/선택 회원 삭제 바 */
+        .top-bar {
+            margin-bottom: 15px;
         }
 
         /* 상세 정보보기 */
-        .info{
+        .info {
             color: gray;
+        }
+        
+        /* 회원 삭제 */
+        .delete{
+            margin-right: 10px;
+        }
+
+         /* 셀렉트 박스 */
+        #block {
+            margin-left: 5px;
+        }
+        /* 적용 */
+        .apply {
+            background-color: rgb(34, 178, 255);
         }
 
         /* 작성글,댓글보기 */
         .written,
         .comment {
-            margin-left: 5px;
-            color: gray;             
+            margin-left: 10px;
+            color: gray;
         }        
 
-        .top-bar {
-            margin-bottom: 15px;
-        }
-
-        /* 검색 */
+        /* 검색창 */
         .search {
             float: right;
             position: relative;
             right: 5vw;
             font-size: 28px;
         }
-
+        /* 검색 버튼 */
         .memberSearch {
             background-color: rgb(34, 178, 255);
         }
@@ -210,18 +220,18 @@
             background-color: gainsboro;
             padding: 5vh 10vw;
         }
-
+        /* 삭제 확인 메세지/버튼 블록 */
         .deleteWrap {
             width: 30vw;
             height: 20vh;
             display: inline-block;
             margin-top: 5vh;
         }
-
+        /* 삭제 확인 메세지 */
         #deleteCheck {
             font-size: 38px;
         }
-
+        /* 삭제 확인,취소 버튼 */
         #deleteConfirm,
         #deleteCancel {
             background-color: rgb(18, 63, 124);
@@ -300,14 +310,16 @@
                 <td class="id">user1</td>
                 <td class="nickname">우와아아앙</td>
                 <td><a href="#" onclick="openModal('myPage.html')" class="info">상세 정보 보기</a></td>
-                <td>
+                <td class="management">
                     <button class="delete">회원 삭제</button>
                     <select name="ban" id="block">
+                        <option value="0">정지 해제</option>
                         <option value="3">3일 정지</option>
                         <option value="7">7일 정지</option>
                         <option value="14">14일 정지</option>
                         <option value="30">30일 정지</option>
                     </select>
+                    <button class="apply">적용</button>
                     <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
                     <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
                 </td>
@@ -321,11 +333,13 @@
                 <td>
                     <button class="delete">회원 삭제</button>
                     <select name="ban" id="block">
+                        <option value="0">정지 해제</option>
                         <option value="3">3일 정지</option>
                         <option value="7">7일 정지</option>
                         <option value="14">14일 정지</option>
                         <option value="30">30일 정지</option>
                     </select>
+                    <button class="apply">적용</button>
                     <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
                     <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
                 </td>
@@ -339,11 +353,13 @@
                 <td>
                     <button class="delete">회원 삭제</button>
                     <select name="ban" id="block">
+                        <option value="0">정지 해제</option>
                         <option value="3">3일 정지</option>
                         <option value="7">7일 정지</option>
                         <option value="14">14일 정지</option>
                         <option value="30">30일 정지</option>
                     </select>
+                    <button class="apply">적용</button>
                     <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
                     <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
                 </td>
@@ -357,11 +373,13 @@
                 <td>
                     <button class="delete">회원 삭제</button>
                     <select name="ban" id="block">
+                        <option value="0">정지 해제</option>
                         <option value="3">3일 정지</option>
                         <option value="7">7일 정지</option>
                         <option value="14">14일 정지</option>
                         <option value="30">30일 정지</option>
                     </select>
+                    <button class="apply">적용</button>
                     <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
                     <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
                 </td>
@@ -374,11 +392,13 @@
                 <td>
                     <button class="delete">회원 삭제</button>
                     <select name="ban" id="block">
+                        <option value="0">정지 해제</option>
                         <option value="3">3일 정지</option>
                         <option value="7">7일 정지</option>
                         <option value="14">14일 정지</option>
                         <option value="30">30일 정지</option>
                     </select>
+                    <button class="apply">적용</button>
                     <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
                     <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
                 </td>
@@ -391,11 +411,13 @@
                 <td>
                     <button class="delete">회원 삭제</button>
                     <select name="ban" id="block">
+                        <option value="0">정지 해제</option>
                         <option value="3">3일 정지</option>
                         <option value="7">7일 정지</option>
                         <option value="14">14일 정지</option>
                         <option value="30">30일 정지</option>
                     </select>
+                    <button class="apply">적용</button>
                     <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
                     <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
                 </td>
@@ -408,11 +430,13 @@
                 <td>
                     <button class="delete">회원 삭제</button>
                     <select name="ban" id="block">
+                        <option value="0">정지 해제</option>
                         <option value="3">3일 정지</option>
                         <option value="7">7일 정지</option>
                         <option value="14">14일 정지</option>
                         <option value="30">30일 정지</option>
                     </select>
+                    <button class="apply">적용</button>
                     <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
                     <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
                 </td>
@@ -425,11 +449,13 @@
                 <td>
                     <button class="delete">회원 삭제</button>
                     <select name="ban" id="block">
+                        <option value="0">정지 해제</option>
                         <option value="3">3일 정지</option>
                         <option value="7">7일 정지</option>
                         <option value="14">14일 정지</option>
                         <option value="30">30일 정지</option>
                     </select>
+                    <button class="apply">적용</button>
                     <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
                     <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
                 </td>
@@ -442,11 +468,13 @@
                 <td>
                     <button class="delete">회원 삭제</button>
                     <select name="ban" id="block">
+                        <option value="0">정지 해제</option>
                         <option value="3">3일 정지</option>
                         <option value="7">7일 정지</option>
                         <option value="14">14일 정지</option>
                         <option value="30">30일 정지</option>
                     </select>
+                    <button class="apply">적용</button>
                     <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
                     <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
                 </td>
@@ -459,11 +487,13 @@
                 <td>
                     <button class="delete">회원 삭제</button>
                     <select name="ban" id="block">
+                        <option value="0">정지 해제</option>
                         <option value="3">3일 정지</option>
                         <option value="7">7일 정지</option>
                         <option value="14">14일 정지</option>
                         <option value="30">30일 정지</option>
                     </select>
+                    <button class="apply">적용</button>
                     <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
                     <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
                 </td>
@@ -476,11 +506,13 @@
                 <td>
                     <button class="delete">회원 삭제</button>
                     <select name="ban" id="block">
+                        <option value="0">정지 해제</option>
                         <option value="3">3일 정지</option>
                         <option value="7">7일 정지</option>
                         <option value="14">14일 정지</option>
                         <option value="30">30일 정지</option>
                     </select>
+                    <button class="apply">적용</button>
                     <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
                     <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
                 </td>
@@ -493,11 +525,13 @@
                 <td>
                     <button class="delete">회원 삭제</button>
                     <select name="ban" id="block">
+                        <option value="0">정지 해제</option>
                         <option value="3">3일 정지</option>
                         <option value="7">7일 정지</option>
                         <option value="14">14일 정지</option>
                         <option value="30">30일 정지</option>
                     </select>
+                    <button class="apply">적용</button>
                     <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
                     <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
                 </td>
@@ -510,11 +544,13 @@
                 <td>
                     <button class="delete">회원 삭제</button>
                     <select name="ban" id="block">
+                        <option value="0">정지 해제</option>
                         <option value="3">3일 정지</option>
                         <option value="7">7일 정지</option>
                         <option value="14">14일 정지</option>
                         <option value="30">30일 정지</option>
                     </select>
+                    <button class="apply">적용</button>
                     <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
                     <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
                 </td>
@@ -527,11 +563,13 @@
                 <td>
                     <button class="delete">회원 삭제</button>
                     <select name="ban" id="block">
+                        <option value="0">정지 해제</option>
                         <option value="3">3일 정지</option>
                         <option value="7">7일 정지</option>
                         <option value="14">14일 정지</option>
                         <option value="30">30일 정지</option>
                     </select>
+                    <button class="apply">적용</button>
                     <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
                     <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
                 </td>
@@ -544,11 +582,13 @@
                 <td>
                     <button class="delete">회원 삭제</button>
                     <select name="ban" id="block">
+                        <option value="0">정지 해제</option>
                         <option value="3">3일 정지</option>
                         <option value="7">7일 정지</option>
                         <option value="14">14일 정지</option>
                         <option value="30">30일 정지</option>
                     </select>
+                    <button class="apply">적용</button>
                     <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
                     <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
                 </td>
@@ -561,11 +601,13 @@
                 <td>
                     <button class="delete">회원 삭제</button>
                     <select name="ban" id="block">
+                        <option value="0">정지 해제</option>
                         <option value="3">3일 정지</option>
                         <option value="7">7일 정지</option>
                         <option value="14">14일 정지</option>
                         <option value="30">30일 정지</option>
                     </select>
+                    <button class="apply">적용</button>
                     <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
                     <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
                 </td>
@@ -578,11 +620,13 @@
                 <td>
                     <button class="delete">회원 삭제</button>
                     <select name="ban" id="block">
+                        <option value="0">정지 해제</option>
                         <option value="3">3일 정지</option>
                         <option value="7">7일 정지</option>
                         <option value="14">14일 정지</option>
                         <option value="30">30일 정지</option>
                     </select>
+                    <button class="apply">적용</button>
                     <a href="#" onclick="openModal('ㄱ.html')" class="written">작성 글 보기</a>
                     <a href="#" onclick="openModal('ㄴ.html')" class="comment">작성 댓글 보기</a>
                 </td>
