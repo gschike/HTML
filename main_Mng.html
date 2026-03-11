@@ -11,17 +11,22 @@
 </head>
 
 <body>
+    <!-- fixed -->
     <div id="mainpageBtn">메인페이지</div>
 
+    <!-- gnb -->
     <div id="gnb_Manager_wrap">
         <div class="gnb_head">
-            <div id="buttons">
-                <div id="logo">LOGO</div>
-                <div id="main_btn" class="button">메인페이지</div>
-                <div id="manager_btn" class="button">관리자페이지(메인)</div>
-                <div id="userManager_btn" class="button">관리자페이지(회원관리/커뮤니티)</div>
+            <div id="logo_wrap">
+                <img src="./image/LOGO.png" id="logo" alt="관리자 로고">
             </div>
-            <!-- gnb 제작자 확인 필요 -->
+
+            <div id="buttons">
+                <div id="main_btn" class="button">메인페이지</div>
+                <!-- <div id="manager_btn" class="button">관리자페이지(메인)</div> -->
+                <div id="userManager_btn" class="button">관리자페이지(회원관리/커뮤니티)</div>
+                <div id="logOut" class="button"> 로그아웃 </div>
+            </div>
         </div>
     </div>
 
@@ -70,12 +75,13 @@
             </div>
         </div>
 
-        <div id="scheduler_wrap">
+        <!-- !!!!!추후에 작업 예정 -->
+        <!-- <div id="scheduler_wrap">
             <div class="wrap">
                 <div class="title">업데이트 스케쥴러</div>
                 <div id="calander">관리자 일정 달력</div>
             </div>
-        </div>
+        </div> -->
 
         <div id="gameBreak_wrap">
             <!-- 게임 중지 버튼  -->
@@ -108,7 +114,7 @@
 
             </div>
         </div>
-
+        <!-- !!!!! 페이징 or 캐러셀 적용 -->
         <div id="pageBreak_wrap">
             <!-- 페이지 중지 버튼 -->
             <div class="wrap">
@@ -149,16 +155,18 @@
         </div>
     </div>
 
+    <!-- modal -->
     <div id="modal_wrap">
-        <div class="container" style="">
+        <div id="first-confirm" class="container" style="">
             <div class="modal-text"><span>정지하시겠습니까?</span></div>
             <div class="modal-btns">
                 <button type="button" class="btn-confirm">확인</button>
                 <button type="button" class="btn-cancel">취소</button>
             </div>
         </div>
-        <div class="container" style="">
-            <div class="modal-text"><span>1-4-7-5 를 순서대로 클릭하세요</span></div>
+
+        <div id="second-confirm" class="container" style="">
+            <div class="modal-text"><span id="random-PW">1-4-7-5 를 순서대로 클릭하세요</span></div>
             <div class="modal-btns">
                 <div class="numberPad_wrap">
                     <div class="number" value="1">1</div>
@@ -171,10 +179,17 @@
                     <div class="number" value="8">8</div>
                     <div class="number" value="9">9</div>
                 </div>
+                <div id="clicked-PW">
+                    <p>입력 중인 번호</p>
+                    <span></span>
+                </div>
                 <button type="button" class="btn-cancel">취소</button>
             </div>
         </div>
-        <div class="container" style="">
+
+        <div class="container">성공</div>
+
+        <div id="third-confirm" class="container" style="">
             <div class="modal-text"><span>(최종 확인) 강제 정지합니다.</span></div>
             <div class="modal-btns">
                 <button type="button" class="btn-confirm">확인</button>
