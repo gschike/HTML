@@ -269,7 +269,7 @@ body {
 
     background-repeat: no-repeat;
     background-position: center;
-    background-size: cover;
+    background-size: contain;
 
     height: 410px;
 }
@@ -280,7 +280,6 @@ body {
 
 #slide2 {
     background-image: url("./image/광고_타자연습.png");
-    background-size: contain;
 }
 
 #slide3 {
