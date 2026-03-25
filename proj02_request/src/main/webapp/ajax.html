@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+ window.addEventListener('load',bind);
+ 
+ function bind(){
+	 const a = document.querySelector('.xhr');
+	 const xhr = new XMLHttpRequest();
+	 
+	 xhr.open("get","/proj02_request/req?id=&pw=&none=1234&hidden=hihi&select=1&radio1=r4&ta=%EC%B4%88%EA%B8%B0%EA%B0%92%0D%0A%09%09%EC%97%94%ED%84%B0%0D%0A%09%09&date1=")
+	 
+	 xhr.send();
+	 
+	 xhr.onload=function(){
+		 const xhr1 = JSON.parse(xhr.responseText);
+		 console.log(xhr1);
+		 a.innerHTML = xhr1.key;
+	 }
+ }
+ </script>
+</head>
+<body>
+ <div class="xhr"></div>
+ 
+</body>
+</html>

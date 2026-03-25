@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+	window.addEventListener('load', bind);
+
+	function bind() {
+		
+		const qqq = document.querySelector('.qqq');
+		
+		const url = "/proj02_request/req?id=&pw=&none=1234&hidden=hihi&select=1&radio1=r4&ta=%EC%B4%88%EA%B8%B0%EA%B0%92%0D%0A%09%09%EC%97%94%ED%84%B0%0D%0A%09%09&date1="
+
+		const option = {
+			method : 'get'
+		}
+		
+		fetch(url,option)
+		.then(function(response){
+			return response.json()
+		}).then(function(json){
+			console.log(json)
+		})
+		
+		qqq.innerText = nonevalue;
+		
+// 		console.log(Objectkeys(option))
+		console.log("111 : " + option)
+	}
+</script>
+</head>
+<body>
+
+	<div class="qqq"></div>
+
+</body>
+</html>

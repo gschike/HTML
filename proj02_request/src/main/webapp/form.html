@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<h1>parameter 연습</h1>
+	
+<!-- 	<form method="get" action="http://localhost:8080/proj02_request/req"> -->
+<!-- 	<form method="get" action="/proj02_request/req"> -->
+	<form method="get" action="req">
+		id : <input type="text" name="id"><br>
+		pw : <input type="password" name="pw"><br>
+		
+		
+		<input type="checkbox" name="item" value="1">욕망의 항아리
+		<input type="checkbox" name="item" value="2">노가다 목장갑
+		<input type="checkbox" name="item" value="3">집행자의 검<br>
+		
+		<input type="text" name="none" value="1234" style="display:none;">
+		<input type="hidden" name="hidden" value="hihi">
+		
+		<!--  버튼은 전송이 되는게 아님 NUll 나옴 -->
+		<input type="button" name="btn1" value="btn1"><br>
+		<button type="button" name="btn2" value="btn2">btn2</button><br>
+		
+		
+		
+		<!--  select옆 value는 아무 의미도 없구낭 -->
+		<select name="select" value="s1">
+			<option value="1">무한의 대검</option>
+			<option value="2">몰락한 왕의 검</option>
+			<option value="3">처형인의 대검</option>
+			<option value="4">스태틱 단검</option>
+			
+		</select> <br>
+		
+		<input type="radio" name="radio1" value="r1" checked>트레이서
+		<input type="radio" name="radio1" value="r2" checked>라인하르트
+		<input type="radio" name="radio1" value="r3" checked>디바
+		<input type="radio" name="radio1" value="r4" checked>메르시
+		<br>
+	
+		<textarea name="ta" value="ta1">초기값
+		엔터
+		</textarea><br>
+		
+		<input type="date" name="date1"><br>
+		
+		<input type="submit" value="get 전송">
+	 </form>
+	 
+	 
+	 <form method="post" action="forward">
+	 	id : <input type="text" name="id" value="1234"><br>
+	 	<input type="submit" value="post 전송">
+	 </form>
+	 
+	 <form method="post" action="forward">
+	 	<input type="text" name="text"><br>
+	 	<input type="submit" value="forward post 전송">
+	 </form>
+	 
+	 <form method="post" action="redirect">
+	 	<input type="text" name="text"><br>
+	 	<input type="submit" value="redirect post 전송">
+	 </form>
+
+</body>
+</html>
